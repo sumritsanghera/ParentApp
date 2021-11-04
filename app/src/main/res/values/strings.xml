@@ -5,4 +5,7 @@
     <string name="remove_name">REMOVE NAME</string>
     <string name="children_details">CHILDREN DETAILS</string>
     <string name="enter_the_name">Enter the name:</string>
+    <string name="submit">Submit</string>
+    <string name="which_name_you_want_to_edit">Which name you want to edit?</string>
+    <string name="cancel">cancel</string>
 </resources>
