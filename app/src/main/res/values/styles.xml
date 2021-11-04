@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme" parent = "Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/dark_blue</item>
+        <item name="colorAccent">@color/darker_blue</item>
+    </style>
+
+    <style name="ToolBarStyle" parent="Theme.AppCompat">
+        <item name="android:textColorPrimary">@color/darker_blue</item>
+        <item name="android:textColorSecondary">@color/light_blue</item>
+        <item name="actionMenuTextColor">@color/dark_blue</item>
+    </style>
+
+    <style name="Title" parent="@android:style/TextAppearance.Medium">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/darker_blue</item>
+        <item name="android:fontFamily">andada</item>
+    </style>
+</resources>

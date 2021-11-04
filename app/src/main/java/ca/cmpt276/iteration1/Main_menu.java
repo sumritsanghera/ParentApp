@@ -1,4 +1,4 @@
-package cmpt276.groupassignment.parentapp;
+package ca.cmpt276.iteration1;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
