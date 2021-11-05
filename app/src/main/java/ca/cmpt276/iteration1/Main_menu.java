@@ -70,6 +70,9 @@ public class Main_menu extends AppCompatActivity {
     private void setup_history_button() {
         Button button = findViewById(R.id.coin_history_button);
         button.setOnClickListener(view -> {
+            Intent intent = new Intent(Main_menu.this, Coin_flip_history.class);
+            intent.putExtra("COIN_FLIP_LIST", manager.getCoin_flip_list());
+            startActivity(intent);
         });
     }
 

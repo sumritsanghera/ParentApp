@@ -28,6 +28,12 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
 
+        <activity android:name=".Coin_flip_history"
+            android:exported="true"
+            android:label="Back"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+
         <activity
             android:name=".MainActivity3"
             android:exported="false" />
