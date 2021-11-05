@@ -1,7 +1,6 @@
-package cmpt276.groupassignment.parentapp.model;
+package ca.cmpt276.iteration1.model;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Coin_Flip_Manager {
     private ArrayList<ArrayList<String>> coin_flip_list;

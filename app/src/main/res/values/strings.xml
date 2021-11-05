@@ -8,4 +8,15 @@
     <string name="submit">Submit</string>
     <string name="which_name_you_want_to_edit">Which name you want to edit?</string>
     <string name="cancel">cancel</string>
+
+    <string name="coin_flip_child_info">(By default, child picked heads)</string>
+    <string name="coin_spin_info">Tap coin to spin</string>
+    <string name="child_guess_button_text">Flip Coin!</string>
+    <string name="child_guess_heads_text">Heads</string>
+    <string name="child_guess_tails_text">Tails</string>
+    <string name="first_child_text">First child</string>
+    <string name="second_child_text">Second child</string>
+    <string name="picker_text">Picker:</string>
+    <string name="heads_text">Heads</string>
+    <string name="tails_text">Tails</string>
 </resources>

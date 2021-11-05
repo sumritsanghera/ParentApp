@@ -3,16 +3,16 @@ package ca.cmpt276.iteration1;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Button;
 
-import cmpt276.groupassignment.parentapp.model.Coin_Flip;
-import cmpt276.groupassignment.parentapp.model.Coin_Flip_Manager;
+import ca.cmpt276.iteration1.model.Coin_Flip;
+import ca.cmpt276.iteration1.model.Coin_Flip_Manager;
 
 /*
        Main Menu class using layout: activity_main_menu
@@ -32,6 +32,8 @@ public class Main_menu extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
+
+        manager = Coin_Flip_Manager.getInstance();
 
         setup_launcher();
         setup_coin_flip();
@@ -58,10 +60,17 @@ public class Main_menu extends AppCompatActivity {
     }
 
     private void setup_coin_flip() {
-
+        Button button = findViewById(R.id.coin_flip_button);
+        button.setOnClickListener(view -> {
+            Intent intent = new Intent(Main_menu.this, Coin_Flip_Activity.class);
+            coin_flip_launcher.launch(intent);
+        });
     }
 
     private void setup_history_button() {
+        Button button = findViewById(R.id.coin_history_button);
+        button.setOnClickListener(view -> {
+        });
     }
 
     @Override
