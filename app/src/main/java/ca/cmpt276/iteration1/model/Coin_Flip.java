@@ -1,4 +1,4 @@
-package cmpt276.groupassignment.parentapp.model;
+package ca.cmpt276.iteration1.model;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
