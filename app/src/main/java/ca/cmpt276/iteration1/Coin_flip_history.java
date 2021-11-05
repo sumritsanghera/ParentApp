@@ -15,6 +15,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
+/*
+    Coin Flip History:
+    -   Lists all coin flips, with their flip time, picker's name and result.
+    -   Flip animation starts when tapped on coin
+    -   Result is displayed as check mark or clear mark, depending if result match picker's guess.
+
+ */
+
 public class Coin_flip_history extends AppCompatActivity {
 
     private ArrayAdapter adapter;

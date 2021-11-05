@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import ca.cmpt276.iteration1.model.Coin_Flip;
 import ca.cmpt276.iteration1.model.Coin_Flip_Manager;
@@ -35,12 +36,19 @@ public class Main_menu extends AppCompatActivity {
 
         manager = Coin_Flip_Manager.getInstance();
 
-        setup_launcher();
+
+        setup_back_button();
+        setup_coin_flip_launcher();
         setup_coin_flip();
         setup_history_button();
     }
 
-    private void setup_launcher() {
+    private void setup_back_button() {
+        ImageView back_button = findViewById(R.id.main_menu_back_button);
+        back_button.setOnClickListener(view -> Main_menu.super.onBackPressed());
+    }
+
+    private void setup_coin_flip_launcher() {
         coin_flip_launcher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
