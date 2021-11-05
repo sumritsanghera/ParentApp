@@ -7,9 +7,12 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,9 +25,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -88,17 +93,19 @@ public class Coin_Flip_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flip_coin);
-        setSupportActionBar(findViewById(R.id.main_toolbar));
-        ActionBar ab = getSupportActionBar();
-        assert ab != null;
-        ab.setDisplayHomeAsUpEnabled(true);
 
+        setup_back_button();
         setup_children_list();
         setup_child_option_spinner();
         setup_radioButton_listener();
 
         refresh_option();
         setup_spin_coin_image_click();
+    }
+
+    private void setup_back_button() {
+        ImageView back_button = findViewById(R.id.coin_flip_back_button);
+        back_button.setOnClickListener(view -> Coin_Flip_Activity.super.onBackPressed());
     }
 
     private void setup_children_list() {
@@ -262,7 +269,6 @@ public class Coin_Flip_Activity extends AppCompatActivity {
                     set.start();
                 } else {
                     TextView result = findViewById(R.id.result);
-                    ImageView pickerResult = findViewById(R.id.picker_result);
                     duration = 40;
                     duration_increment = 0;
                     if(cur_face)
@@ -271,13 +277,9 @@ public class Coin_Flip_Activity extends AppCompatActivity {
                         result.setText("Tails");
                     if(cur_face == guess) {
                         setup_Result(true);
-                        pickerResult.setBackgroundColor(000000);
-                        pickerResult.setBackground(getDrawable(R.drawable.check_mark));
                     }
                     else {
                         setup_Result(false);
-                        pickerResult.setBackgroundColor(000000);
-                        pickerResult.setBackground(getDrawable(R.drawable.clear_mark));
                     }
                 }
             }
@@ -295,7 +297,6 @@ public class Coin_Flip_Activity extends AppCompatActivity {
         setResult(RESULT_OK,intent);
     }
 
-    //Ref for delay function: https://stackoverflow.com/questions/37323110/how-to-use-delay-functions-in-android-studio/37323343
     private void setup_spin_coin_image_click() {
         cur_face = true;
         coin = findViewById(R.id.coin_img_view);
@@ -305,7 +306,9 @@ public class Coin_Flip_Activity extends AppCompatActivity {
             options = findViewById(R.id.radioGroup);
             if (options.getCheckedRadioButtonId() == -1)
             {
-                Toast.makeText(Coin_Flip_Activity.this, "Choose Heads or Tails!",Toast.LENGTH_LONG).show();
+                Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                v.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+                Snackbar.make(view,"Select Heads or Tails!",Snackbar.LENGTH_LONG).show();
             } else {
                 time = LocalDateTime.now();
                 guess = heads.isChecked();

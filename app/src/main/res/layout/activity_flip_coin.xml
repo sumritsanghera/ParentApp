@@ -8,133 +8,159 @@
     android:backgroundTint="@color/white_grey"
     tools:context=".Coin_Flip_Activity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/main_toolbar"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white_grey"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="@style/ToolBarStyle"
+        android:layout_margin="10dp"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <ImageView
-        android:id="@+id/coin_img_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:adjustViewBounds="true"
-        android:maxWidth="200dp"
-        android:maxHeight="200dp"
-        android:scaleType="fitCenter"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/coin_info"
-        app:srcCompat="@drawable/heads" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize">
 
-    <TextView
-        android:id="@+id/result"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:textSize="35sp"
-        android:textStyle="bold"
-        android:fontFamily="@font/cabin"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/coin_img_view" />
+            <ImageView
+                android:id="@+id/coin_flip_back_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/back_icon"
+                android:contentDescription="@string/coin_flip_back_button_description" />
 
-    <ImageView
-        android:id="@+id/picker_result"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/result"
-        app:srcCompat="@android:color/transparent" />
+        </RelativeLayout>
 
-    <TextView
-        android:id="@+id/coin_info"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:text="@string/coin_spin_info"
-        android:textSize="20sp"
-        android:textStyle="italic"
-        android:fontFamily="@font/cabin"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
-
-    <TextView
-        android:id="@+id/picker_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:minHeight="48dp"
-        android:padding="5dp"
-        android:text="Picker:"
-        android:fontFamily="@font/cabin"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_toolbar" />
-
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:minHeight="48dp"
-        app:layout_constraintStart_toEndOf="@+id/picker_text"
-        app:layout_constraintTop_toBottomOf="@+id/main_toolbar" />
-
-    <RadioGroup
-        android:id="@+id/radioGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/picker_text">
-
-        <RadioButton
-            android:id="@+id/radioHeads"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/heads_text"
-            android:fontFamily="@font/cabin"
-            android:textSize="20sp"
-            android:padding="5dp"/>
+            android:text="@string/coin_flip_title"
+            android:padding="10dp"
+            android:textSize="30sp"
+            android:textColor="@color/dark_blue"
+            android:fontFamily="@font/andada"/>
 
-        <RadioButton
-            android:id="@+id/radioTails"
+        <RelativeLayout
             android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/coin_flip_text_background">
+
+            <TextView
+                android:id="@+id/picker_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="20dp"
+                android:fontFamily="@font/cabin"
+                android:gravity="center"
+                android:minHeight="48dp"
+                android:padding="5dp"
+                android:text="@string/coin_flip_picker_text"
+                android:textSize="20sp" />
+
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="30dp"
+                android:gravity="center"
+                android:minHeight="48dp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/coin_flip_text_background">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:padding="5dp"
+                android:text="@string/coin_flip_guess_text"
+                android:textSize="20sp" />
+
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp">
+
+                <RadioButton
+                    android:id="@+id/radioHeads"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/heads_text"
+                    android:fontFamily="@font/cabin"
+                    android:textSize="20sp"
+                    android:padding="5dp"/>
+
+                <RadioButton
+                    android:id="@+id/radioTails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="@string/tails_text"
+                    android:fontFamily="@font/cabin"
+                    android:textSize="20sp" />
+
+            </RadioGroup>
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/coin_info"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="@string/tails_text"
+            android:layout_marginTop="15dp"
+            android:text="@string/coin_spin_info"
+            android:textSize="20sp"
+            android:textStyle="italic"
+            android:layout_gravity="center"
+            android:fontFamily="@font/cabin"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp">
+            <ImageView
+                android:id="@+id/coin_img_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:adjustViewBounds="true"
+                android:maxWidth="200dp"
+                android:maxHeight="200dp"
+                android:scaleType="fitCenter"
+                android:layout_centerInParent="true"
+                app:srcCompat="@drawable/heads"
+                android:contentDescription="@string/coin_flip_image_description" />
+
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textSize="35sp"
+            android:textStyle="bold"
             android:fontFamily="@font/cabin"
-            android:textSize="20sp" />
+            android:layout_gravity="center"/>
 
-    </RadioGroup>
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="10dp"
-        android:padding="5dp"
-        android:text="Guess:"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/picker_text" />
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

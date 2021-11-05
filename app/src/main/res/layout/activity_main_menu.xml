@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
@@ -20,18 +19,18 @@
             android:layout_height="?actionBarSize">
 
             <ImageView
-
                 android:id="@+id/main_menu_back_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/back_icon" />
+                android:background="@drawable/back_icon"
+                android:contentDescription="@string/main_back_button_image_description" />
 
         </RelativeLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Main Menu"
+            android:text="@string/main_menu_title"
             android:padding="10dp"
             android:textSize="30sp"
             android:textColor="@color/dark_blue"
@@ -64,7 +63,7 @@
                 android:layout_marginBottom="22dp"
                 android:fontFamily="@font/cabin"
                 android:paddingStart="25dp"
-                android:text="Children Configuration"
+                android:text="@string/main_config_text"
                 android:textColor="@color/white"
                 android:textSize="30sp" />
 
@@ -75,7 +74,8 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="30dp"
-                android:background="@drawable/config_icon" />
+                android:background="@drawable/config_icon"
+                android:contentDescription="@string/config_icon" />
 
             <Button
                 android:id="@+id/config_button"
@@ -97,7 +97,8 @@
                 android:layout_centerInParent="true"
                 android:alpha="0.30"
                 android:scaleType="centerCrop"
-                android:src="@drawable/history_card_background" />
+                android:src="@drawable/history_card_background"
+                android:contentDescription="@string/history_background" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -112,7 +113,7 @@
                 android:layout_marginBottom="22dp"
                 android:fontFamily="@font/cabin"
                 android:paddingStart="25dp"
-                android:text="Coin Flip History"
+                android:text="@string/main_history_text"
                 android:textColor="@color/white"
                 android:textSize="30sp" />
 
@@ -123,7 +124,8 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="30dp"
-                android:background="@drawable/history_icon" />
+                android:background="@drawable/history_icon"
+                android:contentDescription="@string/history_icon" />
 
             <Button
                 android:id="@+id/coin_history_button"
@@ -145,7 +147,8 @@
                 android:layout_centerInParent="true"
                 android:alpha="0.30"
                 android:scaleType="centerCrop"
-                android:src="@drawable/coin_flip_card_background" />
+                android:src="@drawable/coin_flip_card_background"
+                android:contentDescription="@string/coin_flip_backgroun" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -160,7 +163,7 @@
                 android:layout_marginBottom="22dp"
                 android:fontFamily="@font/cabin"
                 android:paddingStart="25dp"
-                android:text="Coin Flip"
+                android:text="@string/main_coin_flip_text"
                 android:textColor="@color/white"
                 android:textSize="30sp" />
 
@@ -171,7 +174,8 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="30dp"
-                android:background="@drawable/coin_icon" />
+                android:background="@drawable/coin_icon"
+                android:contentDescription="@string/coin_icon" />
 
             <Button
                 android:id="@+id/coin_flip_button"
@@ -193,7 +197,8 @@
                 android:layout_centerInParent="true"
                 android:alpha="0.30"
                 android:scaleType="centerCrop"
-                android:src="@drawable/timer_card_background" />
+                android:src="@drawable/timer_card_background"
+                android:contentDescription="@string/timer_background" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -208,7 +213,7 @@
                 android:layout_marginBottom="22dp"
                 android:fontFamily="@font/cabin"
                 android:paddingStart="25dp"
-                android:text="Timer"
+                android:text="@string/main_timer_text"
                 android:textColor="@color/white"
                 android:textSize="30sp" />
 
@@ -219,7 +224,8 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="30dp"
-                android:background="@drawable/timer_icon" />
+                android:background="@drawable/timer_icon"
+                android:contentDescription="@string/timer_icon" />
 
             <Button
                 android:id="@+id/timer_button"
@@ -241,7 +247,8 @@
                 android:layout_centerInParent="true"
                 android:alpha="0.30"
                 android:scaleType="centerCrop"
-                android:src="@drawable/about_us_card_background" />
+                android:src="@drawable/about_us_card_background"
+                android:contentDescription="@string/about_us_background" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -256,7 +263,7 @@
                 android:layout_marginBottom="22dp"
                 android:fontFamily="@font/cabin"
                 android:paddingStart="25dp"
-                android:text="About Us"
+                android:text="@string/main_about_us_text"
                 android:textColor="@color/white"
                 android:textSize="30sp" />
 
@@ -267,7 +274,8 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="30dp"
-                android:background="@drawable/info_icon" />
+                android:background="@drawable/info_icon"
+                android:contentDescription="@string/info_icon" />
 
             <Button
                 android:id="@+id/about_button"
