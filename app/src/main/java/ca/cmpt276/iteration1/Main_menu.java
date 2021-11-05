@@ -9,8 +9,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import ca.cmpt276.iteration1.model.Coin_Flip;
 import ca.cmpt276.iteration1.model.Coin_Flip_Manager;
@@ -41,6 +43,17 @@ public class Main_menu extends AppCompatActivity {
         setup_coin_flip_launcher();
         setup_coin_flip();
         setup_history_button();
+        Button configure_children = (Button) findViewById(R.id.config_button);
+        configure_children.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Toast.makeText(Main_menu.this,"Clicked",Toast.LENGTH_SHORT).show();
+                Intent intent=MainActivity.makeIntent(Main_menu.this);
+                //startActivityForResult(intent, REQUEST_CODE_FOR_NAME);
+                startActivity(intent);
+            }
+        });
     }
 
     private void setup_back_button() {

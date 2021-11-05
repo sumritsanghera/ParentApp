@@ -45,4 +45,5 @@
     <string name="history_list_picker">Picker:</string>
     <string name="history_list_datetime">Date and time</string>
     <string name="history_list_result">history list result</string>
+    <string name="back">Back</string>
 </resources>
