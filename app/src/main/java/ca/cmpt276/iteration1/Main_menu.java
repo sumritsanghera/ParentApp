@@ -7,6 +7,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+/*
+       Main Menu class using layout: activity_main_menu
+       4 transparent buttons takes user to 4 different features of the app namely:
+       -    Children configuration
+       -    Coin flip history
+       -    Coin flip
+       -    Timer
+
+ */
+
 public class Main_menu extends AppCompatActivity {
 
     @Override
