@@ -286,7 +286,7 @@ public class Coin_Flip_Activity extends AppCompatActivity {
     }
 
     private void setup_Result(Boolean result) {
-        DateTimeFormatter format = DateTimeFormatter.ofPattern("MMM dd @ HH:mma");
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("MMM dd - HH:mma");
 
         Intent intent = new Intent();
         intent.putExtra("PICKER", child_name);
