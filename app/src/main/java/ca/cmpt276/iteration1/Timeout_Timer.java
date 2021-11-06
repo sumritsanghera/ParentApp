@@ -3,35 +3,72 @@ package ca.cmpt276.iteration1;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import ca.cmpt276.iteration1.R;
 import android.os.CountDownTimer;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Locale;
 
 public class Timeout_Timer extends AppCompatActivity {
 
-    private static final long START_TIME_IN_MILLIS = 600000;
-    private long TimeLeftInMillis = START_TIME_IN_MILLIS;
-    private long EndTime;
-
+    private EditText EditTextInput;
     private TextView TextViewCountdown;
+    private Button ButtonSet;
     private Button ButtonStartPause;
     private Button ButtonReset;
+
     private CountDownTimer CountDownTimer;
+
     private boolean isTimerRunning;
+
+    private long StartTimeInMillis;
+    private long TimeLeftInMillis;
+    private long EndTime;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_timeout_timer);
+        setContentView(R.layout.activity_main);
+
+        EditTextInput = findViewById(R.id.edit_text_input);
         TextViewCountdown = findViewById(R.id.text_view_countdown);
+
+        ButtonSet = findViewById(R.id.button_set);
         ButtonStartPause = findViewById(R.id.button_start_pause);
         ButtonReset = findViewById(R.id.button_reset);
+
+
+        ButtonSet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String input = EditTextInput.getText().toString();
+                if (input.length() == 0) {
+                    Toast.makeText(Timeout_Timer.this, "Field can't be empty",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                long millisInput = Long.parseLong(input) * 60000;
+                if (millisInput == 0) {
+                    Toast.makeText(Timeout_Timer.this, "Please enter a positive number",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                setTime(millisInput);
+                EditTextInput.setText("");
+            }
+        });
 
         ButtonStartPause.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,6 +88,14 @@ public class Timeout_Timer extends AppCompatActivity {
         });
         //updateCountDownText();
     }
+
+    private void setTime(long milliseconds) {
+        StartTimeInMillis = milliseconds;
+        resetTimer();
+        closeKeyboard();
+    }
+
+
     private void startTimer() {
         EndTime = System.currentTimeMillis() + TimeLeftInMillis;
 
@@ -66,47 +111,72 @@ public class Timeout_Timer extends AppCompatActivity {
                 updateButtons();
             }
         }.start();
+
         isTimerRunning = true;
         updateButtons();
     }
+
     private void pauseTimer() {
         CountDownTimer.cancel();
         isTimerRunning = false;
         updateButtons();
     }
+
     private void resetTimer() {
-        TimeLeftInMillis = START_TIME_IN_MILLIS;
+        TimeLeftInMillis = StartTimeInMillis;
         updateCountDownText();
         updateButtons();
     }
+
     private void updateCountDownText() {
-        int minutes = (int) (TimeLeftInMillis / 1000) / 60;
+        int hours = (int) (TimeLeftInMillis / 1000) / 3600;
+        int minutes = (int) ((TimeLeftInMillis / 1000) % 3600) / 60;
         int seconds = (int) (TimeLeftInMillis / 1000) % 60;
-        String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
+
+        String timeLeftFormatted;
+        if (hours > 0) {
+            timeLeftFormatted = String.format(Locale.getDefault(),
+                    "%d:%02d:%02d", hours, minutes, seconds);
+        } else {
+            timeLeftFormatted = String.format(Locale.getDefault(),
+                    "%02d:%02d", minutes, seconds);
+        }
+
         TextViewCountdown.setText(timeLeftFormatted);
     }
 
     private void updateButtons() {
         if (isTimerRunning) {
+            EditTextInput.setVisibility(View.INVISIBLE);
+            ButtonSet.setVisibility(View.INVISIBLE);
             ButtonReset.setVisibility(View.INVISIBLE);
             ButtonStartPause.setText("Pause");
-        }
-        else {
+            ButtonStartPause.setBackgroundColor(Color.GREEN);
+        } else {
             ButtonStartPause.setText("Start");
+            EditTextInput.setVisibility(View.VISIBLE);
+            ButtonSet.setVisibility(View.VISIBLE);
 
             if (TimeLeftInMillis < 1000) {
                 ButtonStartPause.setVisibility(View.INVISIBLE);
-            }
-            else {
+            } else {
                 ButtonStartPause.setVisibility(View.VISIBLE);
             }
 
-            if (TimeLeftInMillis < START_TIME_IN_MILLIS) {
+            if (TimeLeftInMillis < StartTimeInMillis) {
                 ButtonReset.setVisibility(View.VISIBLE);
-            }
-            else {
+                ButtonReset.setBackgroundColor(Color.RED);
+            } else {
                 ButtonReset.setVisibility(View.INVISIBLE);
             }
+        }
+    }
+
+    private void closeKeyboard() {
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
 
@@ -117,6 +187,7 @@ public class Timeout_Timer extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
 
+        editor.putLong("startTimeInMillis", StartTimeInMillis);
         editor.putLong("millisLeft", TimeLeftInMillis);
         editor.putBoolean("timerRunning", isTimerRunning);
         editor.putLong("endTime", EndTime);
@@ -134,7 +205,8 @@ public class Timeout_Timer extends AppCompatActivity {
 
         SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
 
-        TimeLeftInMillis = prefs.getLong("millisLeft", START_TIME_IN_MILLIS);
+        StartTimeInMillis = prefs.getLong("startTimeInMillis", 600000);
+        TimeLeftInMillis = prefs.getLong("millisLeft", StartTimeInMillis);
         isTimerRunning = prefs.getBoolean("timerRunning", false);
 
         updateCountDownText();
@@ -149,8 +221,7 @@ public class Timeout_Timer extends AppCompatActivity {
                 isTimerRunning = false;
                 updateCountDownText();
                 updateButtons();
-            }
-            else {
+            } else {
                 startTimer();
             }
         }
