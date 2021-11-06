@@ -2,6 +2,7 @@ package ca.cmpt276.iteration1;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import ca.cmpt276.iteration1.R;
@@ -16,6 +17,7 @@ public class Timeout_Timer extends AppCompatActivity {
 
     private static final long START_TIME_IN_MILLIS = 600000;
     private long TimeLeftInMillis = START_TIME_IN_MILLIS;
+    private long EndTime;
 
     private TextView TextViewCountdown;
     private Button ButtonStartPause;
@@ -47,9 +49,11 @@ public class Timeout_Timer extends AppCompatActivity {
                 resetTimer();
             }
         });
-        updateCountDownText();
+        //updateCountDownText();
     }
     private void startTimer() {
+        EndTime = System.currentTimeMillis() + TimeLeftInMillis;
+
         CountDownTimer = new CountDownTimer(TimeLeftInMillis, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -59,26 +63,21 @@ public class Timeout_Timer extends AppCompatActivity {
             @Override
             public void onFinish() {
                 isTimerRunning = false;
-                ButtonStartPause.setText("Start");
-                ButtonStartPause.setVisibility(View.INVISIBLE);
-                ButtonReset.setVisibility(View.VISIBLE);
+                updateButtons();
             }
         }.start();
         isTimerRunning = true;
-        ButtonStartPause.setText("pause");
-        ButtonReset.setVisibility(View.INVISIBLE);
+        updateButtons();
     }
     private void pauseTimer() {
         CountDownTimer.cancel();
         isTimerRunning = false;
-        ButtonStartPause.setText("Start");
-        ButtonReset.setVisibility(View.VISIBLE);
+        updateButtons();
     }
     private void resetTimer() {
         TimeLeftInMillis = START_TIME_IN_MILLIS;
         updateCountDownText();
-        ButtonReset.setVisibility(View.INVISIBLE);
-        ButtonStartPause.setVisibility(View.VISIBLE);
+        updateButtons();
     }
     private void updateCountDownText() {
         int minutes = (int) (TimeLeftInMillis / 1000) / 60;
@@ -87,4 +86,73 @@ public class Timeout_Timer extends AppCompatActivity {
         TextViewCountdown.setText(timeLeftFormatted);
     }
 
+    private void updateButtons() {
+        if (isTimerRunning) {
+            ButtonReset.setVisibility(View.INVISIBLE);
+            ButtonStartPause.setText("Pause");
+        }
+        else {
+            ButtonStartPause.setText("Start");
+
+            if (TimeLeftInMillis < 1000) {
+                ButtonStartPause.setVisibility(View.INVISIBLE);
+            }
+            else {
+                ButtonStartPause.setVisibility(View.VISIBLE);
+            }
+
+            if (TimeLeftInMillis < START_TIME_IN_MILLIS) {
+                ButtonReset.setVisibility(View.VISIBLE);
+            }
+            else {
+                ButtonReset.setVisibility(View.INVISIBLE);
+            }
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+
+        editor.putLong("millisLeft", TimeLeftInMillis);
+        editor.putBoolean("timerRunning", isTimerRunning);
+        editor.putLong("endTime", EndTime);
+
+        editor.apply();
+
+        if (CountDownTimer != null) {
+            CountDownTimer.cancel();
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+
+        TimeLeftInMillis = prefs.getLong("millisLeft", START_TIME_IN_MILLIS);
+        isTimerRunning = prefs.getBoolean("timerRunning", false);
+
+        updateCountDownText();
+        updateButtons();
+
+        if (isTimerRunning) {
+            EndTime = prefs.getLong("endTime", 0);
+            TimeLeftInMillis = EndTime - System.currentTimeMillis();
+
+            if (TimeLeftInMillis < 0) {
+                TimeLeftInMillis = 0;
+                isTimerRunning = false;
+                updateCountDownText();
+                updateButtons();
+            }
+            else {
+                startTimer();
+            }
+        }
+    }
 }
