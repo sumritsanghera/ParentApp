@@ -31,7 +31,6 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ScrollView
-        android:id="@+id/results"
         android:layout_width="409dp"
         android:layout_height="590dp"
         android:layout_marginBottom="2dp"
@@ -44,7 +43,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" />
+            android:orientation="vertical"
+            android:id="@+id/results"/>
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
