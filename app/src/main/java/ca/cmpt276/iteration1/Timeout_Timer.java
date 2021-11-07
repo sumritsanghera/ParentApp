@@ -1,13 +1,16 @@
 package ca.cmpt276.iteration1;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 
-import ca.cmpt276.iteration1.R;
+import ca.cmpt276.iteration1.model.Timer_Message_Fragment;
+
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -137,7 +140,8 @@ public class Timeout_Timer extends AppCompatActivity {
         if (hours > 0) {
             timeLeftFormatted = String.format(Locale.getDefault(),
                     "%d:%02d:%02d", hours, minutes, seconds);
-        } else {
+        }
+        else {
             timeLeftFormatted = String.format(Locale.getDefault(),
                     "%02d:%02d", minutes, seconds);
         }
@@ -147,13 +151,16 @@ public class Timeout_Timer extends AppCompatActivity {
 
     private void updateButtons() {
         if (isTimerRunning) {
+
             EditTextInput.setVisibility(View.INVISIBLE);
             ButtonSet.setVisibility(View.INVISIBLE);
             ButtonReset.setVisibility(View.INVISIBLE);
             ButtonStartPause.setText("Pause");
-            ButtonStartPause.setBackgroundColor(Color.GREEN);
-        } else {
+            ButtonStartPause.setBackgroundColor(Color.GRAY);
+        }
+        else {
             ButtonStartPause.setText("Start");
+            ButtonStartPause.setBackgroundColor(Color.GREEN);
             EditTextInput.setVisibility(View.VISIBLE);
             ButtonSet.setVisibility(View.VISIBLE);
 
@@ -166,8 +173,11 @@ public class Timeout_Timer extends AppCompatActivity {
             if (TimeLeftInMillis < StartTimeInMillis) {
                 ButtonReset.setVisibility(View.VISIBLE);
                 ButtonReset.setBackgroundColor(Color.RED);
+                TextViewCountdown.setVisibility(View.INVISIBLE);
+                messageFragment();
             } else {
                 ButtonReset.setVisibility(View.INVISIBLE);
+                TextViewCountdown.setVisibility(View.VISIBLE);
             }
         }
     }
@@ -225,5 +235,14 @@ public class Timeout_Timer extends AppCompatActivity {
                 startTimer();
             }
         }
+    }
+
+    private void messageFragment() {
+        FragmentManager manager = getSupportFragmentManager();
+        Timer_Message_Fragment dialog = new Timer_Message_Fragment();
+        dialog.show(manager, "MessageDialog");
+
+        Log.i("TAG", "Just Showed Dialog");
+
     }
 }
