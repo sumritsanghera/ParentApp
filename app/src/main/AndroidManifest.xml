@@ -41,16 +41,14 @@
             android:label="Back"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
-        <activity
-            android:name=".MainActivity3"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity2"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity"
-            android:exported="false" />
 
+        <activity
+            android:name=".Children_Config"
+            android:exported="true"
+            android:label="Back"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            />
 
         <meta-data
             android:name="preloaded_fonts"
