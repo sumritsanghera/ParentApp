@@ -15,6 +15,8 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +26,7 @@ public class Timeout_Timer extends AppCompatActivity {
 
     private EditText EditTextInput;
     private TextView TextViewCountdown;
+    private RadioGroup radioGroup;
     private Button ButtonSet;
     private Button ButtonStartPause;
     private Button ButtonReset;
@@ -89,8 +92,33 @@ public class Timeout_Timer extends AppCompatActivity {
                 resetTimer();
             }
         });
-        //updateCountDownText();
+
+        createRadioButtons();
     }
+
+    private void createRadioButtons() {
+        radioGroup = findViewById(R.id.radio_group_timer);
+        int[] numMinutes = getResources().getIntArray(R.array.num_minutes);
+        for(int i = 0; i < numMinutes.length; i++) {
+            int numMinute = numMinutes[i];
+            RadioButton button = new RadioButton(this);
+            button.setText(numMinute + " Minutes");
+
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    long buttonTimer = numMinute * 60000;
+                    setTime(buttonTimer);
+
+                    Toast.makeText(Timeout_Timer.this, numMinute + " Minute Timer",
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
+            radioGroup.addView(button);
+        }
+    }
+
 
     private void setTime(long milliseconds) {
         StartTimeInMillis = milliseconds;
@@ -123,6 +151,7 @@ public class Timeout_Timer extends AppCompatActivity {
         CountDownTimer.cancel();
         isTimerRunning = false;
         updateButtons();
+        TextViewCountdown.setVisibility(View.VISIBLE);
     }
 
     private void resetTimer() {
@@ -140,8 +169,7 @@ public class Timeout_Timer extends AppCompatActivity {
         if (hours > 0) {
             timeLeftFormatted = String.format(Locale.getDefault(),
                     "%d:%02d:%02d", hours, minutes, seconds);
-        }
-        else {
+        } else {
             timeLeftFormatted = String.format(Locale.getDefault(),
                     "%02d:%02d", minutes, seconds);
         }
@@ -152,29 +180,38 @@ public class Timeout_Timer extends AppCompatActivity {
     private void updateButtons() {
         if (isTimerRunning) {
 
+            TextViewCountdown.setVisibility(View.VISIBLE);
             EditTextInput.setVisibility(View.INVISIBLE);
             ButtonSet.setVisibility(View.INVISIBLE);
             ButtonReset.setVisibility(View.INVISIBLE);
             ButtonStartPause.setText("Pause");
             ButtonStartPause.setBackgroundColor(Color.GRAY);
+            radioGroup.setVisibility(View.INVISIBLE);
         }
         else {
-            ButtonStartPause.setText("Start");
+            //ButtonStartPause.setText("Start");
             ButtonStartPause.setBackgroundColor(Color.GREEN);
+            ButtonStartPause.setText("Resume");
             EditTextInput.setVisibility(View.VISIBLE);
             ButtonSet.setVisibility(View.VISIBLE);
+            TextViewCountdown.setVisibility(View.INVISIBLE);
+            radioGroup.setVisibility(View.VISIBLE);
 
+            //if timer is over
             if (TimeLeftInMillis < 1000) {
                 ButtonStartPause.setVisibility(View.INVISIBLE);
+                TextViewCountdown.setVisibility(View.VISIBLE);
+                messageFragment();
             } else {
                 ButtonStartPause.setVisibility(View.VISIBLE);
+                ButtonStartPause.setText("Start");
             }
+
 
             if (TimeLeftInMillis < StartTimeInMillis) {
                 ButtonReset.setVisibility(View.VISIBLE);
                 ButtonReset.setBackgroundColor(Color.RED);
-                TextViewCountdown.setVisibility(View.INVISIBLE);
-                messageFragment();
+                radioGroup.setVisibility(View.VISIBLE);
             } else {
                 ButtonReset.setVisibility(View.INVISIBLE);
                 TextViewCountdown.setVisibility(View.VISIBLE);
