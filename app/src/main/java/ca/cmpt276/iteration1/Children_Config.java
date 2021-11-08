@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -21,6 +22,7 @@ public class Children_Config extends AppCompatActivity {
     private ArrayList<String> children_list;
     private ArrayAdapter<String> adapter;
     private ActivityResultLauncher<Intent> edit_name_launcher;
+    private TextView info;
 
     @Override
     protected void onResume() {
@@ -29,13 +31,17 @@ public class Children_Config extends AppCompatActivity {
     }
 
     private void refresh_children_list() {
+        info = findViewById(R.id.config_info);
         if(!children_list.isEmpty()){
+            info.setText("");
             adapter = new ArrayAdapter<>(
                     this,
                     R.layout.children_list,
                     children_list);
             ListView list = findViewById(R.id.children_listView);
             list.setAdapter(adapter);
+        } else {
+            info.setText(R.string.config_info);
         }
     }
 

@@ -50,4 +50,5 @@
     <string name="pause">Pause</string>
     <string name="reset">Reset</string>
     <string name="timer_back_button_description">timer back button</string>
+    <string name="config_info">Empty list, click button to add children!</string>
 </resources>
