@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ca.cmpt276.iteration1">
-    <uses-permission android:name="android.permission.VIBRATE"/>
+
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/parent_app_launcher_icon"
@@ -9,9 +11,8 @@
         android:roundIcon="@mipmap/parent_app_launcher_icon_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Iteration1">
-
-
-        <activity android:name=".Main_menu"
+        <activity
+            android:name=".Main_menu"
             android:exported="true"
             android:label="Parent App"
             android:screenOrientation="portrait"
@@ -22,19 +23,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".Coin_Flip_Activity"
+        <activity
+            android:name=".Coin_Flip_Activity"
             android:exported="true"
             android:label="Back"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
-
-        <activity android:name=".Coin_flip_history"
+        <activity
+            android:name=".Coin_flip_history"
             android:exported="true"
             android:label="Back"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
-
+        <activity
+            android:name=".Timeout_Timer"
+            android:exported="true"
+            android:label="Back"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".MainActivity3"
             android:exported="false" />
@@ -43,8 +49,8 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="false"
-            />
+            android:exported="false" />
+
 
         <meta-data
             android:name="preloaded_fonts"

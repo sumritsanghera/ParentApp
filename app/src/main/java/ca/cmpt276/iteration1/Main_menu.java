@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -43,6 +44,9 @@ public class Main_menu extends AppCompatActivity {
         setup_coin_flip_launcher();
         setup_coin_flip();
         setup_history_button();
+        setup_timer_button();
+
+
         Button configure_children = (Button) findViewById(R.id.config_button);
         configure_children.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,6 +59,7 @@ public class Main_menu extends AppCompatActivity {
             }
         });
     }
+
 
     private void setup_back_button() {
         ImageView back_button = findViewById(R.id.main_menu_back_button);
@@ -96,6 +101,19 @@ public class Main_menu extends AppCompatActivity {
             startActivity(intent);
         });
     }
+
+    private void setup_timer_button() {
+        Button button = (Button) findViewById(R.id.timer_button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Main_menu.this, Timeout_Timer.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
