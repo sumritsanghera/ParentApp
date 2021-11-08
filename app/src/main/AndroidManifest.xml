@@ -12,9 +12,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Iteration1">
         <activity
-            android:name=".Timeout_Timer"
-            android:exported="true" />
-        <activity
             android:name=".Main_menu"
             android:exported="true"
             android:label="Parent App"
@@ -39,6 +36,12 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
+            android:name=".Timeout_Timer"
+            android:exported="true"
+            android:label="Back"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
             android:name=".MainActivity3"
             android:exported="false" />
         <activity
@@ -47,6 +50,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="false" />
+
 
         <meta-data
             android:name="preloaded_fonts"

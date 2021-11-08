@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -44,6 +45,8 @@ public class Main_menu extends AppCompatActivity {
         setup_coin_flip();
         setup_history_button();
         setup_timer_button();
+
+
         Button configure_children = (Button) findViewById(R.id.config_button);
         configure_children.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,12 +103,17 @@ public class Main_menu extends AppCompatActivity {
     }
 
     private void setup_timer_button() {
-        Button button = findViewById(R.id.timer_button);
-        button.setOnClickListener(view -> {
-            Intent intent = new Intent(Main_menu.this, Timeout_Timer.class);
-            startActivity(intent);
+        Button button = (Button) findViewById(R.id.timer_button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Main_menu.this, Timeout_Timer.class);
+                startActivity(intent);
+            }
         });
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
