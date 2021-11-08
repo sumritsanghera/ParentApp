@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -71,13 +72,17 @@ public class Timeout_Timer extends AppCompatActivity {
         buttonStartPause = findViewById(R.id.button_start_pause);
         buttonReset = findViewById(R.id.button_reset);
 
-
+        setup_back_button();
         setUpSetButton();
         setUpStartPauseButton();
         setUpResetButton();
         createRadioButtons();
     }
 
+    private void setup_back_button() {
+        ImageView back_button = findViewById(R.id.timer_back_button);
+        back_button.setOnClickListener(view -> Timeout_Timer.super.onBackPressed());
+    }
 
 
     private void setUpStartPauseButton() {
