@@ -10,6 +10,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
+/*
+    Add Name Activity
+    -   Takes in the tapped name in configuration activity, and display in edit text.
+    -   User can edit text and save name or delete name
+    -   Upon clicking delete name, a dialog will appear to warn user.
+
+ */
+
 public class Add_Name_Activity extends AppCompatActivity {
 
     @Override

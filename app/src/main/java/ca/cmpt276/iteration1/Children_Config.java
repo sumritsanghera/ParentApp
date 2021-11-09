@@ -89,19 +89,18 @@ public class Children_Config extends AppCompatActivity {
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     Intent data = result.getData();
-                    assert data != null;
-
-                    boolean option = data.getBooleanExtra("DELETE_BUTTON",true);
-                    int index = data.getIntExtra("INDEX", -1);
-                    Log.e("Children_config index:",""+index);
-                    if(!option) {
-                        String name = data.getStringExtra("NAME");
-                        children_list.set(index,name);
-                    } else {
-                        children_list.remove(index);
+                    if(data != null){
+                        boolean option = data.getBooleanExtra("DELETE_BUTTON",true);
+                        int index = data.getIntExtra("INDEX", -1);
+                        Log.e("Children_config index:",""+index);
+                        if(!option) {
+                            String name = data.getStringExtra("NAME");
+                            children_list.set(index,name);
+                        } else {
+                            children_list.remove(index);
+                        }
                     }
 
-                    refresh_children_list();
                     if(!children_list.isEmpty())
                         refresh_children_list();
                     else {
