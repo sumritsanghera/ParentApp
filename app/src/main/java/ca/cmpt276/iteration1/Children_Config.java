@@ -3,6 +3,7 @@ package ca.cmpt276.iteration1;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -33,7 +34,7 @@ public class Children_Config extends AppCompatActivity {
     private void refresh_children_list() {
         info = findViewById(R.id.config_info);
         if(!children_list.isEmpty()){
-            info.setText("");
+            info.setText(R.string.config_info2);
             adapter = new ArrayAdapter<>(
                     this,
                     R.layout.children_list,
@@ -43,6 +44,7 @@ public class Children_Config extends AppCompatActivity {
         } else {
             info.setText(R.string.config_info);
         }
+        
     }
 
 
@@ -56,7 +58,7 @@ public class Children_Config extends AppCompatActivity {
         setup_edit_name_launcher();
         setup_children_list();
         setup_floating_button();
-//        setup_edit_list();
+        setup_edit_list();
     }
 
 
@@ -89,11 +91,25 @@ public class Children_Config extends AppCompatActivity {
                     Intent data = result.getData();
                     assert data != null;
 
-                    String name = data.getStringExtra("NAME");
-                    int index = data.getIntExtra("INDEX",-1);
+                    Boolean option = data.getBooleanExtra("DELETE_BUTTON",true);
+                    int index = data.getIntExtra("INDEX", -1);
+                    Log.e("Children_config index:",""+index);
+                    if(!option) {
+                        String name = data.getStringExtra("NAME");
+                        children_list.set(index,name);
+                    } else {
+                        children_list.remove(index);
+                    }
 
-                    children_list.set(index,name);
+                    refresh_children_list();
+                    if(!children_list.isEmpty())
+                        refresh_children_list();
+                    else {
+                        adapter.clear();
+                        info.setText(R.string.config_info);
+                    }
                     setResult();
+
                 });
     }
 
@@ -117,15 +133,15 @@ public class Children_Config extends AppCompatActivity {
         }
     }
 
-//    private void setup_edit_list() {
-//        ListView list = findViewById(R.id.children_listView);
-//        list.setOnItemClickListener((parent, viewClicked, position, id) -> {
-//            Intent intent = new Intent(Children_Config.this,Edit_Name_Activity.class);
-//            intent.putExtra("NAME", children_list.get(position));
-//            intent.putExtra("INDEX", position);
-//            edit_name_launcher.launch(intent);
-//        });
-//    }
+    private void setup_edit_list() {
+        ListView list = findViewById(R.id.children_listView);
+        list.setOnItemClickListener((parent, viewClicked, position, id) -> {
+            Intent intent = new Intent(Children_Config.this,Edit_Name_Activity.class);
+            intent.putExtra("NAME", children_list.get(position));
+            intent.putExtra("INDEX", position);
+            edit_name_launcher.launch(intent);
+        });
+    }
 
     private void setup_floating_button() {
         FloatingActionButton button = findViewById(R.id.add_child_floating_button);

@@ -69,6 +69,8 @@ public class Main_menu extends AppCompatActivity {
                                 Child new_child = new Child(name);
                                 children_manager.addChild(new_child);
                             }
+                        } else {
+                            children_manager.clear();
                         }
                     }
                 }
