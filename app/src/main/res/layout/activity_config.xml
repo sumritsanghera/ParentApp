@@ -54,7 +54,8 @@
             android:id="@+id/children_listView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp" />
+            android:layout_margin="10dp"
+            android:background="@drawable/config_children_list_background"/>
 
 
     </LinearLayout>
