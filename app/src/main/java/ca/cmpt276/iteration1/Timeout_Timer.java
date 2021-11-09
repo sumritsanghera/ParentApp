@@ -317,7 +317,6 @@ public class Timeout_Timer extends AppCompatActivity {
         isTimerRunning = prefs.getBoolean("timerRunning", false);
 
         updateCountDownText();
-        updateButtons();
 
         if (isTimerRunning) {
             endTime = prefs.getLong("endTime", 0);
