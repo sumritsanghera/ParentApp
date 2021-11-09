@@ -55,8 +55,8 @@ public class Children_Config extends AppCompatActivity {
         setup_add_name_launcher();
         setup_edit_name_launcher();
         setup_children_list();
+        setup_floating_button();
 //        setup_edit_list();
-//        setup_floating_button();
     }
 
 
@@ -127,11 +127,11 @@ public class Children_Config extends AppCompatActivity {
 //        });
 //    }
 
-//    private void setup_floating_button() {
-//        FloatingActionButton button = findViewById(R.id.add_child_floating_button);
-//        button.setOnClickListener(view -> {
-//            Intent intent = new Intent(Children_Config.this, Add_Name_Activity.class);
-//            add_name_launcher.launch(intent);
-//        });
-//    }
+    private void setup_floating_button() {
+        FloatingActionButton button = findViewById(R.id.add_child_floating_button);
+        button.setOnClickListener(view -> {
+            Intent intent = new Intent(Children_Config.this, Add_Name_Activity.class);
+            add_name_launcher.launch(intent);
+        });
+    }
 }

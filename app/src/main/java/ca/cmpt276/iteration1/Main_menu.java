@@ -112,6 +112,7 @@ public class Main_menu extends AppCompatActivity {
         Button button = findViewById(R.id.coin_flip_button);
         button.setOnClickListener(view -> {
             Intent intent = new Intent(Main_menu.this, Coin_Flip_Activity.class);
+            intent.putExtra("CHILDREN_LIST",children_manager.getChildren_list());
             coin_flip_launcher.launch(intent);
         });
     }

@@ -108,12 +108,11 @@ public class Coin_Flip_Activity extends AppCompatActivity {
         back_button.setOnClickListener(view -> Coin_Flip_Activity.super.onBackPressed());
     }
 
+    //INPUT: Arraylist of strings of names
     private void setup_children_list() {
-        children_list.add("Abel");
-        children_list.add("Betty");
-        children_list.add("Charles");
-        children_list.add("Dana");
-        children_list.add("None");
+        Intent data = getIntent();
+        children_list = data.getStringArrayListExtra("CHILDREN_LIST");
+        children_list.add("No name");
     }
 
     private void setup_child_option_spinner() {
