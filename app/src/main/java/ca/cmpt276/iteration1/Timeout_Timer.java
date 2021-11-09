@@ -11,9 +11,6 @@ import android.os.Bundle;
 import ca.cmpt276.iteration1.model.Timer_Message_Fragment;
 
 
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.CountDownTimer;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
@@ -30,18 +27,25 @@ import android.widget.Toast;
 
 import java.util.Locale;
 
+/*
+    Timeout_Timer
+    -   Displays Timer
+    -   Able to Start/Pause/Reset Timer with buttons
+    -   Includes Radio Buttons for Pre-set times, and able to input custom time
+    -   Fragment + Alarm at end of Timer
+
+    References:
+        https://beginnersbook.com/2019/04/java-int-to-long-conversion/
+        https://www.youtube.com/watch?v=MDuGwI6P-X8&list=PLrnPJCHvNZuB8wxqXCwKw2_NkyEmFwcSd&index=1
+        https://www.youtube.com/watch?v=LMYQS1dqfo8&list=PLrnPJCHvNZuB8wxqXCwKw2_NkyEmFwcSd&index=2
+        https://www.youtube.com/watch?v=lvibl8YJfGo&list=PLrnPJCHvNZuB8wxqXCwKw2_NkyEmFwcSd&index=3
+        https://www.youtube.com/watch?v=7dQJAkjNEjM&list=PLrnPJCHvNZuB8wxqXCwKw2_NkyEmFwcSd&index=4
+        https://www.youtube.com/watch?v=btk4229qI04 - videoBackground
+        https://stackoverflow.com/questions/2618182/how-to-play-ringtone-alarm-sound-in-android
+ */
+
 public class Timeout_Timer extends AppCompatActivity {
 
-    /*
-    References:
-            https://beginnersbook.com/2019/04/java-int-to-long-conversion/
-            https://www.youtube.com/watch?v=MDuGwI6P-X8&list=PLrnPJCHvNZuB8wxqXCwKw2_NkyEmFwcSd&index=1
-            https://www.youtube.com/watch?v=LMYQS1dqfo8&list=PLrnPJCHvNZuB8wxqXCwKw2_NkyEmFwcSd&index=2
-            https://www.youtube.com/watch?v=lvibl8YJfGo&list=PLrnPJCHvNZuB8wxqXCwKw2_NkyEmFwcSd&index=3
-            https://www.youtube.com/watch?v=7dQJAkjNEjM&list=PLrnPJCHvNZuB8wxqXCwKw2_NkyEmFwcSd&index=4
-            https://www.youtube.com/watch?v=btk4229qI04 - videoBackground
-            https://stackoverflow.com/questions/2618182/how-to-play-ringtone-alarm-sound-in-android
-    */
 
     private EditText editTextInput;
     private TextView textViewCountDown;
@@ -220,7 +224,6 @@ public class Timeout_Timer extends AppCompatActivity {
         buttonStartPause.setVisibility(View.INVISIBLE);
         textViewCountDown.setVisibility(View.VISIBLE);
         messageFragment();
-        playRingtone();
         vibrate();
     }
 
@@ -320,7 +323,7 @@ public class Timeout_Timer extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
 
-                    long buttonTimer = numMinute * 60000;
+                    long buttonTimer = (long) numMinute * 60000;
                     setTime(buttonTimer);
 
                     Toast.makeText(Timeout_Timer.this, numMinute + " Minute Timer",
@@ -328,15 +331,6 @@ public class Timeout_Timer extends AppCompatActivity {
                 }
             });
             radioGroup.addView(button);
-        }
-    }
-
-    private void playRingtone() {
-        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
-        r.play();
-        if (!r.isPlaying()) {
-            r.play();
         }
     }
 
