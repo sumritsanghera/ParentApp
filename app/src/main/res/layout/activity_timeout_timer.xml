@@ -16,7 +16,7 @@
         android:layout_alignParentBottom="true"
         tools:layout_editor_absoluteX="10dp"
         tools:layout_editor_absoluteY="10dp"
-        android:visibility="invisible" />
+        android:visibility="invisible"  />
 
     <LinearLayout
         android:id="@+id/timer_linear_layout"
