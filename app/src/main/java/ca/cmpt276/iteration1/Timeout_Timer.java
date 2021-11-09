@@ -1,6 +1,7 @@
 package ca.cmpt276.iteration1;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 
 import android.content.Context;
@@ -231,7 +232,7 @@ public class Timeout_Timer extends AppCompatActivity {
                 videoView.setVisibility(View.INVISIBLE);
                 buttonReset.setVisibility(View.INVISIBLE);
                 textViewCountDown.setVisibility(View.VISIBLE);
-                textViewCountDown.setTextColor(getResources().getColor(android.R.color.black));
+                textViewCountDown.setTextColor(ContextCompat.getColor(getApplicationContext(),R.color.black));
             }
         }
     }
@@ -240,7 +241,7 @@ public class Timeout_Timer extends AppCompatActivity {
         videoView.setVisibility(View.INVISIBLE);
         buttonStartPause.setVisibility(View.INVISIBLE);
         textViewCountDown.setVisibility(View.VISIBLE);
-        textViewCountDown.setTextColor(getResources().getColor(android.R.color.black));
+        textViewCountDown.setTextColor(ContextCompat.getColor(getApplicationContext(),R.color.black));
         messageFragment();
         vibrate();
     }
@@ -251,10 +252,9 @@ public class Timeout_Timer extends AppCompatActivity {
         editTextInput.setVisibility(View.VISIBLE);
         buttonSet.setVisibility(View.VISIBLE);
         textViewCountDown.setVisibility(View.VISIBLE);
-        textViewCountDown.setTextColor(getResources().getColor(android.R.color.black));
+        textViewCountDown.setTextColor(ContextCompat.getColor(getApplicationContext(),R.color.black));
         radioGroup.setVisibility(View.VISIBLE);
         videoView.setVisibility(View.INVISIBLE);
-
     }
 
     private void timerPausedActions() {
@@ -267,7 +267,7 @@ public class Timeout_Timer extends AppCompatActivity {
 
     private void timerRunningActions() {
         playVideo();
-        textViewCountDown.setTextColor(getResources().getColor(android.R.color.white));
+        textViewCountDown.setTextColor(ContextCompat.getColor(getApplicationContext(),R.color.white));
         textViewCountDown.setVisibility(View.VISIBLE);
         editTextInput.setVisibility(View.INVISIBLE);
         buttonSet.setVisibility(View.INVISIBLE);
