@@ -2,6 +2,12 @@ package ca.cmpt276.iteration1.model;
 
 import java.util.ArrayList;
 
+/*
+    Coin Flip class:
+    -   Stores name of picker, their coin flip time and the result of their flip.
+    -   To be added into the coin flip manager.
+ */
+
 public class Coin_Flip {
     private ArrayList<String> list;
 

@@ -33,12 +33,14 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 /*
-Description:
-    Press button to do a coin flip animation, with results randomized every time.
-    By default, child picks heads, and if the flip correspond to the child's guess
-        a tick mark will show. Else, clear mark will show.
-    Sound is played upon flipping a coin, and coin stopped.
-
+    Coin_Flip_Activity:
+        - Includes a spinner to choose picker's name
+        - Includes a radio group of heads/tails buttons for picker's guess
+        - Press button to do a coin flip animation, with results randomized every time.
+        - By default, child picks heads, and if the flip correspond to the child's guess
+            a tick mark will show in coin flip history. Else, clear mark will show.
+        - Sound is played upon flipping a coin, and coin stopped.
+        - Result displayed as a text written heads or tails or clarification.
 
 References:
 https://stackoverflow.com/questions/7785649/creating-a-3d-flip-animation-in-android-using-xml

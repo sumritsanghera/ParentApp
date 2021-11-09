@@ -17,6 +17,15 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
+/*
+    Children_Config
+    -   Displays list of added names.
+    -   Upon tap on a name, moves user to edit name activity for edit/delete.
+    -   Includes a floating action bar to add names to list.
+    -   List is then sent back to main menu as an ArrayList<String> for use in other
+            features such as coin flip and coin flip history.
+ */
+
 public class Children_Config extends AppCompatActivity {
 
     private ActivityResultLauncher<Intent> add_name_launcher;

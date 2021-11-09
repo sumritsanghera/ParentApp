@@ -21,11 +21,12 @@ import ca.cmpt276.iteration1.model.Coin_Flip_Manager;
 
 /*
        Main Menu class using layout: activity_main_menu
-       4 transparent buttons takes user to 4 different features of the app namely:
+       5 transparent buttons takes user to 5 different features of the app namely:
        -    Children configuration
        -    Coin flip history
        -    Coin flip
        -    Timer
+       -    About Us
 
  */
 

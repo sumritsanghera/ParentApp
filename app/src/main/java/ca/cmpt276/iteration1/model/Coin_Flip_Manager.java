@@ -2,6 +2,13 @@ package ca.cmpt276.iteration1.model;
 
 import java.util.ArrayList;
 
+/*
+    Coin Flip Manager:
+    -   Manages coin flips, saves ArrayList of ArrayList of Strings to store name/time/result for
+        each flip.
+    -   Creates static instance of class, is implemented in main menu.
+ */
+
 public class Coin_Flip_Manager {
     private ArrayList<ArrayList<String>> coin_flip_list;
     private static Coin_Flip_Manager instance;

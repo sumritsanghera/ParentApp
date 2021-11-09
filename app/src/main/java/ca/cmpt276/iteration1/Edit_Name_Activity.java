@@ -12,6 +12,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
+/*
+    Edit Name Activity:
+    -   Text input display tapped name
+    -   Edit name, then press 'save' or 'delete' to save or delete name.
+    -   Upon pressing back button, name will be reverted back to original.
+ */
+
 public class Edit_Name_Activity extends AppCompatActivity {
 
     private TextInputEditText text;
