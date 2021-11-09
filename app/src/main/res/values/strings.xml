@@ -49,6 +49,11 @@
     <string name="start">Start</string>
     <string name="pause">Pause</string>
     <string name="reset">Reset</string>
+    <string name="minutes"> Minutes</string>
+    <string name="minute_timer_selected"> Minute Timer Selected</string>
+    <string name="enter_time_error">Please Enter a Time</string>
+    <string name="field_empty">Field cannot be empty</string>
+    <string name="enter_positive_number">Please enter a positive number</string>
     <string name="timer_back_button_description">timer back button</string>
     <string name="config_info">Empty list, click button to add children!</string>
     <string name="config_info2">Tap a name to edit or delete</string>

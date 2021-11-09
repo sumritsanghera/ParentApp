@@ -1,19 +1,19 @@
 package ca.cmpt276.iteration1;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 
 import ca.cmpt276.iteration1.model.Timer_Message_Fragment;
 
 
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.CountDownTimer;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
@@ -27,22 +27,33 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Locale;
 
+/*
+    Timeout_Timer
+    -   Displays Timer
+    -   Able to Start/Pause/Reset Timer with buttons
+    -   Includes Radio Buttons for Pre-set times, and able to input custom time
+    -   Fragment + Alarm at end of Timer
+
+    References:
+        https://beginnersbook.com/2019/04/java-int-to-long-conversion/
+        https://www.youtube.com/watch?v=MDuGwI6P-X8&list=PLrnPJCHvNZuB8wxqXCwKw2_NkyEmFwcSd&index=1
+        https://www.youtube.com/watch?v=LMYQS1dqfo8&list=PLrnPJCHvNZuB8wxqXCwKw2_NkyEmFwcSd&index=2
+        https://www.youtube.com/watch?v=lvibl8YJfGo&list=PLrnPJCHvNZuB8wxqXCwKw2_NkyEmFwcSd&index=3
+        https://www.youtube.com/watch?v=7dQJAkjNEjM&list=PLrnPJCHvNZuB8wxqXCwKw2_NkyEmFwcSd&index=4
+        https://www.youtube.com/watch?v=btk4229qI04 - videoBackground
+        https://stackoverflow.com/questions/2618182/how-to-play-ringtone-alarm-sound-in-android
+ */
+
 public class Timeout_Timer extends AppCompatActivity {
 
-    /*
-    References:
-            https://beginnersbook.com/2019/04/java-int-to-long-conversion/
-            https://www.youtube.com/watch?v=MDuGwI6P-X8&list=PLrnPJCHvNZuB8wxqXCwKw2_NkyEmFwcSd&index=1
-            https://www.youtube.com/watch?v=LMYQS1dqfo8&list=PLrnPJCHvNZuB8wxqXCwKw2_NkyEmFwcSd&index=2
-            https://www.youtube.com/watch?v=lvibl8YJfGo&list=PLrnPJCHvNZuB8wxqXCwKw2_NkyEmFwcSd&index=3
-            https://www.youtube.com/watch?v=7dQJAkjNEjM&list=PLrnPJCHvNZuB8wxqXCwKw2_NkyEmFwcSd&index=4
-            https://www.youtube.com/watch?v=btk4229qI04 - videoBackground
-            https://stackoverflow.com/questions/2618182/how-to-play-ringtone-alarm-sound-in-android
-    */
 
+    private VideoView videoView;
     private EditText editTextInput;
     private TextView textViewCountDown;
     private RadioGroup radioGroup;
@@ -55,7 +66,7 @@ public class Timeout_Timer extends AppCompatActivity {
     private boolean isTimerRunning;
 
     private long startTimeInMillis;
-    private long timeLeftInMillis;
+    private long timeLeftInMillis = 1000;
     private long endTime;
 
 
@@ -65,6 +76,7 @@ public class Timeout_Timer extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeout_timer);
 
+        videoView = findViewById(R.id.videoView);
         editTextInput = findViewById(R.id.edit_text_input);
         textViewCountDown = findViewById(R.id.text_view_countdown);
 
@@ -89,11 +101,18 @@ public class Timeout_Timer extends AppCompatActivity {
         buttonStartPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String input = textViewCountDown.getText().toString();
+
+                if (input.equals("00:00")) {
+                    Snackbar.make(v,"Please Enter a Time",Snackbar.LENGTH_LONG).show();
+                    return;
+                }
                 if (isTimerRunning) {
                     pauseTimer();
                 } else {
                     startTimer();
                 }
+
             }
         });
     }
@@ -210,23 +229,36 @@ public class Timeout_Timer extends AppCompatActivity {
                 buttonReset.setBackgroundColor(Color.RED);
                 radioGroup.setVisibility(View.VISIBLE);
             } else {
+                videoView.setVisibility(View.INVISIBLE);
                 buttonReset.setVisibility(View.INVISIBLE);
                 textViewCountDown.setVisibility(View.VISIBLE);
+                textViewCountDown.setTextColor(ContextCompat.getColor(getApplicationContext(),R.color.black));
             }
         }
     }
 
     private void timerOverActions() {
+        videoView.setVisibility(View.INVISIBLE);
         buttonStartPause.setVisibility(View.INVISIBLE);
         textViewCountDown.setVisibility(View.VISIBLE);
+        textViewCountDown.setTextColor(ContextCompat.getColor(getApplicationContext(),R.color.black));
         messageFragment();
-        playRingtone();
         vibrate();
+    }
+
+    private void timerStartActions() {
+        buttonStartPause.setBackgroundColor(Color.GREEN);
+        buttonStartPause.setText("Start");
+        editTextInput.setVisibility(View.VISIBLE);
+        buttonSet.setVisibility(View.VISIBLE);
+        textViewCountDown.setVisibility(View.VISIBLE);
+        textViewCountDown.setTextColor(ContextCompat.getColor(getApplicationContext(),R.color.black));
+        radioGroup.setVisibility(View.VISIBLE);
+        videoView.setVisibility(View.INVISIBLE);
     }
 
     private void timerPausedActions() {
         buttonStartPause.setBackgroundColor(Color.GREEN);
-        buttonStartPause.setText("Resume");
         editTextInput.setVisibility(View.VISIBLE);
         buttonSet.setVisibility(View.VISIBLE);
         textViewCountDown.setVisibility(View.INVISIBLE);
@@ -234,6 +266,8 @@ public class Timeout_Timer extends AppCompatActivity {
     }
 
     private void timerRunningActions() {
+        playVideo();
+        textViewCountDown.setTextColor(ContextCompat.getColor(getApplicationContext(),R.color.white));
         textViewCountDown.setVisibility(View.VISIBLE);
         editTextInput.setVisibility(View.INVISIBLE);
         buttonSet.setVisibility(View.INVISIBLE);
@@ -288,11 +322,12 @@ public class Timeout_Timer extends AppCompatActivity {
             endTime = prefs.getLong("endTime", 0);
             timeLeftInMillis = endTime - System.currentTimeMillis();
 
+
             if (timeLeftInMillis < 0) {
                 timeLeftInMillis = 0;
                 isTimerRunning = false;
                 updateCountDownText();
-                updateButtons();
+                timerStartActions();
             } else {
                 startTimer();
             }
@@ -320,24 +355,30 @@ public class Timeout_Timer extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
 
-                    long buttonTimer = numMinute * 60000;
+                    long buttonTimer = (long) numMinute * 60000;
                     setTime(buttonTimer);
 
-                    Toast.makeText(Timeout_Timer.this, numMinute + " Minute Timer",
-                            Toast.LENGTH_SHORT).show();
+                    Snackbar.make(view,numMinute + " Minute Timer Selected",
+                            Snackbar.LENGTH_LONG).show();
+
                 }
             });
             radioGroup.addView(button);
         }
     }
 
-    private void playRingtone() {
-        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
-        r.play();
-        if (!r.isPlaying()) {
-            r.play();
-        }
+    private void playVideo() {
+        videoView.setVisibility(View.VISIBLE);
+        Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.video);
+        videoView.setVideoURI(uri);
+
+        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                mp.setLooping(true);
+            }
+        });
+        videoView.start();
     }
 
     private void vibrate() {
