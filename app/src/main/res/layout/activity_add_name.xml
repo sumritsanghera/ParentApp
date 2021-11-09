@@ -33,7 +33,7 @@
         android:layout_margin="10dp"
         android:fontFamily="@font/andada"
         android:padding="10dp"
-        android:text="Add Name"
+        android:text="@string/add_name_title"
         android:textColor="@color/dark_blue"
         android:textSize="30sp"
         app:layout_constraintStart_toStartOf="parent"

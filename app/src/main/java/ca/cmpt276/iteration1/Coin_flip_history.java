@@ -25,7 +25,6 @@ import java.util.ArrayList;
 
 public class Coin_flip_history extends AppCompatActivity {
 
-    private ArrayAdapter adapter;
     private ArrayList<ArrayList<String>> coin_list;
 
     @Override
@@ -53,7 +52,7 @@ public class Coin_flip_history extends AppCompatActivity {
             TextView info = findViewById(R.id.history_info);
             info.setText("");
         }
-        adapter = new Coin_Flip_Adapter();
+        ArrayAdapter adapter = new Coin_Flip_Adapter();
         ListView list = findViewById(R.id.coin_flip_list);
         list.setAdapter(adapter);
 

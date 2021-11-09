@@ -91,7 +91,7 @@ public class Children_Config extends AppCompatActivity {
                     Intent data = result.getData();
                     assert data != null;
 
-                    Boolean option = data.getBooleanExtra("DELETE_BUTTON",true);
+                    boolean option = data.getBooleanExtra("DELETE_BUTTON",true);
                     int index = data.getIntExtra("INDEX", -1);
                     Log.e("Children_config index:",""+index);
                     if(!option) {

@@ -27,7 +27,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/back_icon"
-                tools:ignore="ImageContrastCheck" />
+                tools:ignore="ImageContrastCheck"
+                android:contentDescription="@string/config_back_button_description" />
         </RelativeLayout>
 
         <TextView
@@ -35,7 +36,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/andada"
             android:padding="10dp"
-            android:text="Children Configuration"
+            android:text="@string/children_configuration_title"
             android:textColor="@color/dark_blue"
             android:textSize="30sp" />
 
@@ -69,7 +70,8 @@
         android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/add_icon" />
+        app:srcCompat="@drawable/add_icon"
+        android:contentDescription="@string/floating_action_button_in_config" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

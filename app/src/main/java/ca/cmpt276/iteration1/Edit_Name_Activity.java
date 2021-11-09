@@ -59,21 +59,19 @@ public class Edit_Name_Activity extends AppCompatActivity {
 
     private void setup_delete_button() {
         Button deleteBtn = findViewById(R.id.delete_button);
-        deleteBtn.setOnClickListener(view -> {
-            new AlertDialog.Builder(Edit_Name_Activity.this)
-                    .setTitle("Delete name")
-                    .setMessage("Are you sure to delete this entry?")
-                    .setPositiveButton("DELETE", (dialog, which) -> {
-                        Intent intent = new Intent();
-                        intent.putExtra("DELETE_BUTTON",true);
-                        intent.putExtra("INDEX", getIntent().getIntExtra("INDEX",-1));
-                        setResult(RESULT_OK,intent);
-                        finish();
-                    })
-                    .setNegativeButton("CANCEL", (dialogInterface, i) -> dialogInterface.cancel())
-                    .setIcon(getDrawable(R.drawable.delete_icon))
-                    .show();
-        });
+        deleteBtn.setOnClickListener(view -> new AlertDialog.Builder(Edit_Name_Activity.this)
+                .setTitle("Delete name")
+                .setMessage("Are you sure to delete this entry?")
+                .setPositiveButton("DELETE", (dialog, which) -> {
+                    Intent intent = new Intent();
+                    intent.putExtra("DELETE_BUTTON",true);
+                    intent.putExtra("INDEX", getIntent().getIntExtra("INDEX",-1));
+                    setResult(RESULT_OK,intent);
+                    finish();
+                })
+                .setNegativeButton("CANCEL", (dialogInterface, i) -> dialogInterface.cancel())
+                .setIcon(getDrawable(R.drawable.delete_icon))
+                .show());
     }
 
     @Override

@@ -30,7 +30,7 @@ public class Add_Name_Activity extends AppCompatActivity {
         Button button = findViewById(R.id.add_name_button);
         button.setOnClickListener(view -> {
             TextInputEditText input = findViewById(R.id.add_name_edit_text);
-            if(input.getText().equals("")){
+            if(String.valueOf(input.getText()).equals("")){
                 Snackbar.make(view,"Cannot add empty name",Snackbar.LENGTH_LONG).show();
             } else {
                 Intent intent = new Intent();

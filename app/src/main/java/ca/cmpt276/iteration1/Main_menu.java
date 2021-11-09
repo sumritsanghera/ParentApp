@@ -9,7 +9,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -130,12 +129,9 @@ public class Main_menu extends AppCompatActivity {
 
     private void setup_timer_button() {
         Button button = (Button) findViewById(R.id.timer_button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Main_menu.this, Timeout_Timer.class);
-                startActivity(intent);
-            }
+        button.setOnClickListener(view -> {
+            Intent intent = new Intent(Main_menu.this, Timeout_Timer.class);
+            startActivity(intent);
         });
     }
 

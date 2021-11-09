@@ -1,7 +1,5 @@
 package ca.cmpt276.iteration1.model;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class Coin_Flip {
