@@ -103,7 +103,7 @@ public class Timeout_Timer extends AppCompatActivity {
                 String input = textViewCountDown.getText().toString();
 
                 if (input.equals("00:00")) {
-                    Snackbar.make(v,"Please Enter a Time",Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(v,R.string.enter_time_error,Snackbar.LENGTH_LONG).show();
                     return;
                 }
                 if (isTimerRunning) {
@@ -132,14 +132,14 @@ public class Timeout_Timer extends AppCompatActivity {
             public void onClick(View view) {
                 String input = editTextInput.getText().toString();
                 if (input.length() == 0) {
-                    Toast.makeText(Timeout_Timer.this, "Field can't be empty",
+                    Toast.makeText(Timeout_Timer.this, R.string.field_empty,
                             Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 long millisInput = Long.parseLong(input) * 60000;
                 if (millisInput == 0) {
-                    Toast.makeText(Timeout_Timer.this, "Please enter a positive number",
+                    Toast.makeText(Timeout_Timer.this, R.string.enter_positive_number,
                             Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -220,7 +220,7 @@ public class Timeout_Timer extends AppCompatActivity {
             }
             else {
                 buttonStartPause.setVisibility(View.VISIBLE);
-                buttonStartPause.setText("Start");
+                buttonStartPause.setText(R.string.start);
             }
 
             if (timeLeftInMillis < startTimeInMillis) {
@@ -247,7 +247,7 @@ public class Timeout_Timer extends AppCompatActivity {
 
     private void timerStartActions() {
         buttonStartPause.setBackgroundColor(Color.GREEN);
-        buttonStartPause.setText("Start");
+        buttonStartPause.setText(R.string.start);
         editTextInput.setVisibility(View.VISIBLE);
         buttonSet.setVisibility(View.VISIBLE);
         textViewCountDown.setVisibility(View.VISIBLE);
@@ -273,7 +273,7 @@ public class Timeout_Timer extends AppCompatActivity {
         editTextInput.setVisibility(View.INVISIBLE);
         buttonSet.setVisibility(View.INVISIBLE);
         buttonReset.setVisibility(View.INVISIBLE);
-        buttonStartPause.setText("Pause");
+        buttonStartPause.setText(R.string.pause);
         buttonStartPause.setBackgroundColor(Color.GRAY);
         radioGroup.setVisibility(View.INVISIBLE);
     }
