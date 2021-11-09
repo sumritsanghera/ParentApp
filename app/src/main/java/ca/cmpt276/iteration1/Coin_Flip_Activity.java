@@ -7,7 +7,6 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,9 +22,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -36,12 +33,14 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 /*
-Description:
-    Press button to do a coin flip animation, with results randomized every time.
-    By default, child picks heads, and if the flip correspond to the child's guess
-        a tick mark will show. Else, clear mark will show.
-    Sound is played upon flipping a coin, and coin stopped.
-
+    Coin_Flip_Activity:
+        - Includes a spinner to choose picker's name
+        - Includes a radio group of heads/tails buttons for picker's guess
+        - Press button to do a coin flip animation, with results randomized every time.
+        - By default, child picks heads, and if the flip correspond to the child's guess
+            a tick mark will show in coin flip history. Else, clear mark will show.
+        - Sound is played upon flipping a coin, and coin stopped.
+        - Result displayed as a text written heads or tails or clarification.
 
 References:
 https://stackoverflow.com/questions/7785649/creating-a-3d-flip-animation-in-android-using-xml
@@ -108,17 +107,16 @@ public class Coin_Flip_Activity extends AppCompatActivity {
         back_button.setOnClickListener(view -> Coin_Flip_Activity.super.onBackPressed());
     }
 
+    //INPUT: Arraylist of strings of names
     private void setup_children_list() {
-        children_list.add("Abel");
-        children_list.add("Betty");
-        children_list.add("Charles");
-        children_list.add("Dana");
-        children_list.add("None");
+        Intent data = getIntent();
+        children_list = data.getStringArrayListExtra("CHILDREN_LIST");
+        children_list.add("No name");
     }
 
     private void setup_child_option_spinner() {
         spinner = findViewById(R.id.spinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(Coin_Flip_Activity.this,
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(Coin_Flip_Activity.this,
                 R.layout.spinner_list,
                 children_list
         );
@@ -128,9 +126,8 @@ public class Coin_Flip_Activity extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                String picker = (String) adapterView.getItemAtPosition(i);
 
-                child_name = picker;
+                child_name = (String) adapterView.getItemAtPosition(i);
 
                 save_last_picker(i);
             }
@@ -152,9 +149,9 @@ public class Coin_Flip_Activity extends AppCompatActivity {
 
     private void setup_radioButton_listener() {
         heads = findViewById(R.id.radioHeads);
-        heads.setOnClickListener(view -> { saveRadioOptions(true);});
+        heads.setOnClickListener(view -> saveRadioOptions(true));
         tails = findViewById(R.id.radioTails);
-        tails.setOnClickListener(view -> { saveRadioOptions(false);});
+        tails.setOnClickListener(view -> saveRadioOptions(false));
 
     }
 
@@ -162,11 +159,7 @@ public class Coin_Flip_Activity extends AppCompatActivity {
         SharedPreferences prefs = this.getSharedPreferences(PREFS_NAME,MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         //1 is Heads, 2 is Tails
-        if(radio_option){
-            editor.putBoolean(CHILD_GUESS, true);
-        } else{
-            editor.putBoolean(CHILD_GUESS, false);
-        }
+        editor.putBoolean(CHILD_GUESS, radio_option);
         editor.apply();
 
     }
@@ -272,15 +265,10 @@ public class Coin_Flip_Activity extends AppCompatActivity {
                     duration = 40;
                     duration_increment = 0;
                     if(cur_face)
-                        result.setText("Heads");
+                        result.setText(R.string.heads_text);
                     else
-                        result.setText("Tails");
-                    if(cur_face == guess) {
-                        setup_Result(true);
-                    }
-                    else {
-                        setup_Result(false);
-                    }
+                        result.setText(R.string.tails_text);
+                    setup_Result(cur_face == guess);
                 }
             }
         });
@@ -322,7 +310,7 @@ public class Coin_Flip_Activity extends AppCompatActivity {
 
                 //Delay the flip animation by 240ms to match with audio
                 final Handler handler = new Handler();
-                handler.postDelayed(() -> flip_animation(), 240);
+                handler.postDelayed(this::flip_animation, 240);
             }
         });
     }
