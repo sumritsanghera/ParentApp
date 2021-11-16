@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/back_icon"
                 tools:ignore="ImageContrastCheck"
-                android:contentDescription="@string/config_back_button_description" />
+                android:contentDescription="@string/back_button_image_description" />
         </RelativeLayout>
 
         <TextView

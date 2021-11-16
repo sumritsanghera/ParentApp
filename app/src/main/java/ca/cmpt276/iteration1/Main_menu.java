@@ -95,6 +95,11 @@ public class Main_menu extends AppCompatActivity {
                         boolean returned_result = data.getBooleanExtra("RESULT",false);
                         String time = data.getStringExtra("TIME");
 
+                        if(!picker.equals("No name")){
+                            int index = children_manager.getChildren_list().indexOf(picker);
+                            children_manager.update_queue(index); //child who last picked be moved to end of queue.
+                        }
+
                         Coin_Flip new_flip = new Coin_Flip(picker,returned_result,time);
                         coin_manager.add_flip(new_flip);
                     }
@@ -102,7 +107,7 @@ public class Main_menu extends AppCompatActivity {
     }
 
     private void setup_config_button() {
-        Button configure_children = (Button) findViewById(R.id.config_button);
+        Button configure_children = findViewById(R.id.config_button);
         configure_children.setOnClickListener(view -> {
             Intent intent = new Intent(Main_menu.this, Children_Config.class);
             intent.putExtra("CHILDREN_LIST", children_manager.getChildren_list());
@@ -113,7 +118,7 @@ public class Main_menu extends AppCompatActivity {
     private void setup_coin_flip() {
         Button button = findViewById(R.id.coin_flip_button);
         button.setOnClickListener(view -> {
-            Intent intent = new Intent(Main_menu.this, Coin_Flip_Activity.class);
+            Intent intent = new Intent(Main_menu.this, Coin_Flip_Config.class);
             intent.putExtra("CHILDREN_LIST",children_manager.getChildren_list());
             coin_flip_launcher.launch(intent);
         });
@@ -129,7 +134,7 @@ public class Main_menu extends AppCompatActivity {
     }
 
     private void setup_timer_button() {
-        Button button = (Button) findViewById(R.id.timer_button);
+        Button button = findViewById(R.id.timer_button);
         button.setOnClickListener(view -> {
             Intent intent = new Intent(Main_menu.this, Timeout_Timer.class);
             startActivity(intent);
