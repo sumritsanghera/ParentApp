@@ -26,7 +26,7 @@
     <string name="coin_flip_picker_text">Picker:</string>
     <string name="coin_flip_guess_text">Guess:</string>
     <string name="coin_flip_image_description">Coin Flip image</string>
-    <string name="main_back_button_image_description">Back Button image</string>
+    <string name="back_button_image_description">Back Button image</string>
     <string name="main_menu_title">Main Menu</string>
     <string name="main_config_text">Children Configuration</string>
     <string name="main_history_text">Coin Flip History</string>

@@ -12,7 +12,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginBottom="10dp"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -20,34 +21,41 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="?actionBarSize">
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
                     android:id="@+id/main_menu_back_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/back_icon"
-                    android:contentDescription="@string/main_back_button_image_description"
                     android:layout_centerVertical="true"
+                    android:background="@drawable/back_icon"
+                    android:contentDescription="@string/back_button_image_description"
                     tools:ignore="ImageContrastCheck" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
                     android:layout_marginStart="10dp"
-                    android:layout_toEndOf="@+id/main_menu_back_button"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
                     android:fontFamily="@font/andada"
                     android:padding="10dp"
                     android:text="@string/main_menu_title"
                     android:textColor="@color/dark_blue"
-                    android:textSize="30sp" />
+                    android:textSize="30sp"
+                    android:textStyle="bold" />
             </RelativeLayout>
 
 
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
+                android:layout_height="100dp"
                 android:layout_margin="5dp"
                 android:background="@color/darker_blue">
 
@@ -92,7 +100,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
+                android:layout_height="100dp"
                 android:layout_margin="5dp"
                 android:background="@color/yellow">
 
@@ -137,7 +145,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
+                android:layout_height="100dp"
                 android:layout_margin="5dp"
                 android:background="@color/dark_green">
 
@@ -182,7 +190,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
+                android:layout_height="100dp"
                 android:layout_margin="5dp"
                 android:background="@color/red">
 
@@ -227,7 +235,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
+                android:layout_height="100dp"
                 android:layout_margin="5dp"
                 android:background="@color/dark_blue">
 
@@ -273,9 +281,6 @@
 
         </LinearLayout>
     </ScrollView>
-
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
