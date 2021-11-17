@@ -12,6 +12,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Iteration1">
         <activity
+            android:name=".Picker_Queue_Activity"
+            android:exported="true"
+            android:label="Back"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".Coin_Flip_Config"
+            android:exported="true"
+            android:label="Back"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
             android:name=".Main_menu"
             android:exported="true"
             android:label="Parent App"
@@ -41,22 +53,18 @@
             android:label="Back"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
-
         <activity
             android:name=".Children_Config"
             android:exported="true"
             android:label="Back"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"
-            />
-
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".Add_Name_Activity"
             android:exported="true"
             android:label="Back"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
-
         <activity
             android:name=".Edit_Name_Activity"
             android:exported="true"

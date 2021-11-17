@@ -33,6 +33,13 @@ public class Children_Manager {
         children_list.clear();
     }
 
+    //child at index be moved to end of queue.
+    public void update_queue(int index){
+        String name = children_list.get(index);
+        children_list.remove(index);
+        children_list.add(name);
+    }
+
     public ArrayList<String> getChildren_list(){
         return children_list;
     }

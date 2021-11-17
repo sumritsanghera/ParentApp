@@ -54,13 +54,6 @@ https://stackoverflow.com/questions/3072173/how-to-call-a-method-after-a-delay-i
 
 public class Coin_Flip_Activity extends AppCompatActivity {
 
-
-    private ArrayList<String> children_list = new ArrayList<>();
-    private Spinner spinner;
-    private static final String LAST_PICKER = "Last Picker";
-    private static final String PREFS_NAME = "Coin_flip_prefs";
-    private static final String CHILD_GUESS = "Child's guess";
-
     private LocalDateTime time;
     private ImageView coin;
     private TextView info;
@@ -69,22 +62,17 @@ public class Coin_Flip_Activity extends AppCompatActivity {
     private int duration_increment = 0;
     private MediaPlayer player;
     private boolean guess;
-    private RadioGroup options;
-    private RadioButton heads;
-    private RadioButton tails;
     private String child_name;
 
     @Override
     protected void onResume() {
         super.onResume();
-        refresh_option();
         setup_spin_coin_image_click();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        refresh_option();
         setup_spin_coin_image_click();
     }
 
@@ -94,11 +82,7 @@ public class Coin_Flip_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_flip_coin);
 
         setup_back_button();
-        setup_children_list();
-        setup_child_option_spinner();
-        setup_radioButton_listener();
-
-        refresh_option();
+        setup_params();
         setup_spin_coin_image_click();
     }
 
@@ -107,77 +91,9 @@ public class Coin_Flip_Activity extends AppCompatActivity {
         back_button.setOnClickListener(view -> Coin_Flip_Activity.super.onBackPressed());
     }
 
-    //INPUT: Arraylist of strings of names
-    private void setup_children_list() {
-        Intent data = getIntent();
-        children_list = data.getStringArrayListExtra("CHILDREN_LIST");
-        children_list.add("No name");
-    }
-
-    private void setup_child_option_spinner() {
-        spinner = findViewById(R.id.spinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(Coin_Flip_Activity.this,
-                R.layout.spinner_list,
-                children_list
-        );
-        spinner.setAdapter(adapter);
-
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-                child_name = (String) adapterView.getItemAtPosition(i);
-
-                save_last_picker(i);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
-    }
-
-    private void save_last_picker(int i) {
-        SharedPreferences prefs = this.getSharedPreferences(PREFS_NAME,MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putInt(LAST_PICKER, i);
-        editor.apply();
-    }
-
-    private void setup_radioButton_listener() {
-        heads = findViewById(R.id.radioHeads);
-        heads.setOnClickListener(view -> saveRadioOptions(true));
-        tails = findViewById(R.id.radioTails);
-        tails.setOnClickListener(view -> saveRadioOptions(false));
-
-    }
-
-    private void saveRadioOptions(boolean radio_option){
-        SharedPreferences prefs = this.getSharedPreferences(PREFS_NAME,MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        //1 is Heads, 2 is Tails
-        editor.putBoolean(CHILD_GUESS, radio_option);
-        editor.apply();
-
-    }
-
-    public static int getLastPicker(Context context){
-        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME,MODE_PRIVATE);
-        return prefs.getInt(LAST_PICKER,0);
-    }
-
-    public static boolean getOption(Context context){
-        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME,MODE_PRIVATE);
-        return prefs.getBoolean(CHILD_GUESS,false);
-    }
-
-    private void refresh_option() {
-        spinner.setSelection(getLastPicker(this));
-        guess = Coin_Flip_Activity.getOption(this);
-        Log.e("Coin_Flip.java", "get option is: " + Coin_Flip_Activity.getOption(this));
+    private void setup_params() {
+        guess = getIntent().getBooleanExtra("GUESS",false);
+        child_name = getIntent().getStringExtra("CHILD_NAME");
     }
 
     /*
@@ -291,27 +207,16 @@ public class Coin_Flip_Activity extends AppCompatActivity {
         info = findViewById(R.id.coin_info);
         coin.setSoundEffectsEnabled(false);
         coin.setOnClickListener(view -> {
-            options = findViewById(R.id.radioGroup);
-            if (options.getCheckedRadioButtonId() == -1)
-            {
-                Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-                v.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
-                Snackbar.make(view,"Select Heads or Tails!",Snackbar.LENGTH_LONG).show();
-            } else {
-                time = LocalDateTime.now();
-                guess = heads.isChecked();
-                player = MediaPlayer.create(Coin_Flip_Activity.this,R.raw.coin_flip);
-                player.start();
-                info.setText("");
-                coin.setEnabled(false);
-                spinner.setEnabled(false);
-                heads.setEnabled(false);
-                tails.setEnabled(false);
 
-                //Delay the flip animation by 240ms to match with audio
-                final Handler handler = new Handler();
-                handler.postDelayed(this::flip_animation, 240);
-            }
+            time = LocalDateTime.now();
+            player = MediaPlayer.create(Coin_Flip_Activity.this,R.raw.coin_flip);
+            player.start();
+            info.setText("");
+            coin.setEnabled(false);
+
+            //Delay the flip animation by 240ms to match with audio
+            final Handler handler = new Handler();
+            handler.postDelayed(this::flip_animation, 240);
         });
     }
 
