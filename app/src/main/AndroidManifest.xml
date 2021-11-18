@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Iteration1">
         <activity
+            android:name=".Task_List_Activity"
+            android:exported="true"
+            android:label="Back"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
             android:name=".Picker_Queue_Activity"
             android:exported="true"
             android:label="Back"

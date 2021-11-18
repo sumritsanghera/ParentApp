@@ -7,7 +7,7 @@
     <string name="enter_the_name">Enter the name:</string>
     <string name="submit">Submit</string>
     <string name="which_name_you_want_to_edit">Which name you want to edit?</string>
-    <string name="cancel">cancel</string>
+    <string name="cancel">Cancel</string>
 
     <string name="coin_flip_child_info">(By default, child picked heads)</string>
     <string name="coin_spin_info">Tap coin to spin</string>
@@ -32,7 +32,7 @@
     <string name="main_history_text">Coin Flip History</string>
     <string name="main_coin_flip_text">Coin Flip</string>
     <string name="main_timer_text">Timer</string>
-    <string name="main_about_us_text">About Us</string>
+    <string name="main_help_text">Help</string>
     <string name="history_background">history background</string>
     <string name="coin_flip_background">coin flip backgroun</string>
     <string name="timer_background">timer background</string>
@@ -65,4 +65,15 @@
     <string name="add_name_title">Add Name</string>
     <string name="config_card_background_description">config card background</string>
     <string name="profile_description">Profile picture</string>
+    <string name="task_background_description">task card background</string>
+    <string name="main_tasks_title">Tasks</string>
+    <string name="task_icon">task icon</string>
+    <string name="task_activity_title">Task Manager</string>
+    <string name="task_item_description">Task description goes here</string>
+    <string name="task_item_name">Name of child goes here</string>
+    <string name="edit_icon">edit icon</string>
+    <string name="inflate_name">Name</string>
+    <string name="inflate_description">Task description goes here</string>
+    <string name="inflate_cancel">Cancel</string>
+    <string name="inflate_turn_done">Turn Done</string>
 </resources>

@@ -19,6 +19,8 @@ import ca.cmpt276.iteration1.model.Children_Manager;
 import ca.cmpt276.iteration1.model.Coin_Flip;
 import ca.cmpt276.iteration1.model.Coin_Flip_Manager;
 import ca.cmpt276.iteration1.model.Edited_Child;
+import ca.cmpt276.iteration1.model.Task;
+import ca.cmpt276.iteration1.model.Task_Manager;
 
 /*
        Main Menu class using layout: activity_main_menu
@@ -34,6 +36,7 @@ import ca.cmpt276.iteration1.model.Edited_Child;
 public class Main_menu extends AppCompatActivity {
     private Children_Manager children_manager;
     private Coin_Flip_Manager coin_manager;
+    private Task_Manager task_manager;
     private ActivityResultLauncher<Intent> coin_flip_launcher;
     private ActivityResultLauncher<Intent> config_launcher;
 
@@ -44,16 +47,31 @@ public class Main_menu extends AppCompatActivity {
 
         children_manager = Children_Manager.getInstance();
         coin_manager = Coin_Flip_Manager.getInstance();
+        task_manager = Task_Manager.getInstance();
 
+        setup_TEST_task();
 
-        setup_back_button();
         setup_coin_flip_launcher();
         setup_config_launcher();
         setup_config_button();
         setup_coin_flip();
+        setup_tasks();
         setup_history_button();
         setup_timer_button();
 
+    }
+
+    private void setup_TEST_task() {
+        Task task1 = new Task(children_manager.getChildren_list(),"drink milk");
+        Task task2 = new Task(children_manager.getChildren_list(),"play games");
+        Task task3 = new Task(children_manager.getChildren_list(),"choose fruit");
+        Task task4 = new Task(children_manager.getChildren_list(),"watch tv");
+        Task task5 = new Task(children_manager.getChildren_list(),"choose gummy");
+        task_manager.add_task(task1);
+        task_manager.add_task(task2);
+        task_manager.add_task(task3);
+        task_manager.add_task(task4);
+        task_manager.add_task(task5);
     }
 
     private void setup_config_launcher() {
@@ -81,11 +99,6 @@ public class Main_menu extends AppCompatActivity {
                     }
                 }
         );
-    }
-
-    private void setup_back_button() {
-        ImageView back_button = findViewById(R.id.main_menu_back_button);
-        back_button.setOnClickListener(view -> Main_menu.super.onBackPressed());
     }
 
     private void setup_coin_flip_launcher() {
@@ -135,6 +148,15 @@ public class Main_menu extends AppCompatActivity {
         button.setOnClickListener(view -> {
             Intent intent = new Intent(Main_menu.this, Coin_flip_history.class);
             intent.putExtra("COIN_FLIP_LIST", coin_manager.getCoin_flip_list());
+            startActivity(intent);
+        });
+    }
+
+    private void setup_tasks() {
+        Button button = findViewById(R.id.task_button);
+        button.setOnClickListener(view->{
+            Intent intent = new Intent(Main_menu.this, Task_List_Activity.class);
+            intent.putParcelableArrayListExtra("TASK_LIST", task_manager.getTask_list());
             startActivity(intent);
         });
     }
