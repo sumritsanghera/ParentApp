@@ -15,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
+import ca.cmpt276.iteration1.model.Coin_Flip;
+
 /*
     Coin Flip History:
     -   Lists all coin flips, with their flip time, picker's name and result.
@@ -25,7 +27,7 @@ import java.util.ArrayList;
 
 public class Coin_flip_history extends AppCompatActivity {
 
-    private ArrayList<ArrayList<String>> coin_list;
+    private ArrayList<Coin_Flip> coin_list;
 
     @Override
     protected void onResume() {
@@ -46,19 +48,18 @@ public class Coin_flip_history extends AppCompatActivity {
     }
 
     private void setup_history_list() {
-
-        coin_list = (ArrayList<ArrayList<String>>) getIntent().getSerializableExtra("COIN_FLIP_LIST");
+        coin_list = getIntent().getParcelableArrayListExtra("COIN_FLIP_LIST");
         if(!coin_list.isEmpty()) {
             TextView info = findViewById(R.id.history_info);
             info.setText("");
         }
-        ArrayAdapter adapter = new Coin_Flip_Adapter();
+        ArrayAdapter<Coin_Flip> adapter = new Coin_Flip_Adapter();
         ListView list = findViewById(R.id.coin_flip_list);
         list.setAdapter(adapter);
 
     }
 
-    private class Coin_Flip_Adapter extends ArrayAdapter<ArrayList<String>>{
+    private class Coin_Flip_Adapter extends ArrayAdapter<Coin_Flip>{
         public Coin_Flip_Adapter() {
             super(Coin_flip_history.this,
                     R.layout.flip_history_list,
@@ -75,20 +76,20 @@ public class Coin_flip_history extends AppCompatActivity {
             }
             //populate the list
             //get current coin_flip
-            ArrayList<String> current_coin_flip = coin_list.get(position);
+            Coin_Flip current_coin_flip = coin_list.get(position);
 
             //fill view
             ImageView imageView = itemView.findViewById(R.id.coin_flip_image);
-            if(Boolean.parseBoolean(current_coin_flip.get(1)))
-                imageView.setImageDrawable(getDrawable(R.drawable.check_mark));
+            if(current_coin_flip.getResult())
+                imageView.setImageResource(R.drawable.check_mark);
             else
-                imageView.setImageDrawable(getDrawable(R.drawable.clear_mark));
+                imageView.setImageResource(R.drawable.clear_mark);
 
-            TextView timeView = itemView.findViewById(R.id.date_time_flip);
-            timeView.setText(current_coin_flip.get(2));
+            TextView timeView = itemView.findViewById(R.id.history_time);
+            timeView.setText(current_coin_flip.getTime());
 
-            TextView nameView = itemView.findViewById(R.id.name);
-            nameView.setText(current_coin_flip.get(0));
+            TextView nameView = itemView.findViewById(R.id.history_name);
+            nameView.setText(current_coin_flip.getName());
 
             return itemView;
         }

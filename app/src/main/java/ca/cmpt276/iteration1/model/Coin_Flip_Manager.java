@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 
 public class Coin_Flip_Manager {
-    private ArrayList<ArrayList<String>> coin_flip_list;
+    private ArrayList<Coin_Flip> coin_flip_list;
     private static Coin_Flip_Manager instance;
     public Coin_Flip_Manager() {
 
@@ -25,10 +25,20 @@ public class Coin_Flip_Manager {
     }
 
     public void add_flip(Coin_Flip flip){
-        coin_flip_list.add(flip.get_list());
+        coin_flip_list.add(flip);
     }
 
-    public ArrayList<ArrayList<String>> getCoin_flip_list() {
+    public ArrayList<Coin_Flip> getCoin_flip_list() {
         return coin_flip_list;
+    }
+
+    public void update_child_name_after_edit(ArrayList<Edited_Child> name_list){
+        for(Coin_Flip flip : coin_flip_list){
+            for(Edited_Child child : name_list){
+                if(flip.getName().equals(child.getOriginal_name())){
+                    flip.setName(child.getNew_name());
+                }
+            }
+        }
     }
 }

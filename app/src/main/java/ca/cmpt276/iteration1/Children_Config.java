@@ -17,6 +17,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
+import ca.cmpt276.iteration1.model.Edited_Child;
+
 /*
     Children_Config
     -   Displays list of added names.
@@ -30,6 +32,7 @@ public class Children_Config extends AppCompatActivity {
 
     private ActivityResultLauncher<Intent> add_name_launcher;
     private ArrayList<String> children_list;
+    private ArrayList<Edited_Child> edited_children = new ArrayList<>();
     private ArrayAdapter<String> adapter;
     private ActivityResultLauncher<Intent> edit_name_launcher;
     private TextView info;
@@ -53,7 +56,7 @@ public class Children_Config extends AppCompatActivity {
         } else {
             info.setText(R.string.config_info);
         }
-        
+
     }
 
 
@@ -84,7 +87,6 @@ public class Children_Config extends AppCompatActivity {
                         Intent data = result.getData();
                         if (data != null) {
                             String name = data.getStringExtra("NAME");
-
                             children_list.add(name);
                             refresh_children_list();
                             setResult();
@@ -101,9 +103,10 @@ public class Children_Config extends AppCompatActivity {
                     if(data != null){
                         boolean option = data.getBooleanExtra("DELETE_BUTTON",true);
                         int index = data.getIntExtra("INDEX", -1);
-                        Log.e("Children_config index:",""+index);
                         if(!option) {
                             String name = data.getStringExtra("NAME");
+                            Edited_Child new_child = new Edited_Child(children_list.get(index),name);
+                            edited_children.add(new_child);
                             children_list.set(index,name);
                         } else {
                             children_list.remove(index);
@@ -124,6 +127,7 @@ public class Children_Config extends AppCompatActivity {
     private void setResult() {
         Intent intent = new Intent();
         intent.putExtra("CHILDREN_LIST",children_list);
+        intent.putExtra("EDITED_CHILDREN",edited_children);
         setResult(RESULT_OK,intent);
     }
 

@@ -22,6 +22,7 @@ import com.google.android.material.textfield.TextInputEditText;
 public class Edit_Name_Activity extends AppCompatActivity {
 
     private TextInputEditText text;
+    private String original_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,7 @@ public class Edit_Name_Activity extends AppCompatActivity {
         Intent data = getIntent();
         text = findViewById(R.id.edit_name_edit_text);
         text.setText(data.getStringExtra("NAME"));
+        original_name = data.getStringExtra("NAME");
     }
 
 
@@ -57,6 +59,7 @@ public class Edit_Name_Activity extends AppCompatActivity {
                 Intent intent = new Intent();
                 intent.putExtra("DELETE_BUTTON",false);
                 intent.putExtra("NAME", String.valueOf(text.getText()));
+                intent.putExtra("ORIGINAL_NAME",original_name);
                 intent.putExtra("INDEX", getIntent().getIntExtra("INDEX",-1));
                 setResult(RESULT_OK,intent);
                 finish();
@@ -77,7 +80,7 @@ public class Edit_Name_Activity extends AppCompatActivity {
                     finish();
                 })
                 .setNegativeButton("CANCEL", (dialogInterface, i) -> dialogInterface.cancel())
-                .setIcon(getDrawable(R.drawable.delete_icon))
+                .setIcon(R.drawable.delete_icon)
                 .show());
     }
 

@@ -18,6 +18,7 @@ import ca.cmpt276.iteration1.model.Child;
 import ca.cmpt276.iteration1.model.Children_Manager;
 import ca.cmpt276.iteration1.model.Coin_Flip;
 import ca.cmpt276.iteration1.model.Coin_Flip_Manager;
+import ca.cmpt276.iteration1.model.Edited_Child;
 
 /*
        Main Menu class using layout: activity_main_menu
@@ -64,11 +65,16 @@ public class Main_menu extends AppCompatActivity {
                         //if there's configured children
                         if(data != null){
                             ArrayList<String> children_list = data.getStringArrayListExtra("CHILDREN_LIST");
+                            ArrayList<Edited_Child> edited_children_list = data.getParcelableArrayListExtra("EDITED_CHILDREN");
                             children_manager.clear();
                             for (String name : children_list) {
                                 Child new_child = new Child(name);
                                 children_manager.addChild(new_child);
                             }
+                            if(!edited_children_list.isEmpty()){
+                                coin_manager.update_child_name_after_edit(edited_children_list);
+                            }
+
                         } else {
                             children_manager.clear();
                         }
