@@ -82,6 +82,8 @@ public class Main_menu extends AppCompatActivity {
                                 task_manager.update_child_name_after_edit(edited_children_list);
                             }
 
+                            //TODO: When child is added, it should also update the queues in tasks!
+
                         } else {
                             children_manager.clear();
                         }

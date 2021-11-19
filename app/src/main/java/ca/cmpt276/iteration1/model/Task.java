@@ -59,4 +59,12 @@ public class Task implements Parcelable {
             }
         }
     }
+
+    public void update_queue(){
+        if(queue.size() > 1){
+            Child first = queue.get(0);
+            queue.remove(0);
+            queue.add(first);
+        }
+    }
 }

@@ -170,7 +170,9 @@ public class Task_List_Activity extends AppCompatActivity {
             final View inflate_view = itemView;
 
             RelativeLayout inflate_item = itemView.findViewById(R.id.task_item_relative_layout);
-            inflate_item.setOnClickListener(view -> showPopupWindow(inflate_view,position));
+            inflate_item.setOnClickListener(view -> {
+                showPopupWindow(inflate_view,position,nameView);
+            });
 
             ImageView edit_button = itemView.findViewById(R.id.task_edit);
             edit_button.setOnClickListener(view -> Snackbar.make(view,"Edit the task!",Snackbar.LENGTH_LONG).show());
@@ -178,7 +180,7 @@ public class Task_List_Activity extends AppCompatActivity {
             return itemView;
         }
 
-        public void showPopupWindow(View view,int position) {
+        public void showPopupWindow(View view,int position,TextView task_name) {
 
             // inflate the layout of the popup window
             LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -225,9 +227,15 @@ public class Task_List_Activity extends AppCompatActivity {
 
             Button turn_over = popupView.findViewById(R.id.inflate_turn_button);
             turn_over.setOnClickListener(button_view -> {
-                Snackbar.make(view,"You clicked turn over!",Snackbar.LENGTH_LONG).show();
+                updateQueue(position,task_name);
                 popupWindow.dismiss();
             });
         }
+    }
+
+    private void updateQueue(int position, TextView name) {
+        Task task = task_list.get(position);
+        task.update_queue();
+        name.setText(task_list.get(position).getQueue().get(0).getName());
     }
 }
