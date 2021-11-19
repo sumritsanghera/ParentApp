@@ -7,8 +7,14 @@ package ca.cmpt276.iteration1.model;
 
 public class Child {
     private String name;
+    private String bitmap;
     public Child(String name) {
         this.name = name;
+    }
+
+    public Child(String name, String bitmap) {
+        this.name = name;
+        this.bitmap = bitmap;
     }
 
     public void setName(String name) {
@@ -17,5 +23,13 @@ public class Child {
 
     public String getName() {
         return name;
+    }
+
+    public void setBitmap(String bitmap) {
+        this.bitmap = bitmap;
+    }
+
+    public  String getBitmap() {
+        return bitmap;
     }
 }

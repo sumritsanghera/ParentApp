@@ -26,6 +26,7 @@ public class Add_Name_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_name);
 
+        ImageView profilePicture = findViewById(R.id.picker_profile);
         setup_back_button();
         setup_submit_button();
     }
@@ -49,4 +50,5 @@ public class Add_Name_Activity extends AppCompatActivity {
             }
         });
     }
+
 }
