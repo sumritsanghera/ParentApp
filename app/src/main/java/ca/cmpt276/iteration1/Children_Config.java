@@ -36,6 +36,8 @@ public class Children_Config extends AppCompatActivity {
 
     private ActivityResultLauncher<Intent> add_name_launcher;
     private ArrayList<Child> children_list;
+    private ArrayList<Child> added_children = new ArrayList<>();
+    private ArrayList<Child> removed_children = new ArrayList<>();
     private ArrayList<Edited_Child> edited_children = new ArrayList<>();
     private ArrayAdapter<Child> adapter;
     private ActivityResultLauncher<Intent> edit_name_launcher;
@@ -89,6 +91,7 @@ public class Children_Config extends AppCompatActivity {
                             String name = data.getStringExtra("NAME");
                             Child new_child = new Child(name);
                             children_list.add(new_child);
+                            added_children.add(new_child);
                             refresh_children_list();
                             setResult();
                         }
@@ -112,6 +115,7 @@ public class Children_Config extends AppCompatActivity {
                             edit_child.setName(name);
                             children_list.set(index,edit_child);
                         } else {
+                            removed_children.add(children_list.get(index));
                             children_list.remove(index);
                         }
                     }
@@ -130,6 +134,8 @@ public class Children_Config extends AppCompatActivity {
     private void setResult() {
         Intent intent = new Intent();
         intent.putExtra("CHILDREN_LIST",children_list);
+        intent.putExtra("ADDED_CHILDREN", added_children);
+        intent.putExtra("REMOVED_CHILDREN",removed_children);
         intent.putExtra("EDITED_CHILDREN",edited_children);
         setResult(RESULT_OK,intent);
     }

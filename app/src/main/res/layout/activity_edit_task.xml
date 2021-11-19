@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Add_Task_Activity">
+    tools:context=".Edit_Task_Activity">
 
     <RelativeLayout
-        android:id="@+id/add_task_tool_bar"
+        android:id="@+id/edit_task_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/add_task_back_button"
+            android:id="@+id/edit_task_back_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -25,7 +25,7 @@
             tools:ignore="ImageContrastCheck"/>
 
         <TextView
-            android:id="@+id/add_task_title"
+            android:id="@+id/edit_task_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -35,10 +35,10 @@
             android:layout_marginBottom="10dp"
             android:fontFamily="@font/andada"
             android:padding="10dp"
-            android:text="@string/add_task_title"
+            android:text="@string/edit_task_title"
             android:textColor="@color/dark_blue"
             android:textSize="30sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
     </RelativeLayout>
 
@@ -47,18 +47,17 @@
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@id/add_task_submit_button"
+        app:layout_constraintBottom_toTopOf="@id/edit_task_submit_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_task_tool_bar"
+        app:layout_constraintTop_toBottomOf="@+id/edit_task_toolbar"
         app:layout_constraintVertical_bias="0.0">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="150dp">
-
             <androidx.cardview.widget.CardView
-                android:id="@+id/add_task_card_view"
+                android:id="@+id/edit_task_card_view"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_centerHorizontal="true"
@@ -73,10 +72,11 @@
                     android:scaleType="centerCrop"
                     android:src="@drawable/default_profile"
                     android:contentDescription="@string/profile_description"/>
+
             </androidx.cardview.widget.CardView>
 
             <ImageView
-                android:id="@+id/add_task_edit"
+                android:id="@+id/edit_task_edit_profile"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_alignParentBottom="true"
@@ -84,14 +84,14 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="5dp"
                 android:layout_marginBottom="5dp"
-                android:layout_toEndOf="@+id/add_task_card_view"
-                android:src="@drawable/edit_icon"
-                android:contentDescription="@string/edit_icon"/>
+                android:layout_toEndOf="@+id/edit_task_card_view"
+                android:contentDescription="@string/edit_icon"
+                android:src="@drawable/edit_icon" />
 
         </RelativeLayout>
 
         <TextView
-            android:id="@+id/add_task_name"
+            android:id="@+id/edit_task_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -104,7 +104,7 @@
             android:text="@string/add_task_default_name"
             android:textColor="@color/light_purple"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -116,25 +116,22 @@
             app:boxStrokeColor="@color/darker_blue"
             app:endIconMode="clear_text"
             app:errorEnabled="true">
-
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/add_task_description"
+                android:id="@+id/edit_task_description"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
+                android:layout_height="wrap_content"/>
         </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
 
-
     <Button
-        android:id="@+id/add_task_submit_button"
+        android:id="@+id/edit_task_submit_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="10dp"
         android:background="@drawable/button_background"
-        android:text="@string/add_task_add_button"
+        android:text="@string/edit_task_submit_text"
         android:theme="@style/ButtonStyle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

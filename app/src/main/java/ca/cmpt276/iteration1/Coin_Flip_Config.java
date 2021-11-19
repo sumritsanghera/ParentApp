@@ -24,12 +24,13 @@ import ca.cmpt276.iteration1.model.Child;
 
 public class Coin_Flip_Config extends AppCompatActivity {
 
-    private ArrayList<Child> children_list = new ArrayList<>();
+    private ArrayList<Child> queue;
     private ActivityResultLauncher<Intent> picker_launcher;
     private ActivityResultLauncher<Intent> coin_flip_launcher;
     private TextView picker_name;
     private RadioGroup options;
     private Boolean guess; //true is heads, false is tails.
+    private int index_picker = 0; //index of picker in queue
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,13 +53,13 @@ public class Coin_Flip_Config extends AppCompatActivity {
 
     private void setup_children_list() {
         Intent data = getIntent();
-        children_list = data.getParcelableArrayListExtra("CHILDREN_LIST");
+        queue = data.getParcelableArrayListExtra("QUEUE");
         Child no_name = new Child("No name");
-        children_list.add(no_name);
+        queue.add(no_name);
     }
     private void setup_default_picker() {
         picker_name = findViewById(R.id.picker_name);
-        picker_name.setText(children_list.get(0).getName());
+        picker_name.setText(queue.get(0).getName());
     }
 
     private void setup_choose_picker_launcher() {
@@ -69,7 +70,8 @@ public class Coin_Flip_Config extends AppCompatActivity {
                         Intent data = result.getData();
                         int index = data.getIntExtra("CHILD_INDEX",0);
                         picker_name = findViewById(R.id.picker_name);
-                        picker_name.setText(children_list.get(index).getName());
+                        picker_name.setText(queue.get(index).getName());
+                        index_picker = index;
                     }
                 }
         );
@@ -85,6 +87,7 @@ public class Coin_Flip_Config extends AppCompatActivity {
                         intent.putExtra("PICKER", data.getStringExtra("PICKER"));
                         intent.putExtra("RESULT",data.getBooleanExtra("RESULT",false));
                         intent.putExtra("TIME", data.getStringExtra("TIME"));
+                        intent.putExtra("INDEX",index_picker);
                         setResult(RESULT_OK,intent);
                         finish();
                     }
@@ -101,7 +104,7 @@ public class Coin_Flip_Config extends AppCompatActivity {
         Button choose_picker = findViewById(R.id.picker_button);
         choose_picker.setOnClickListener(view -> {
             Intent intent = new Intent(Coin_Flip_Config.this, Picker_Queue_Activity.class);
-            intent.putExtra("CHILDREN_LIST", children_list);
+            intent.putExtra("CHILDREN_LIST", queue);
             picker_launcher.launch(intent);
         });
     }

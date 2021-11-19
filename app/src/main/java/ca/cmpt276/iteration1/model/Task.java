@@ -6,8 +6,8 @@ import android.os.Parcelable;
 import java.util.ArrayList;
 
 public class Task implements Parcelable {
-    ArrayList<Child> queue;
-    String task_description;
+    private ArrayList<Child> queue;
+    private String task_description;
 
     public Task(ArrayList<Child> queue, String task_description) {
         this.queue = queue;
@@ -46,18 +46,19 @@ public class Task implements Parcelable {
         return queue;
     }
 
+    public void setQueue(ArrayList<Child> queue) {
+        this.queue = queue;
+    }
+
     public String getTask_description() {
         return task_description;
     }
 
-    public void update_child_name_after_edit(ArrayList<Edited_Child> name_list){
-        for(Child task_child : queue){
-            for(Edited_Child child : name_list){
-                if(task_child.getName().equals(child.getOriginal_name())){
-                    task_child.setName(child.getNew_name());
-                }
-            }
+    public String getName(){
+        if(queue.size()>0){
+            return queue.get(0).getName();
         }
+        return "";
     }
 
     public void update_queue(){

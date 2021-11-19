@@ -31,7 +31,13 @@ public class Task_Manager {
 
     public void update_child_name_after_edit(ArrayList<Edited_Child> name_list){
         for(Task task : task_list){
-            task.update_child_name_after_edit(name_list);
+            for(Child queue_child : task.getQueue()){
+                for(Edited_Child edited_child : name_list){
+                    if(queue_child.getName().equals(edited_child.getOriginal_name())){
+                        queue_child.setName(edited_child.getNew_name());
+                    }
+                }
+            }
         }
     }
 }

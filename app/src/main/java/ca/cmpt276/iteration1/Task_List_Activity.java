@@ -38,6 +38,7 @@ public class Task_List_Activity extends AppCompatActivity {
     private ArrayList<Task> task_list;
     private ArrayList<Child> children_list;
     private ActivityResultLauncher<Intent> add_task_launcher;
+    private ActivityResultLauncher<Intent> edit_task_launcher;
     private ArrayAdapter<Task> adapter;
 
     @Override
@@ -72,6 +73,7 @@ public class Task_List_Activity extends AppCompatActivity {
         setup_getIntentData();
 
         setup_add_task_launcher();
+        setup_edit_task_launcher();
 
         setup_back_button();
         setup_task_list();
@@ -94,6 +96,24 @@ public class Task_List_Activity extends AppCompatActivity {
                             String description = data.getStringExtra("TASK_DESCRIPTION");
                             Task new_task = new Task(new_queue,description);
                             task_list.add(new_task);
+                            setReturnResult();
+                        }
+                    }
+                });
+    }
+
+    private void setup_edit_task_launcher() {
+        edit_task_launcher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if(result.getResultCode() == Activity.RESULT_OK) {
+                        Intent data = result.getData();
+                        if (data != null) {
+                            Task new_task = data.getParcelableExtra("NEW_TASK");
+                            int task_index = data.getIntExtra("TASK_INDEX",-1);
+                            assert task_index != -1;
+                            task_list.remove(task_index);
+                            task_list.add(task_index,new_task);
                             setReturnResult();
                         }
                     }
@@ -158,14 +178,16 @@ public class Task_List_Activity extends AppCompatActivity {
             //populate the list
             //get current coin_flip
 
+            Task current_task = task_list.get(position);
+
             //fill view
             TextView nameView = itemView.findViewById(R.id.task_name);
 
             if(task_list.get(position).getQueue().size() > 0) {
-                nameView.setText(task_list.get(position).getQueue().get(0).getName());
+                nameView.setText(current_task.getQueue().get(0).getName());
             }
             TextView descriptionView = itemView.findViewById(R.id.task_description);
-            descriptionView.setText(task_list.get(position).getTask_description());
+            descriptionView.setText(current_task.getTask_description());
 
             final View inflate_view = itemView;
 
@@ -175,7 +197,12 @@ public class Task_List_Activity extends AppCompatActivity {
             });
 
             ImageView edit_button = itemView.findViewById(R.id.task_edit);
-            edit_button.setOnClickListener(view -> Snackbar.make(view,"Edit the task!",Snackbar.LENGTH_LONG).show());
+            edit_button.setOnClickListener(view -> {
+                Intent intent = new Intent(Task_List_Activity.this,Edit_Task_Activity.class);
+                intent.putExtra("TASK_INDEX",position);
+                intent.putExtra("TASK",current_task);
+                edit_task_launcher.launch(intent);
+            });
 
             return itemView;
         }
