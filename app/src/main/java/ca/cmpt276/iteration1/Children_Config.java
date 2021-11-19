@@ -50,7 +50,7 @@ public class Children_Config extends AppCompatActivity {
     private void refresh_children_list() {
         info = findViewById(R.id.config_info);
         if(!children_list.isEmpty()){
-            info.setText(R.string.config_info2);
+            info.setText("");
             adapter = new Children_Config_Adapter();
             ListView list = findViewById(R.id.children_listView);
             list.setAdapter(adapter);

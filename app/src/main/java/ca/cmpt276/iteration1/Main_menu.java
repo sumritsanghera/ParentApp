@@ -8,9 +8,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import ca.cmpt276.iteration1.model.Child;
@@ -38,6 +40,7 @@ public class Main_menu extends AppCompatActivity {
     private Task_Manager task_manager;
     private ActivityResultLauncher<Intent> coin_flip_launcher;
     private ActivityResultLauncher<Intent> config_launcher;
+    private ActivityResultLauncher<Intent> task_launcher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,29 +51,16 @@ public class Main_menu extends AppCompatActivity {
         coin_manager = Coin_Flip_Manager.getInstance();
         task_manager = Task_Manager.getInstance();
 
-        setup_TEST_task();
-
         setup_coin_flip_launcher();
         setup_config_launcher();
+        setup_task_launcher();
+
         setup_config_button();
         setup_coin_flip();
         setup_tasks();
         setup_history_button();
         setup_timer_button();
 
-    }
-
-    private void setup_TEST_task() {
-        Task task1 = new Task(children_manager.getChildren_list(),"drink milk");
-        Task task2 = new Task(children_manager.getChildren_list(),"play games");
-        Task task3 = new Task(children_manager.getChildren_list(),"choose fruit");
-        Task task4 = new Task(children_manager.getChildren_list(),"watch tv");
-        Task task5 = new Task(children_manager.getChildren_list(),"choose gummy");
-        task_manager.add_task(task1);
-        task_manager.add_task(task2);
-        task_manager.add_task(task3);
-        task_manager.add_task(task4);
-        task_manager.add_task(task5);
     }
 
     private void setup_config_launcher() {
@@ -89,6 +79,7 @@ public class Main_menu extends AppCompatActivity {
                             }
                             if(!edited_children_list.isEmpty()){
                                 coin_manager.update_child_name_after_edit(edited_children_list);
+                                task_manager.update_child_name_after_edit(edited_children_list);
                             }
 
                         } else {
@@ -106,25 +97,44 @@ public class Main_menu extends AppCompatActivity {
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         // There are no request codes
                         Intent data = result.getData();
-                        assert data != null;
+                        if(data!=null) {
+                            String picker = data.getStringExtra("PICKER");
+                            boolean returned_result = data.getBooleanExtra("RESULT", false);
+                            String time = data.getStringExtra("TIME");
 
-                        String picker = data.getStringExtra("PICKER");
-                        boolean returned_result = data.getBooleanExtra("RESULT",false);
-                        String time = data.getStringExtra("TIME");
-
-                        if(!picker.equals("No name")){
-                            int index = 0;
-                            ArrayList<Child> children_list = children_manager.getChildren_list();
-                            for(int i = 0; i < children_list.size(); i++){
-                                if(children_list.get(i).getName().equals(picker)) {
-                                    index = i;
+                            if (!picker.equals("No name")) {
+                                int index = 0;
+                                ArrayList<Child> children_list = children_manager.getChildren_list();
+                                for (int i = 0; i < children_list.size(); i++) {
+                                    if (children_list.get(i).getName().equals(picker)) {
+                                        index = i;
+                                    }
                                 }
+                                children_manager.update_queue(index); //child who last picked be moved to end of queue.
                             }
-                            children_manager.update_queue(index); //child who last picked be moved to end of queue.
-                        }
 
-                        Coin_Flip new_flip = new Coin_Flip(picker,returned_result,time);
-                        coin_manager.add_flip(new_flip);
+                            Coin_Flip new_flip = new Coin_Flip(picker, returned_result, time);
+                            coin_manager.add_flip(new_flip);
+                        }
+                    }
+                });
+    }
+
+    private void setup_task_launcher() {
+        task_launcher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        // There are no request codes
+                        Intent data = result.getData();
+                        if(data!=null){
+                            ArrayList<Task> task_list = data.getParcelableArrayListExtra("TASK_LIST");
+                            Log.e("MAIN MENU", task_list.get(0).getTask_description());
+                            task_manager.clear();
+                            for(Task task : task_list){
+                                task_manager.add_task(task);
+                            }
+                        }
                     }
                 });
     }
@@ -162,7 +172,8 @@ public class Main_menu extends AppCompatActivity {
             Intent intent = new Intent(Main_menu.this, Task_List_Activity.class);
             intent.putParcelableArrayListExtra("CHILDREN_LIST",children_manager.getChildren_list());
             intent.putParcelableArrayListExtra("TASK_LIST", task_manager.getTask_list());
-            startActivity(intent);
+
+            task_launcher.launch(intent);
         });
     }
 

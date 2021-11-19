@@ -5,6 +5,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -37,6 +38,25 @@ public class Task_List_Activity extends AppCompatActivity {
     private ArrayList<Task> task_list;
     private ArrayList<Child> children_list;
     private ActivityResultLauncher<Intent> add_task_launcher;
+    private ArrayAdapter<Task> adapter;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refreshTaskList();
+    }
+
+    private void refreshTaskList() {
+        TextView info = findViewById(R.id.task_list_info_text);
+        if(!task_list.isEmpty()){
+            info.setText("");
+            adapter = new Task_List_Activity.Task_List_Adapter();
+            ListView list = findViewById(R.id.task_list);
+            list.setAdapter(adapter);
+        } else {
+            info.setText(R.string.task_list_info_1);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +74,7 @@ public class Task_List_Activity extends AppCompatActivity {
         setup_add_task_launcher();
 
         setup_back_button();
-        setup_get_task_list();
+        setup_task_list();
         setup_add_task_floating_button();
     }
 
@@ -70,10 +90,20 @@ public class Task_List_Activity extends AppCompatActivity {
                     if(result.getResultCode() == Activity.RESULT_OK) {
                         Intent data = result.getData();
                         if (data != null) {
-
+                            ArrayList<Child> new_queue = data.getParcelableArrayListExtra("QUEUE");
+                            String description = data.getStringExtra("TASK_DESCRIPTION");
+                            Task new_task = new Task(new_queue,description);
+                            task_list.add(new_task);
+                            setReturnResult();
                         }
                     }
                 });
+    }
+
+    private void setReturnResult(){
+        Intent intent = new Intent();
+        intent.putExtra("TASK_LIST",task_list);
+        setResult(RESULT_OK,intent);
     }
 
     private void setup_back_button() {
@@ -81,10 +111,15 @@ public class Task_List_Activity extends AppCompatActivity {
         back_button.setOnClickListener(view -> Task_List_Activity.super.onBackPressed());
     }
 
-    private void setup_get_task_list() {
-        ArrayAdapter<Task> adapter = new Task_List_Adapter();
-        ListView list = findViewById(R.id.task_listView);
-        list.setAdapter(adapter);
+    private void setup_task_list() {
+        if (!task_list.isEmpty()) {
+            TextView text = findViewById(R.id.task_list_info_text);
+            text.setText("");
+
+            adapter = new Task_List_Adapter();
+            ListView list = findViewById(R.id.task_list);
+            list.setAdapter(adapter);
+        }
     }
 
     private void setup_add_task_floating_button() {
@@ -135,7 +170,7 @@ public class Task_List_Activity extends AppCompatActivity {
             final View inflate_view = itemView;
 
             RelativeLayout inflate_item = itemView.findViewById(R.id.task_item_relative_layout);
-            inflate_item.setOnClickListener(view -> showPopupWindow(inflate_view));
+            inflate_item.setOnClickListener(view -> showPopupWindow(inflate_view,position));
 
             ImageView edit_button = itemView.findViewById(R.id.task_edit);
             edit_button.setOnClickListener(view -> Snackbar.make(view,"Edit the task!",Snackbar.LENGTH_LONG).show());
@@ -143,7 +178,7 @@ public class Task_List_Activity extends AppCompatActivity {
             return itemView;
         }
 
-        public void showPopupWindow(View view) {
+        public void showPopupWindow(View view,int position) {
 
             // inflate the layout of the popup window
             LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -152,12 +187,24 @@ public class Task_List_Activity extends AppCompatActivity {
             // create the popup window
             DisplayMetrics displayMetrics = new DisplayMetrics();
             getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-            int height = displayMetrics.heightPixels;
-            int width = displayMetrics.widthPixels;
-            height -= 400;
-            width -= 200;
-            final PopupWindow popupWindow = new PopupWindow(popupView, width, height, true);
+            int screen_height = displayMetrics.heightPixels;
+            int screen_width = displayMetrics.widthPixels;
+            int popup_height = (int) (screen_height * 0.7);
+            int popup_width = (int) (screen_width * 0.7);
+            final PopupWindow popupWindow = new PopupWindow(popupView, popup_width, popup_height, true);
             popupWindow.setAnimationStyle(R.style.popup_animation);
+
+            CardView profile = popupView.findViewById(R.id.inflate_card_view);
+            profile.getLayoutParams().width = (int) (screen_width * 0.3);
+            profile.getLayoutParams().height = profile.getLayoutParams().width;
+            profile.setRadius(profile.getLayoutParams().width /(float)2);
+
+            TextView name = popupView.findViewById(R.id.inflate_text);
+            name.setText(task_list.get(position).getQueue().get(0).getName());
+
+            TextView description = popupView.findViewById(R.id.inflate_task_name);
+            description.setText(task_list.get(position).getTask_description());
+
             // show the popup window
             popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
             popupWindow.setOutsideTouchable(true);
@@ -174,10 +221,7 @@ public class Task_List_Activity extends AppCompatActivity {
             });
 
             Button cancel = popupView.findViewById(R.id.inflate_cancel_button);
-            cancel.setOnClickListener(button_view -> {
-                Snackbar.make(view,"You clicked cancel!",Snackbar.LENGTH_LONG).show();
-                popupWindow.dismiss();
-            });
+            cancel.setOnClickListener(button_view -> popupWindow.dismiss());
 
             Button turn_over = popupView.findViewById(R.id.inflate_turn_button);
             turn_over.setOnClickListener(button_view -> {

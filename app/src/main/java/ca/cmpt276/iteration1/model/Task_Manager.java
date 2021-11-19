@@ -21,6 +21,10 @@ public class Task_Manager {
         task_list.add(task);
     }
 
+    public void clear(){
+        task_list.clear();
+    }
+
     public ArrayList<Task> getTask_list() {
         return task_list;
     }
