@@ -21,9 +21,11 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
+import ca.cmpt276.iteration1.model.Child;
+
 public class Picker_Queue_Activity extends AppCompatActivity {
 
-    ArrayList<String> children_list;
+    ArrayList<Child> children_list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +33,13 @@ public class Picker_Queue_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_picker_queue);
         setup_back_button();
 
+        setup_setIntentData();
+
         setup_queue_listView();
+    }
+
+    private void setup_setIntentData() {
+        children_list = getIntent().getParcelableArrayListExtra("CHILDREN_LIST");
     }
 
     private void setup_back_button() {
@@ -39,17 +47,12 @@ public class Picker_Queue_Activity extends AppCompatActivity {
         back_button.setOnClickListener(view -> Picker_Queue_Activity.super.onBackPressed());
     }
     private void setup_queue_listView() {
-        Intent data = getIntent();
-        children_list = data.getStringArrayListExtra("CHILDREN_LIST");
-        Log.e("QUEUE", children_list.get(0));
-
-        ArrayAdapter adapter = new Picker_Queue_Adapter();
+        ArrayAdapter<Child> adapter = new Picker_Queue_Adapter();
         ListView list = findViewById(R.id.choose_picker_list);
         list.setAdapter(adapter);
-
     }
 
-    private class Picker_Queue_Adapter extends ArrayAdapter<String> {
+    private class Picker_Queue_Adapter extends ArrayAdapter<Child> {
         public Picker_Queue_Adapter() {
             super(Picker_Queue_Activity.this,
                     R.layout.queue_item,
@@ -69,10 +72,10 @@ public class Picker_Queue_Activity extends AppCompatActivity {
 
             //fill view
             ImageView imageView = itemView.findViewById(R.id.queue_profile);
-            imageView.setImageDrawable(getDrawable(R.drawable.default_profile));
+            imageView.setImageResource(R.drawable.default_profile);
 
             TextView nameView = itemView.findViewById(R.id.queue_name);
-            nameView.setText(children_list.get(position));
+            nameView.setText(children_list.get(position).getName());
 
             itemView.setOnClickListener(view -> {
                 for (int i = 0; i < parent.getChildCount(); i++) {

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class Children_Manager {
     private static Children_Manager instance;
-    private ArrayList<String> children_list;
+    private ArrayList<Child> children_list;
     public Children_Manager() {
         this.children_list = new ArrayList<>();
     }
@@ -26,7 +26,7 @@ public class Children_Manager {
     }
 
     public void addChild(Child child){
-        children_list.add(child.getName());
+        children_list.add(child);
     }
 
     public void clear(){
@@ -35,12 +35,12 @@ public class Children_Manager {
 
     //child at index be moved to end of queue.
     public void update_queue(int index){
-        String name = children_list.get(index);
+        Child given_child = children_list.get(index);
         children_list.remove(index);
-        children_list.add(name);
+        children_list.add(given_child);
     }
 
-    public ArrayList<String> getChildren_list(){
+    public ArrayList<Child> getChildren_list(){
         return children_list;
     }
 }

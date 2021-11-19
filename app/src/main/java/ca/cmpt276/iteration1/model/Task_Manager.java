@@ -24,4 +24,10 @@ public class Task_Manager {
     public ArrayList<Task> getTask_list() {
         return task_list;
     }
+
+    public void update_child_name_after_edit(ArrayList<Edited_Child> name_list){
+        for(Task task : task_list){
+            task.update_child_name_after_edit(name_list);
+        }
+    }
 }

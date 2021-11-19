@@ -76,4 +76,5 @@
     <string name="inflate_description">Task description goes here</string>
     <string name="inflate_cancel">Cancel</string>
     <string name="inflate_turn_done">Turn Done</string>
+    <string name="add_task_title">Add Task</string>
 </resources>

@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Button;
-import android.widget.ImageView;
 
 import java.util.ArrayList;
 
@@ -82,11 +81,10 @@ public class Main_menu extends AppCompatActivity {
                         Intent data = result.getData();
                         //if there's configured children
                         if(data != null){
-                            ArrayList<String> children_list = data.getStringArrayListExtra("CHILDREN_LIST");
+                            ArrayList<Child> children_list = data.getParcelableArrayListExtra("CHILDREN_LIST");
                             ArrayList<Edited_Child> edited_children_list = data.getParcelableArrayListExtra("EDITED_CHILDREN");
                             children_manager.clear();
-                            for (String name : children_list) {
-                                Child new_child = new Child(name);
+                            for (Child new_child : children_list) {
                                 children_manager.addChild(new_child);
                             }
                             if(!edited_children_list.isEmpty()){
@@ -115,7 +113,13 @@ public class Main_menu extends AppCompatActivity {
                         String time = data.getStringExtra("TIME");
 
                         if(!picker.equals("No name")){
-                            int index = children_manager.getChildren_list().indexOf(picker);
+                            int index = 0;
+                            ArrayList<Child> children_list = children_manager.getChildren_list();
+                            for(int i = 0; i < children_list.size(); i++){
+                                if(children_list.get(i).getName().equals(picker)) {
+                                    index = i;
+                                }
+                            }
                             children_manager.update_queue(index); //child who last picked be moved to end of queue.
                         }
 
@@ -156,6 +160,7 @@ public class Main_menu extends AppCompatActivity {
         Button button = findViewById(R.id.task_button);
         button.setOnClickListener(view->{
             Intent intent = new Intent(Main_menu.this, Task_List_Activity.class);
+            intent.putParcelableArrayListExtra("CHILDREN_LIST",children_manager.getChildren_list());
             intent.putParcelableArrayListExtra("TASK_LIST", task_manager.getTask_list());
             startActivity(intent);
         });

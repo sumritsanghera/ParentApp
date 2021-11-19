@@ -20,9 +20,11 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
+import ca.cmpt276.iteration1.model.Child;
+
 public class Coin_Flip_Config extends AppCompatActivity {
 
-    private ArrayList<String> children_list = new ArrayList<>();
+    private ArrayList<Child> children_list = new ArrayList<>();
     private ActivityResultLauncher<Intent> picker_launcher;
     private ActivityResultLauncher<Intent> coin_flip_launcher;
     private TextView picker_name;
@@ -50,12 +52,13 @@ public class Coin_Flip_Config extends AppCompatActivity {
 
     private void setup_children_list() {
         Intent data = getIntent();
-        children_list = data.getStringArrayListExtra("CHILDREN_LIST");
-        children_list.add("No name");
+        children_list = data.getParcelableArrayListExtra("CHILDREN_LIST");
+        Child no_name = new Child("No name");
+        children_list.add(no_name);
     }
     private void setup_default_picker() {
         picker_name = findViewById(R.id.picker_name);
-        picker_name.setText(children_list.get(0));
+        picker_name.setText(children_list.get(0).getName());
     }
 
     private void setup_choose_picker_launcher() {
@@ -66,7 +69,7 @@ public class Coin_Flip_Config extends AppCompatActivity {
                         Intent data = result.getData();
                         int index = data.getIntExtra("CHILD_INDEX",0);
                         picker_name = findViewById(R.id.picker_name);
-                        picker_name.setText(children_list.get(index));
+                        picker_name.setText(children_list.get(index).getName());
                     }
                 }
         );

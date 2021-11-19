@@ -1,12 +1,15 @@
 package ca.cmpt276.iteration1;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.transition.Explode;
-import android.transition.Slide;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -17,20 +20,23 @@ import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
+import ca.cmpt276.iteration1.model.Child;
 import ca.cmpt276.iteration1.model.Task;
 
 public class Task_List_Activity extends AppCompatActivity {
-    ArrayList<Task> task_list;
+    private ArrayList<Task> task_list;
+    private ArrayList<Child> children_list;
+    private ActivityResultLauncher<Intent> add_task_launcher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +49,31 @@ public class Task_List_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_list);
 
+        setup_getIntentData();
+
+        setup_add_task_launcher();
+
         setup_back_button();
         setup_get_task_list();
+        setup_add_task_floating_button();
+    }
+
+    private void setup_getIntentData() {
+        task_list = getIntent().getParcelableArrayListExtra("TASK_LIST");
+        children_list = getIntent().getParcelableArrayListExtra("CHILDREN_LIST");
+    }
+
+    private void setup_add_task_launcher() {
+        add_task_launcher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if(result.getResultCode() == Activity.RESULT_OK) {
+                        Intent data = result.getData();
+                        if (data != null) {
+
+                        }
+                    }
+                });
     }
 
     private void setup_back_button() {
@@ -53,12 +82,24 @@ public class Task_List_Activity extends AppCompatActivity {
     }
 
     private void setup_get_task_list() {
-        task_list = getIntent().getParcelableArrayListExtra("TASK_LIST");
-
         ArrayAdapter<Task> adapter = new Task_List_Adapter();
         ListView list = findViewById(R.id.task_listView);
         list.setAdapter(adapter);
     }
+
+    private void setup_add_task_floating_button() {
+        FloatingActionButton button = findViewById(R.id.task_add_floating_button);
+        button.setOnClickListener(view -> {
+            if(children_list.isEmpty()){
+                Snackbar.make(view,"No children added yet!",Snackbar.LENGTH_LONG).show();
+            } else {
+                Intent intent = new Intent(Task_List_Activity.this,Add_Task_Activity.class);
+                intent.putExtra("CHILDREN_LIST",children_list);
+                add_task_launcher.launch(intent);
+            }
+        });
+    }
+
 
     private class Task_List_Adapter extends ArrayAdapter<Task> {
 
@@ -86,7 +127,7 @@ public class Task_List_Activity extends AppCompatActivity {
             TextView nameView = itemView.findViewById(R.id.task_name);
 
             if(task_list.get(position).getQueue().size() > 0) {
-                nameView.setText(task_list.get(position).getQueue().get(0));
+                nameView.setText(task_list.get(position).getQueue().get(0).getName());
             }
             TextView descriptionView = itemView.findViewById(R.id.task_description);
             descriptionView.setText(task_list.get(position).getTask_description());
