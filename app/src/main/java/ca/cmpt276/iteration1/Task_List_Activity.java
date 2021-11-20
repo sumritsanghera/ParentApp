@@ -256,6 +256,8 @@ public class Task_List_Activity extends AppCompatActivity {
             Button turn_over = popupView.findViewById(R.id.inflate_turn_button);
             turn_over.setOnClickListener(button_view -> {
                 updateQueue(position,task_name);
+                refreshTaskList();
+                setReturnResult();
                 popupWindow.dismiss();
             });
         }
