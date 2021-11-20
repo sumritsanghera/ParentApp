@@ -40,17 +40,6 @@
             android:textColor="@color/dark_blue"
             android:textSize="30sp" />
 
-        <TextView
-            android:id="@+id/config_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:fontFamily="@font/cabin"
-            android:text="@string/config_info"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
-
         <ListView
             android:id="@+id/children_listView"
             android:layout_width="match_parent"
@@ -72,6 +61,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/add_icon"
         android:contentDescription="@string/floating_action_button_in_config" />
+
+    <TextView
+        android:id="@+id/config_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:fontFamily="@font/cabin"
+        android:text="@string/config_info"
+        android:textSize="20sp"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

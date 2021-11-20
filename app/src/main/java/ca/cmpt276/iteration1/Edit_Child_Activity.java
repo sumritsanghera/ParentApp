@@ -19,9 +19,10 @@ import com.google.android.material.textfield.TextInputEditText;
     -   Upon pressing back button, name will be reverted back to original.
  */
 
-public class Edit_Name_Activity extends AppCompatActivity {
+public class Edit_Child_Activity extends AppCompatActivity {
 
     private TextInputEditText text;
+    private String original_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,13 +38,14 @@ public class Edit_Name_Activity extends AppCompatActivity {
 
     private void setup_back_button() {
         ImageView button = findViewById(R.id.edit_back_button);
-        button.setOnClickListener(view -> Edit_Name_Activity.super.onBackPressed());
+        button.setOnClickListener(view -> Edit_Child_Activity.super.onBackPressed());
     }
 
     private void setup_edit_text() {
         Intent data = getIntent();
         text = findViewById(R.id.edit_name_edit_text);
         text.setText(data.getStringExtra("NAME"));
+        original_name = data.getStringExtra("NAME");
     }
 
 
@@ -57,6 +59,7 @@ public class Edit_Name_Activity extends AppCompatActivity {
                 Intent intent = new Intent();
                 intent.putExtra("DELETE_BUTTON",false);
                 intent.putExtra("NAME", String.valueOf(text.getText()));
+                intent.putExtra("ORIGINAL_NAME",original_name);
                 intent.putExtra("INDEX", getIntent().getIntExtra("INDEX",-1));
                 setResult(RESULT_OK,intent);
                 finish();
@@ -66,7 +69,7 @@ public class Edit_Name_Activity extends AppCompatActivity {
 
     private void setup_delete_button() {
         Button deleteBtn = findViewById(R.id.delete_button);
-        deleteBtn.setOnClickListener(view -> new AlertDialog.Builder(Edit_Name_Activity.this)
+        deleteBtn.setOnClickListener(view -> new AlertDialog.Builder(Edit_Child_Activity.this)
                 .setTitle("Delete name")
                 .setMessage("Are you sure to delete this entry?")
                 .setPositiveButton("DELETE", (dialog, which) -> {
@@ -77,7 +80,7 @@ public class Edit_Name_Activity extends AppCompatActivity {
                     finish();
                 })
                 .setNegativeButton("CANCEL", (dialogInterface, i) -> dialogInterface.cancel())
-                .setIcon(getDrawable(R.drawable.delete_icon))
+                .setIcon(R.drawable.delete_icon)
                 .show());
     }
 
