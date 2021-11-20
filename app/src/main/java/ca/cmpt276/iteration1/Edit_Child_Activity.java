@@ -19,7 +19,7 @@ import com.google.android.material.textfield.TextInputEditText;
     -   Upon pressing back button, name will be reverted back to original.
  */
 
-public class Edit_Name_Activity extends AppCompatActivity {
+public class Edit_Child_Activity extends AppCompatActivity {
 
     private TextInputEditText text;
     private String original_name;
@@ -27,7 +27,7 @@ public class Edit_Name_Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_name);
+        setContentView(R.layout.activity_edit_child);
 
         setup_back_button();
         setup_edit_text();
@@ -38,7 +38,7 @@ public class Edit_Name_Activity extends AppCompatActivity {
 
     private void setup_back_button() {
         ImageView button = findViewById(R.id.edit_back_button);
-        button.setOnClickListener(view -> Edit_Name_Activity.super.onBackPressed());
+        button.setOnClickListener(view -> Edit_Child_Activity.super.onBackPressed());
     }
 
     private void setup_edit_text() {
@@ -69,7 +69,7 @@ public class Edit_Name_Activity extends AppCompatActivity {
 
     private void setup_delete_button() {
         Button deleteBtn = findViewById(R.id.delete_button);
-        deleteBtn.setOnClickListener(view -> new AlertDialog.Builder(Edit_Name_Activity.this)
+        deleteBtn.setOnClickListener(view -> new AlertDialog.Builder(Edit_Child_Activity.this)
                 .setTitle("Delete name")
                 .setMessage("Are you sure to delete this entry?")
                 .setPositiveButton("DELETE", (dialog, which) -> {

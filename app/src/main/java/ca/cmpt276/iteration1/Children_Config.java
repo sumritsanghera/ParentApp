@@ -176,7 +176,7 @@ public class Children_Config extends AppCompatActivity {
             nameView.setText(children_list.get(position).getName());
 
             itemView.setOnClickListener(view -> {
-                Intent intent = new Intent(Children_Config.this,Edit_Name_Activity.class);
+                Intent intent = new Intent(Children_Config.this, Edit_Child_Activity.class);
                 intent.putExtra("NAME", children_list.get(position).getName());
                 intent.putExtra("INDEX", position);
                 edit_name_launcher.launch(intent);
@@ -189,7 +189,7 @@ public class Children_Config extends AppCompatActivity {
     private void setup_floating_button() {
         FloatingActionButton button = findViewById(R.id.add_child_floating_button);
         button.setOnClickListener(view -> {
-            Intent intent = new Intent(Children_Config.this, Add_Name_Activity.class);
+            Intent intent = new Intent(Children_Config.this, Add_Child_Activity.class);
             add_name_launcher.launch(intent);
         });
     }

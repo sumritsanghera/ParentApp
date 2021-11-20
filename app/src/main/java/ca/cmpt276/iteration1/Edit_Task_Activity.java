@@ -2,11 +2,13 @@ package ca.cmpt276.iteration1;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -42,12 +44,12 @@ public class Edit_Task_Activity extends AppCompatActivity {
         setup_description();
         setup_edit_child();
         setup_edit_task_button();
+        setup_delete_task_button();
     }
-
 
     private void setup_getIntentData() {
 
-        task_index = getIntent().getIntExtra("TASK_INDEX",-1);
+        task_index = getIntent().getIntExtra("INDEX",-1);
         given_task = getIntent().getParcelableExtra("TASK");
 
         assert task_index != -1;
@@ -114,11 +116,30 @@ public class Edit_Task_Activity extends AppCompatActivity {
                 }
                 Intent intent = new Intent();
                 intent.putExtra("NEW_TASK", new_task);
-                intent.putExtra("TASK_INDEX", task_index);
+                intent.putExtra("INDEX", task_index);
                 setResult(RESULT_OK,intent);
                 finish();
             }
         });
+    }
+
+
+    private void setup_delete_task_button() {
+        ImageView delete = findViewById(R.id.edit_task_delete);
+        delete.setOnClickListener(view -> new AlertDialog.Builder(Edit_Task_Activity.this)
+                .setTitle("Delete name")
+                .setMessage("Are you sure to delete this task?")
+                .setPositiveButton("DELETE", (dialog, which) -> {
+                    Intent intent = new Intent();
+                    intent.putExtra("DELETE",true);
+                    intent.putExtra("INDEX", task_index);
+                    Log.e("EDIT TASK ACTIVITY", ""+task_index);
+                    setResult(RESULT_OK,intent);
+                    finish();
+                })
+                .setNegativeButton("CANCEL", (dialogInterface, i) -> dialogInterface.cancel())
+                .setIcon(R.drawable.delete_icon)
+                .show());
     }
 
 }

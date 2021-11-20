@@ -28,7 +28,9 @@
             android:id="@+id/edit_task_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:layout_toStartOf="@id/edit_task_delete"
+            android:layout_toEndOf="@id/edit_task_back_button"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
@@ -39,6 +41,15 @@
             android:textColor="@color/dark_blue"
             android:textSize="30sp"
             android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/edit_task_delete"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            app:srcCompat="@drawable/trash_icon"
+            android:contentDescription="@string/task_delete_button_description" />
 
     </RelativeLayout>
 

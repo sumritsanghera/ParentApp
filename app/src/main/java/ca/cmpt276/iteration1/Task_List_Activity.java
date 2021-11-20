@@ -51,12 +51,12 @@ public class Task_List_Activity extends AppCompatActivity {
         TextView info = findViewById(R.id.task_list_info_text);
         if(!task_list.isEmpty()){
             info.setText("");
-            adapter = new Task_List_Activity.Task_List_Adapter();
-            ListView list = findViewById(R.id.task_list);
-            list.setAdapter(adapter);
         } else {
             info.setText(R.string.task_list_info_1);
         }
+        adapter = new Task_List_Activity.Task_List_Adapter();
+        ListView list = findViewById(R.id.task_list);
+        list.setAdapter(adapter);
     }
 
     @Override
@@ -109,11 +109,16 @@ public class Task_List_Activity extends AppCompatActivity {
                     if(result.getResultCode() == Activity.RESULT_OK) {
                         Intent data = result.getData();
                         if (data != null) {
-                            Task new_task = data.getParcelableExtra("NEW_TASK");
-                            int task_index = data.getIntExtra("TASK_INDEX",-1);
+                            boolean delete = data.getBooleanExtra("DELETE",false);
+                            int task_index = data.getIntExtra("INDEX",-1);
                             assert task_index != -1;
-                            task_list.remove(task_index);
-                            task_list.add(task_index,new_task);
+                            if(delete){
+                                task_list.remove(task_index);
+                            } else {
+                                Task new_task = data.getParcelableExtra("NEW_TASK");
+                                task_list.remove(task_index);
+                                task_list.add(task_index,new_task);
+                            }
                             setReturnResult();
                         }
                     }
@@ -145,13 +150,11 @@ public class Task_List_Activity extends AppCompatActivity {
     private void setup_add_task_floating_button() {
         FloatingActionButton button = findViewById(R.id.task_add_floating_button);
         button.setOnClickListener(view -> {
-            if(children_list.isEmpty()){
-                Snackbar.make(view,"No children added yet!",Snackbar.LENGTH_LONG).show();
-            } else {
-                Intent intent = new Intent(Task_List_Activity.this,Add_Task_Activity.class);
+            Intent intent = new Intent(Task_List_Activity.this,Add_Task_Activity.class);
+            if(!children_list.isEmpty()){
                 intent.putExtra("CHILDREN_LIST",children_list);
-                add_task_launcher.launch(intent);
             }
+            add_task_launcher.launch(intent);
         });
     }
 
@@ -192,14 +195,12 @@ public class Task_List_Activity extends AppCompatActivity {
             final View inflate_view = itemView;
 
             RelativeLayout inflate_item = itemView.findViewById(R.id.task_item_relative_layout);
-            inflate_item.setOnClickListener(view -> {
-                showPopupWindow(inflate_view,position,nameView);
-            });
+            inflate_item.setOnClickListener(view -> showPopupWindow(inflate_view,position,nameView));
 
             ImageView edit_button = itemView.findViewById(R.id.task_edit);
             edit_button.setOnClickListener(view -> {
                 Intent intent = new Intent(Task_List_Activity.this,Edit_Task_Activity.class);
-                intent.putExtra("TASK_INDEX",position);
+                intent.putExtra("INDEX",position);
                 intent.putExtra("TASK",current_task);
                 edit_task_launcher.launch(intent);
             });

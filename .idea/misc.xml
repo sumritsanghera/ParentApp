@@ -11,25 +11,22 @@
         <entry key="..\:/Users/giaha/AndroidStudioProjects/ParentApp/app/src/main/res/drawable/config_icon.xml" value="0.12685185185185185" />
         <entry key="..\:/Users/giaha/AndroidStudioProjects/ParentApp/app/src/main/res/drawable/history_icon.xml" value="0.12685185185185185" />
         <entry key="..\:/Users/giaha/AndroidStudioProjects/ParentApp/app/src/main/res/drawable/info_icon.xml" value="0.12685185185185185" />
-        <entry key="..\:/Users/giaha/AndroidStudioProjects/ParentApp/app/src/main/res/drawable/task_icon.xml" value="0.13240740740740742" />
         <entry key="..\:/Users/giaha/AndroidStudioProjects/ParentApp/app/src/main/res/drawable/timer_icon.xml" value="0.125" />
-        <entry key="..\:/Users/giaha/AndroidStudioProjects/ParentApp/app/src/main/res/layout/activity_add_name.xml" value="0.4466666666666667" />
-        <entry key="..\:/Users/giaha/AndroidStudioProjects/ParentApp/app/src/main/res/layout/activity_add_task.xml" value="0.6" />
+        <entry key="..\:/Users/giaha/AndroidStudioProjects/ParentApp/app/src/main/res/drawable/trash_icon.xml" value="0.17083333333333334" />
+        <entry key="..\:/Users/giaha/AndroidStudioProjects/ParentApp/app/src/main/res/layout/activity_add_name.xml" value="0.1390625" />
+        <entry key="..\:/Users/giaha/AndroidStudioProjects/ParentApp/app/src/main/res/layout/activity_add_task.xml" value="0.1546875" />
         <entry key="..\:/Users/giaha/AndroidStudioProjects/ParentApp/app/src/main/res/layout/activity_coin_flip_config.xml" value="0.22" />
         <entry key="..\:/Users/giaha/AndroidStudioProjects/ParentApp/app/src/main/res/layout/activity_config.xml" value="0.22" />
+        <entry key="..\:/Users/giaha/AndroidStudioProjects/ParentApp/app/src/main/res/layout/activity_edit_child.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/giaha/AndroidStudioProjects/ParentApp/app/src/main/res/layout/activity_edit_name.xml" value="0.3333333333333333" />
-        <entry key="..\:/Users/giaha/AndroidStudioProjects/ParentApp/app/src/main/res/layout/activity_edit_task.xml" value="0.22" />
-        <entry key="..\:/Users/giaha/AndroidStudioProjects/ParentApp/app/src/main/res/layout/activity_flip_history.xml" value="0.22" />
-        <entry key="..\:/Users/giaha/AndroidStudioProjects/ParentApp/app/src/main/res/layout/activity_main_menu.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/giaha/AndroidStudioProjects/ParentApp/app/src/main/res/layout/activity_edit_task.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/giaha/AndroidStudioProjects/ParentApp/app/src/main/res/layout/activity_main_menu.xml" value="0.14666666666666667" />
         <entry key="..\:/Users/giaha/AndroidStudioProjects/ParentApp/app/src/main/res/layout/activity_picker_queue.xml" value="0.1796875" />
-        <entry key="..\:/Users/giaha/AndroidStudioProjects/ParentApp/app/src/main/res/layout/activity_task_list.xml" value="0.22" />
+        <entry key="..\:/Users/giaha/AndroidStudioProjects/ParentApp/app/src/main/res/layout/activity_task_list.xml" value="0.1546875" />
         <entry key="..\:/Users/giaha/AndroidStudioProjects/ParentApp/app/src/main/res/layout/activity_timeout_timer.xml" value="0.12135416666666667" />
         <entry key="..\:/Users/giaha/AndroidStudioProjects/ParentApp/app/src/main/res/layout/children_list.xml" value="0.128125" />
-        <entry key="..\:/Users/giaha/AndroidStudioProjects/ParentApp/app/src/main/res/layout/flip_history_list.xml" value="0.15572916666666667" />
         <entry key="..\:/Users/giaha/AndroidStudioProjects/ParentApp/app/src/main/res/layout/message_layout.xml" value="0.1" />
         <entry key="..\:/Users/giaha/AndroidStudioProjects/ParentApp/app/src/main/res/layout/queue_item.xml" value="0.1796875" />
-        <entry key="..\:/Users/giaha/AndroidStudioProjects/ParentApp/app/src/main/res/layout/task_inflate_layout.xml" value="0.3333333333333333" />
-        <entry key="..\:/Users/giaha/AndroidStudioProjects/ParentApp/app/src/main/res/layout/task_item.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.24947916666666667" />
         <entry key="app/src/main/res/layout/activity_main2.xml" value="0.24947916666666667" />
         <entry key="app/src/main/res/layout/activity_main3.xml" value="0.24947916666666667" />

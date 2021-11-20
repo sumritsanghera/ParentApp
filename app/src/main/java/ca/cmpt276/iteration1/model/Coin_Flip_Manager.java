@@ -43,12 +43,15 @@ public class Coin_Flip_Manager {
     }
 
     public void remove_child(ArrayList<Child> removed_list) {
-        for(Coin_Flip flip : coin_flip_list){
-            for(Child child : removed_list){
-                if(flip.getName().equals(child.getName())){
-                    coin_flip_list.remove(flip);
+        if(!removed_list.isEmpty() && !coin_flip_list.isEmpty()){
+            for(Coin_Flip flip : coin_flip_list){
+                for(Child child : removed_list){
+                    if(flip.getName().equals(child.getName())){
+                        coin_flip_list.remove(flip);
+                    }
                 }
             }
         }
+
     }
 }
