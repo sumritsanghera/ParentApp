@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Edit_Name_Activity">
+    tools:context=".Edit_Child_Activity">
 
     <RelativeLayout
         android:id="@+id/edit_name_toolbar"

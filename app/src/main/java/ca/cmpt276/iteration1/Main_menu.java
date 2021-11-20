@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -44,8 +45,6 @@ public class Main_menu extends AppCompatActivity {
         children_manager = Children_Manager.getInstance();
         coin_manager = Coin_Flip_Manager.getInstance();
 
-
-        setup_back_button();
         setup_coin_flip_launcher();
         setup_config_launcher();
         setup_config_button();
@@ -63,10 +62,9 @@ public class Main_menu extends AppCompatActivity {
                         Intent data = result.getData();
                         //if there's configured children
                         if(data != null){
-                            ArrayList<String> children_list = data.getStringArrayListExtra("CHILDREN_LIST");
+                            ArrayList<Child> children_list = data.getParcelableArrayListExtra("CHILDREN_LIST");
                             children_manager.clear();
-                            for (String name : children_list) {
-                                Child new_child = new Child(name);
+                            for (Child new_child : children_list) {
                                 children_manager.addChild(new_child);
                             }
                         } else {
@@ -77,11 +75,6 @@ public class Main_menu extends AppCompatActivity {
         );
     }
 
-    private void setup_back_button() {
-        ImageView back_button = findViewById(R.id.main_menu_back_button);
-        back_button.setOnClickListener(view -> Main_menu.super.onBackPressed());
-    }
-
     private void setup_coin_flip_launcher() {
         coin_flip_launcher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -89,19 +82,14 @@ public class Main_menu extends AppCompatActivity {
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         // There are no request codes
                         Intent data = result.getData();
-                        assert data != null;
+                        if(data!=null){
+                            String picker = data.getStringExtra("PICKER");
+                            boolean returned_result = data.getBooleanExtra("RESULT", false);
+                            String time = data.getStringExtra("TIME");
 
-                        String picker = data.getStringExtra("PICKER");
-                        boolean returned_result = data.getBooleanExtra("RESULT",false);
-                        String time = data.getStringExtra("TIME");
-
-                        if(!picker.equals("No name")){
-                            int index = children_manager.getChildren_list().indexOf(picker);
-                            children_manager.update_queue(index); //child who last picked be moved to end of queue.
+                            Coin_Flip new_flip = new Coin_Flip(picker, returned_result, time);
+                            coin_manager.add_flip(new_flip);
                         }
-
-                        Coin_Flip new_flip = new Coin_Flip(picker,returned_result,time);
-                        coin_manager.add_flip(new_flip);
                     }
                 });
     }
