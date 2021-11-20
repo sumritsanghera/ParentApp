@@ -4,15 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.GridView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -26,6 +23,7 @@ import ca.cmpt276.iteration1.model.Child;
 public class Picker_Queue_Activity extends AppCompatActivity {
 
     ArrayList<Child> children_list;
+    private int index = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +34,7 @@ public class Picker_Queue_Activity extends AppCompatActivity {
         setup_setIntentData();
 
         setup_queue_listView();
+        setup_save_button();
     }
 
     private void setup_setIntentData() {
@@ -84,7 +83,7 @@ public class Picker_Queue_Activity extends AppCompatActivity {
                 }
                 getWindow().getDecorView().setBackgroundColor(getColor(R.color.white));
                 parent.getChildAt(position).setBackgroundResource(R.drawable.coin_flip_queue_selected_background);
-                setReturn_Result(position);
+                index = position;
             });
 
             return itemView;
@@ -97,5 +96,19 @@ public class Picker_Queue_Activity extends AppCompatActivity {
         intent.putExtra("CHILD_INDEX",index);
         setResult(RESULT_OK,intent);
     }
+
+
+    private void setup_save_button() {
+        Button save = findViewById(R.id.queue_save);
+        save.setOnClickListener(view -> {
+            if(index == -1){
+                Snackbar.make(view,"Choose a child before save",Snackbar.LENGTH_LONG).show();
+            } else {
+                setReturn_Result(index);
+                finish();
+            }
+        });
+    }
+
 
 }

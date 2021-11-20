@@ -42,7 +42,7 @@
                 android:layout_marginBottom="10dp"
                 android:fontFamily="@font/andada"
                 android:padding="10dp"
-                android:text="Setup"
+                android:text="@string/coin_config_title"
                 android:textColor="@color/dark_blue"
                 android:textSize="30sp"
                 android:textStyle="bold" />
@@ -55,6 +55,7 @@
             android:orientation="vertical">
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/coin_config_card_view"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:elevation="12dp"
@@ -77,7 +78,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="5dp"
                 android:fontFamily="@font/cabin"
-                android:text="Name"
+                android:text="@string/coin_config_default_name"
                 android:textSize="25sp"
                 android:textStyle="bold" />
 
@@ -98,7 +99,7 @@
                 android:layout_margin="10dp"
                 android:fontFamily="@font/cabin"
                 android:textSize="20sp"
-                android:text="Heads" />
+                android:text="@string/heads_text" />
 
             <RadioButton
                 android:id="@+id/radio_tails"
@@ -107,10 +108,11 @@
                 android:layout_margin="10dp"
                 android:fontFamily="@font/cabin"
                 android:textSize="20sp"
-                android:text="Tails" />
+                android:text="@string/tails_text" />
         </RadioGroup>
 
     </LinearLayout>
+
     <Button
         android:id="@+id/picker_button"
         style="@style/ButtonStyle"
@@ -119,7 +121,7 @@
         android:layout_gravity="center"
         android:layout_margin="10dp"
         android:background="@drawable/button_background"
-        android:text="Change Picker"
+        android:text="@string/change_picker_button_text"
         android:theme="@style/ButtonStyle"
         app:layout_constraintBottom_toTopOf="@+id/flip_coin_button"
         app:layout_constraintEnd_toEndOf="parent"
@@ -132,7 +134,7 @@
         android:layout_gravity="center"
         android:layout_margin="10dp"
         android:background="@drawable/button_background"
-        android:text="Flip Coin"
+        android:text="@string/flip_coin_button_text"
         android:theme="@style/ButtonStyle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

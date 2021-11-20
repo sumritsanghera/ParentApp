@@ -12,7 +12,8 @@ import java.util.ArrayList;
 
 public class Children_Manager {
     private static Children_Manager instance;
-    private ArrayList<Child> children_list;
+    private final ArrayList<Child> children_list;
+
     public Children_Manager() {
         this.children_list = new ArrayList<>();
     }

@@ -27,8 +27,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import java.util.ArrayList;
 
 import ca.cmpt276.iteration1.model.Child;
@@ -230,7 +228,11 @@ public class Task_List_Activity extends AppCompatActivity {
             profile.setRadius(profile.getLayoutParams().width /(float)2);
 
             TextView name = popupView.findViewById(R.id.inflate_text);
-            name.setText(task_list.get(position).getQueue().get(0).getName());
+            if(task_list.get(position).getQueue().isEmpty()){
+                name.setText(R.string.inflate_default_name);
+            } else {
+                name.setText(task_list.get(position).getQueue().get(0).getName());
+            }
 
             TextView description = popupView.findViewById(R.id.inflate_task_name);
             description.setText(task_list.get(position).getTask_description());
@@ -255,9 +257,11 @@ public class Task_List_Activity extends AppCompatActivity {
 
             Button turn_over = popupView.findViewById(R.id.inflate_turn_button);
             turn_over.setOnClickListener(button_view -> {
-                updateQueue(position,task_name);
-                refreshTaskList();
-                setReturnResult();
+                if(!task_list.get(position).getQueue().isEmpty()) {
+                    updateQueue(position, task_name);
+                    refreshTaskList();
+                    setReturnResult();
+                }
                 popupWindow.dismiss();
             });
         }

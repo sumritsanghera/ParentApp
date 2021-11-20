@@ -36,9 +36,9 @@ public class Children_Config extends AppCompatActivity {
 
     private ActivityResultLauncher<Intent> add_name_launcher;
     private ArrayList<Child> children_list;
-    private ArrayList<Child> added_children = new ArrayList<>();
-    private ArrayList<Child> removed_children = new ArrayList<>();
-    private ArrayList<Edited_Child> edited_children = new ArrayList<>();
+    private final ArrayList<Child> added_children = new ArrayList<>();
+    private final ArrayList<Child> removed_children = new ArrayList<>();
+    private final ArrayList<Edited_Child> edited_children = new ArrayList<>();
     private ArrayAdapter<Child> adapter;
     private ActivityResultLauncher<Intent> edit_name_launcher;
     private TextView info;

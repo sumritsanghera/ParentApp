@@ -2,6 +2,11 @@ package ca.cmpt276.iteration1.model;
 
 import java.util.ArrayList;
 
+/*
+    Task Manager contains list of all Tasks
+    - Manages tasks such as add/remove/update after name edit/remove/add
+ */
+
 public class Task_Manager {
     public static Task_Manager instance;
     ArrayList<Task> task_list;
@@ -40,4 +45,36 @@ public class Task_Manager {
             }
         }
     }
+
+    public void addUpdate(ArrayList<Child> added_list){
+        for(Task task: task_list){
+            for(Child added_child: added_list){
+                task.add(added_child);
+            }
+        }
+    }
+
+    public void removeUpdate(ArrayList<Child> removed_list) {
+        for(Task task: task_list){
+            ArrayList<Integer> indices = new ArrayList<>();
+            int index=0;
+            if(!removed_list.isEmpty() && !task.getQueue().isEmpty()) {
+                for (Child child : task.getQueue()) {
+                    for (Child removed_child : removed_list) {
+                        if (child.getName().equals(removed_child.getName())) {
+                            indices.add(index);
+                        }
+                    }
+                    index++;
+                }
+            }
+            if(indices.size()>0){
+                for(int i = indices.size()-1; i > -1; i--){
+                    task.remove(indices.get(i));
+                }
+            }
+
+        }
+    }
+
 }

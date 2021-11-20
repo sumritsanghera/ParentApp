@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
 
@@ -74,6 +73,7 @@ public class Main_menu extends AppCompatActivity {
                         //if there's configured children
                         if(data != null){
                             ArrayList<Child> children_list = data.getParcelableArrayListExtra("CHILDREN_LIST");
+                            ArrayList<Child> added_list = data.getParcelableArrayListExtra("ADDED_CHILDREN");
                             ArrayList<Child> removed_list = data.getParcelableArrayListExtra("REMOVED_CHILDREN");
                             ArrayList<Edited_Child> edited_children_list = data.getParcelableArrayListExtra("EDITED_CHILDREN");
 
@@ -118,39 +118,18 @@ public class Main_menu extends AppCompatActivity {
                             }
 
                             //update tasks queues if there are existing tasks
-                            if(!task_manager.getTask_list().isEmpty()){
-                                //First update on any changed names
+                            if(!task_manager.getTask_list().isEmpty()) {
                                 task_manager.update_child_name_after_edit(edited_children_list);
 
-                                //for every task in task list
-                                for(Task task : task_manager.getTask_list()){
+                                task_manager.addUpdate(added_list);
+                                task_manager.removeUpdate(removed_list);
 
-                                    //get child in line
-                                    String firstChild = task.getName();
-
-                                    //if first child is no name, means task has no child, set task queue
-                                    //equal to children list
-                                    if(firstChild.equals("No name")){
-                                        task.setQueue(children_manager.getChildren_list());
-                                    } else { //if queue is not empty, find child first in line in queue of current
-                                        //task and find its index in children list
-                                        int found_index = children_manager.find_name(firstChild);
-
-                                        //set queue to be children list
-                                        task.setQueue(children_manager.getChildren_list());
-
-                                        //if name is found, then dequeue by number of index to move picker to front of line.
-                                        //else, leave queue same with children manager
-                                        if(found_index!=-1){
-                                            for(int i = 0; i < found_index; i++){
-                                                task.update_queue();
-                                            }
-                                        }
+                                for(Task task: task_manager.getTask_list()){
+                                    if(task.getQueue().size()>1 && task.getName().equals("No name")){
+                                        task.remove(0);
                                     }
                                 }
                             }
-
-
                         } else {
                             children_manager.clear();
                             coin_queue.clear();
@@ -245,7 +224,6 @@ public class Main_menu extends AppCompatActivity {
             Intent intent = new Intent(Main_menu.this, Task_List_Activity.class);
             intent.putParcelableArrayListExtra("CHILDREN_LIST",children_manager.getChildren_list());
             intent.putParcelableArrayListExtra("TASK_LIST", task_manager.getTask_list());
-
             task_launcher.launch(intent);
         });
     }

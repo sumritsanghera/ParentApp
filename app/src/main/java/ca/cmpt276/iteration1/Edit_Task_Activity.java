@@ -16,9 +16,6 @@ import android.widget.TextView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
-import java.util.ArrayList;
-
-import ca.cmpt276.iteration1.model.Child;
 import ca.cmpt276.iteration1.model.Task;
 
 public class Edit_Task_Activity extends AppCompatActivity {

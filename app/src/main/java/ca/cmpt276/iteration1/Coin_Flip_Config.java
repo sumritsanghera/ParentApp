@@ -3,6 +3,7 @@ package ca.cmpt276.iteration1;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.app.Activity;
 import android.content.Context;
@@ -39,6 +40,7 @@ public class Coin_Flip_Config extends AppCompatActivity {
 
         setup_children_list();
         setup_default_picker();
+        setup_profile();
 
         setup_choose_picker_launcher();
         setup_coin_flip_launcher();
@@ -48,8 +50,6 @@ public class Coin_Flip_Config extends AppCompatActivity {
         setup_radio_group();
         setup_flip_coin();
     }
-
-
 
     private void setup_children_list() {
         Intent data = getIntent();
@@ -62,16 +62,25 @@ public class Coin_Flip_Config extends AppCompatActivity {
         picker_name.setText(queue.get(0).getName());
     }
 
+    private void setup_profile() {
+        CardView profile = findViewById(R.id.coin_config_card_view);
+        int width = profile.getLayoutParams().width;
+        profile.setRadius((float) width/2);
+    }
+
+
     private void setup_choose_picker_launcher() {
         picker_launcher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if(result.getResultCode() == Activity.RESULT_OK){
                         Intent data = result.getData();
-                        int index = data.getIntExtra("CHILD_INDEX",0);
-                        picker_name = findViewById(R.id.picker_name);
-                        picker_name.setText(queue.get(index).getName());
-                        index_picker = index;
+                        if(data!=null){
+                            int index = data.getIntExtra("CHILD_INDEX",0);
+                            picker_name = findViewById(R.id.picker_name);
+                            picker_name.setText(queue.get(index).getName());
+                            index_picker = index;
+                        }
                     }
                 }
         );
@@ -83,13 +92,16 @@ public class Coin_Flip_Config extends AppCompatActivity {
                 result -> {
                     if(result.getResultCode() == Activity.RESULT_OK){
                         Intent data = result.getData();
-                        Intent intent = new Intent();
-                        intent.putExtra("PICKER", data.getStringExtra("PICKER"));
-                        intent.putExtra("RESULT",data.getBooleanExtra("RESULT",false));
-                        intent.putExtra("TIME", data.getStringExtra("TIME"));
-                        intent.putExtra("INDEX",index_picker);
-                        setResult(RESULT_OK,intent);
-                        finish();
+                        if(data!=null){
+                            Intent intent = new Intent();
+                            intent.putExtra("PICKER", data.getStringExtra("PICKER"));
+                            intent.putExtra("RESULT",data.getBooleanExtra("RESULT",false));
+                            intent.putExtra("TIME", data.getStringExtra("TIME"));
+                            intent.putExtra("INDEX",index_picker);
+                            setResult(RESULT_OK,intent);
+                            finish();
+                        }
+
                     }
                 }
         );

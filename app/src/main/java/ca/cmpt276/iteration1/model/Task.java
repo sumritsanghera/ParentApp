@@ -2,12 +2,18 @@ package ca.cmpt276.iteration1.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import java.util.ArrayList;
 
+/*
+    Task object stores a single task with a children queue and a task description.
+    -   Store functions to add/remove/update children queue
+ */
+
 public class Task implements Parcelable {
-    private ArrayList<Child> queue;
-    private String task_description;
+    private final ArrayList<Child> queue;
+    private final String task_description;
 
     public Task(ArrayList<Child> queue, String task_description) {
         this.queue = queue;
@@ -46,26 +52,25 @@ public class Task implements Parcelable {
         return queue;
     }
 
-    public void setQueue(ArrayList<Child> queue) {
-        this.queue = queue;
-    }
-
     public String getTask_description() {
         return task_description;
     }
 
     public String getName(){
-        if(queue.size()>0){
-            return queue.get(0).getName();
-        }
-        return "";
+        return queue.get(0).getName();
+    }
+
+    public void remove(int i){
+        queue.remove(i);
+    }
+
+    public void add(Child child){
+        queue.add(child);
     }
 
     public void update_queue(){
-        if(queue.size() > 1){
-            Child first = queue.get(0);
-            queue.remove(0);
-            queue.add(first);
-        }
+        Child child = queue.get(0);
+        queue.remove(0);
+        queue.add(child);
     }
 }

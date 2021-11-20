@@ -11,9 +11,9 @@ import android.os.Parcelable;
  */
 
 public class Coin_Flip implements Parcelable {
-    String name;
-    Boolean result;
-    String time;
+    private String name;
+    private final Boolean result;
+    private final String time;
 
     public Coin_Flip(String name, boolean result, String time) {
         this.name = name;

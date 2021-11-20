@@ -2,8 +2,15 @@ package ca.cmpt276.iteration1.model;
 
 import java.util.ArrayList;
 
+/*
+    Coin Queue Manager saves queue of coin flips
+        - Has function to dequeue (take first child and move to end of list)
+        - Has function to iterate over queue and update edited names
+
+ */
+
 public class Coin_Queue_Manager {
-    ArrayList<Child> queue;
+    private ArrayList<Child> queue;
     private static Coin_Queue_Manager instance;
 
     public Coin_Queue_Manager() {
