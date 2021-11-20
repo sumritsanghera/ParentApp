@@ -84,4 +84,5 @@
     <string name="add_task_add_button">Add task</string>
     <string name="edit_task_submit_text">Save task</string>
     <string name="edit_task_title">Edit Task</string>
+    <string name="task_delete_button_description">task delete button</string>
 </resources>

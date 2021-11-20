@@ -21,9 +21,7 @@ import ca.cmpt276.iteration1.model.Task;
 
 public class Add_Task_Activity extends AppCompatActivity {
 
-    private ActivityResultLauncher<Intent> edit_launcher;
     private ArrayList<Child> children_list;
-    private TextView name;
     private TextInputEditText description;
     private int chosen_child_index = 0;
 
@@ -33,33 +31,19 @@ public class Add_Task_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_add_task);
 
         setup_getIntentData();
-        setup_edit_launcher();
 
         setup_back_button();
         setup_profile();
-        setup_edit_child();
         setup_add_task_button();
     }
 
     private void setup_getIntentData() {
         children_list = getIntent().getParcelableArrayListExtra("CHILDREN_LIST");
-    }
-
-    private void setup_edit_launcher() {
-        edit_launcher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if(result.getResultCode() == Activity.RESULT_OK){
-                        Intent data = result.getData();
-                        if(data!=null){
-                            int index = data.getIntExtra("CHILD_INDEX",0);
-                            name = findViewById(R.id.add_task_name);
-                            name.setText(children_list.get(index).getName());
-                            chosen_child_index = index;
-                        }
-                    }
-                }
-        );
+        if(children_list == null){
+            children_list = new ArrayList<>();
+            Child no_name = new Child("No name");
+            children_list.add(no_name);
+        }
     }
 
     private void setup_back_button() {
@@ -72,15 +56,6 @@ public class Add_Task_Activity extends AppCompatActivity {
         if(!children_list.isEmpty()){
             name.setText(children_list.get(0).getName());
         }
-    }
-
-    private void setup_edit_child() {
-        ImageView edit = findViewById(R.id.add_task_edit);
-        edit.setOnClickListener(view -> {
-            Intent intent = new Intent(Add_Task_Activity.this,Picker_Queue_Activity.class);
-            intent.putExtra("CHILDREN_LIST",children_list);
-            edit_launcher.launch(intent);
-        });
     }
 
     //Return queue and task description

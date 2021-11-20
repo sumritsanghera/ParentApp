@@ -128,9 +128,9 @@ public class Main_menu extends AppCompatActivity {
                                     //get child in line
                                     String firstChild = task.getName();
 
-                                    //if there is no child, means task has no child, set task queue
+                                    //if first child is no name, means task has no child, set task queue
                                     //equal to children list
-                                    if(!firstChild.equals("")){
+                                    if(firstChild.equals("No name")){
                                         task.setQueue(children_manager.getChildren_list());
                                     } else { //if queue is not empty, find child first in line in queue of current
                                         //task and find its index in children list
@@ -179,7 +179,6 @@ public class Main_menu extends AppCompatActivity {
                                 for (int i = 0; i < children_list.size(); i++) {
                                     if (children_list.get(i).getName().equals(picker)) {
                                         index = i;
-                                        Log.e("MAIN MENU", ""+index);
                                         break;
                                     }
                                 }
@@ -204,7 +203,6 @@ public class Main_menu extends AppCompatActivity {
                         Intent data = result.getData();
                         if(data!=null){
                             ArrayList<Task> task_list = data.getParcelableArrayListExtra("TASK_LIST");
-                            Log.e("MAIN MENU", task_list.get(0).getTask_description());
                             task_manager.clear();
                             for(Task task : task_list){
                                 task_manager.add_task(task);
