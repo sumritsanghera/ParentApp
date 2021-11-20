@@ -61,13 +61,13 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".Add_Name_Activity"
+            android:name=".Add_Child_Activity"
             android:exported="true"
             android:label="Back"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".Edit_Name_Activity"
+            android:name=".Edit_Child_Activity"
             android:exported="true"
             android:label="Back"
             android:screenOrientation="portrait"

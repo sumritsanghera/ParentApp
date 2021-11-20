@@ -5,17 +5,40 @@ package ca.cmpt276.iteration1.model;
     -   Stores name of child to be added to a children manager in main menu.
  */
 
-public class Child {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Child implements Parcelable {
     private String name;
-    private String bitmap;
     public Child(String name) {
         this.name = name;
     }
 
-    public Child(String name, String bitmap) {
-        this.name = name;
-        this.bitmap = bitmap;
+    protected Child(Parcel in) {
+        name = in.readString();
     }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Child> CREATOR = new Creator<Child>() {
+        @Override
+        public Child createFromParcel(Parcel in) {
+            return new Child(in);
+        }
+
+        @Override
+        public Child[] newArray(int size) {
+            return new Child[size];
+        }
+    };
 
     public void setName(String name) {
         this.name = name;
@@ -23,13 +46,5 @@ public class Child {
 
     public String getName() {
         return name;
-    }
-
-    public void setBitmap(String bitmap) {
-        this.bitmap = bitmap;
-    }
-
-    public  String getBitmap() {
-        return bitmap;
     }
 }
