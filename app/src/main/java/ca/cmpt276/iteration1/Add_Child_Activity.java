@@ -19,12 +19,12 @@ import com.google.android.material.textfield.TextInputEditText;
 
  */
 
-public class Add_Name_Activity extends AppCompatActivity {
+public class Add_Child_Activity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_name);
+        setContentView(R.layout.activity_add_child);
 
         setup_back_button();
         setup_submit_button();
@@ -32,7 +32,7 @@ public class Add_Name_Activity extends AppCompatActivity {
 
     private void setup_back_button() {
         ImageView back_button = findViewById(R.id.add_name_back_button);
-        back_button.setOnClickListener(view -> Add_Name_Activity.super.onBackPressed());
+        back_button.setOnClickListener(view -> Add_Child_Activity.super.onBackPressed());
     }
 
     private void setup_submit_button() {

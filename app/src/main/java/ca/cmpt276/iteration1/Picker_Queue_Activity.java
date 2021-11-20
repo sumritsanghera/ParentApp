@@ -4,15 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.GridView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -21,9 +18,12 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
+import ca.cmpt276.iteration1.model.Child;
+
 public class Picker_Queue_Activity extends AppCompatActivity {
 
-    ArrayList<String> children_list;
+    ArrayList<Child> children_list;
+    private int index = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +31,14 @@ public class Picker_Queue_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_picker_queue);
         setup_back_button();
 
+        setup_setIntentData();
+
         setup_queue_listView();
+        setup_save_button();
+    }
+
+    private void setup_setIntentData() {
+        children_list = getIntent().getParcelableArrayListExtra("CHILDREN_LIST");
     }
 
     private void setup_back_button() {
@@ -39,17 +46,12 @@ public class Picker_Queue_Activity extends AppCompatActivity {
         back_button.setOnClickListener(view -> Picker_Queue_Activity.super.onBackPressed());
     }
     private void setup_queue_listView() {
-        Intent data = getIntent();
-        children_list = data.getStringArrayListExtra("CHILDREN_LIST");
-        Log.e("QUEUE", children_list.get(0));
-
-        ArrayAdapter adapter = new Picker_Queue_Adapter();
+        ArrayAdapter<Child> adapter = new Picker_Queue_Adapter();
         ListView list = findViewById(R.id.choose_picker_list);
         list.setAdapter(adapter);
-
     }
 
-    private class Picker_Queue_Adapter extends ArrayAdapter<String> {
+    private class Picker_Queue_Adapter extends ArrayAdapter<Child> {
         public Picker_Queue_Adapter() {
             super(Picker_Queue_Activity.this,
                     R.layout.queue_item,
@@ -69,10 +71,10 @@ public class Picker_Queue_Activity extends AppCompatActivity {
 
             //fill view
             ImageView imageView = itemView.findViewById(R.id.queue_profile);
-            imageView.setImageDrawable(getDrawable(R.drawable.default_profile));
+            imageView.setImageResource(R.drawable.default_profile);
 
             TextView nameView = itemView.findViewById(R.id.queue_name);
-            nameView.setText(children_list.get(position));
+            nameView.setText(children_list.get(position).getName());
 
             itemView.setOnClickListener(view -> {
                 for (int i = 0; i < parent.getChildCount(); i++) {
@@ -81,7 +83,7 @@ public class Picker_Queue_Activity extends AppCompatActivity {
                 }
                 getWindow().getDecorView().setBackgroundColor(getColor(R.color.white));
                 parent.getChildAt(position).setBackgroundResource(R.drawable.coin_flip_queue_selected_background);
-                setReturn_Result(position);
+                index = position;
             });
 
             return itemView;
@@ -94,5 +96,19 @@ public class Picker_Queue_Activity extends AppCompatActivity {
         intent.putExtra("CHILD_INDEX",index);
         setResult(RESULT_OK,intent);
     }
+
+
+    private void setup_save_button() {
+        Button save = findViewById(R.id.queue_save);
+        save.setOnClickListener(view -> {
+            if(index == -1){
+                Snackbar.make(view,"Choose a child before save",Snackbar.LENGTH_LONG).show();
+            } else {
+                setReturn_Result(index);
+                finish();
+            }
+        });
+    }
+
 
 }

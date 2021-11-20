@@ -12,7 +12,8 @@ import java.util.ArrayList;
 
 public class Children_Manager {
     private static Children_Manager instance;
-    private ArrayList<String> children_list;
+    private final ArrayList<Child> children_list;
+
     public Children_Manager() {
         this.children_list = new ArrayList<>();
     }
@@ -26,21 +27,23 @@ public class Children_Manager {
     }
 
     public void addChild(Child child){
-        children_list.add(child.getName());
+        children_list.add(child);
     }
 
     public void clear(){
         children_list.clear();
     }
 
-    //child at index be moved to end of queue.
-    public void update_queue(int index){
-        String name = children_list.get(index);
-        children_list.remove(index);
-        children_list.add(name);
+    public int find_name(String name){
+        for(Child child : children_list){
+            if(child.getName().equals(name)){
+                return children_list.indexOf(child);
+            }
+        }
+        return -1;
     }
 
-    public ArrayList<String> getChildren_list(){
+    public ArrayList<Child> getChildren_list(){
         return children_list;
     }
 }

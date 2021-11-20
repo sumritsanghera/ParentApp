@@ -3,9 +3,14 @@ package ca.cmpt276.iteration1.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+/*
+    Edited Child saves original and new name of child to be edited
+    - passed array of Edited Child to other activities to update queues and lists
+ */
+
 public class Edited_Child implements Parcelable {
-    String original_name;
-    String new_name;
+    private final String original_name;
+    private final String new_name;
 
     public Edited_Child(String original_name,String new_name) {
         this.original_name = original_name;
