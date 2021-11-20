@@ -1,7 +1,10 @@
 package ca.cmpt276.iteration1;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.util.Base64;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -9,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
+
+import java.io.ByteArrayOutputStream;
 
 /*
     Add Child Activity
@@ -20,12 +25,13 @@ import com.google.android.material.textfield.TextInputEditText;
 
 public class Add_Child_Activity extends AppCompatActivity {
 
+    ImageView profilePicture = findViewById(R.id.picker_profile);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_name);
 
-        ImageView profilePicture = findViewById(R.id.picker_profile);
         setup_back_button();
         setup_submit_button();
     }
@@ -45,9 +51,27 @@ public class Add_Child_Activity extends AppCompatActivity {
                 Intent intent = new Intent();
                 intent.putExtra("NAME", String.valueOf(input.getText()));
                 setResult(RESULT_OK,intent);
+
+                Intent picture = new Intent();
+                String code = encodeToBase64(((BitmapDrawable) profilePicture.getDrawable()).getBitmap());
+                picture.putExtra("PICTURE", code);
+                setResult(RESULT_OK, picture);
+
                 finish();
             }
         });
     }
+
+    //https://stackoverflow.com/questions/9224056/android-bitmap-to-base64-string
+    public static String encodeToBase64(Bitmap image) {
+        Bitmap immage = image;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        immage.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        byte[] b = baos.toByteArray();
+        String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
+
+        return imageEncoded;
+    }
+
 
 }

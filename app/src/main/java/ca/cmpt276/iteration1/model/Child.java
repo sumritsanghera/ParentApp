@@ -10,8 +10,15 @@ import android.os.Parcelable;
 
 public class Child implements Parcelable {
     private String name;
+    private String bitmap;
+
     public Child(String name) {
         this.name = name;
+    }
+
+    public Child(String name, String bitmap) {
+        this.name = name;
+        this.bitmap = bitmap;
     }
 
     protected Child(Parcel in) {
@@ -44,7 +51,15 @@ public class Child implements Parcelable {
         this.name = name;
     }
 
+    public void setBitmap(String bitmap) {
+        this.bitmap = bitmap;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public String getBitmap() {
+        return bitmap;
     }
 }

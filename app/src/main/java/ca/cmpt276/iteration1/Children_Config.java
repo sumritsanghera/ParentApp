@@ -86,7 +86,8 @@ public class Children_Config extends AppCompatActivity {
                         Intent data = result.getData();
                         if (data != null) {
                             String name = data.getStringExtra("NAME");
-                            Child new_child = new Child(name);
+                            String bitmap = data.getStringExtra("PICTURE");
+                            Child new_child = new Child(name, bitmap);
                             children_list.add(new_child);
                             added_children.add(new_child);
                             refresh_children_list();
@@ -195,4 +196,6 @@ public class Children_Config extends AppCompatActivity {
             add_name_launcher.launch(intent);
         });
     }
+
+
 }
