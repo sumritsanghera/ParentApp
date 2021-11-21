@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -56,7 +57,7 @@ public class Add_Child_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_name);
 
-        profilePicture = findViewById(R.id.picker_profile);
+        profilePicture = findViewById(R.id.imageViewMainActivityProfilePicture);
 
         setup_back_button();
         setup_submit_button();
@@ -90,8 +91,8 @@ public class Add_Child_Activity extends AppCompatActivity {
     }
 
     private void setup_camera_button() {
-        Button button = findViewById(R.id.add_image_button);
-        button.setOnClickListener(new View.OnClickListener() {
+        //Button button = findViewById(R.id.add_image_button);
+        profilePicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 chooseProfilePicture();
@@ -121,6 +122,8 @@ public class Add_Child_Activity extends AppCompatActivity {
                     takePictureFromCamera();
                 }
                 alertDialogProfilePicture.cancel();
+                TextView text = findViewById(R.id.touch_add_picture);
+                text.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -129,6 +132,8 @@ public class Add_Child_Activity extends AppCompatActivity {
             public void onClick(View view) {
                 takePictureFromGallery();
                 alertDialogProfilePicture.cancel();
+                TextView text = findViewById(R.id.touch_add_picture);
+                text.setVisibility(View.INVISIBLE);
             }
         });
     }
@@ -196,7 +201,7 @@ public class Add_Child_Activity extends AppCompatActivity {
         return UUID.randomUUID().toString();
     }
 
-    public static String saveBitmap(Context context, Bitmap mBitmap) {
+    public static String saveBitmap(Context context, Bitmap photo) {
 
         String savePath;
         File filePic;
@@ -216,7 +221,7 @@ public class Add_Child_Activity extends AppCompatActivity {
                 filePic.createNewFile();
             }
             FileOutputStream fos = new FileOutputStream(filePic);
-            mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            photo.compress(Bitmap.CompressFormat.JPEG, 100, fos);
             fos.flush();
             fos.close();
         } catch (IOException e) {
