@@ -1,20 +1,31 @@
 package ca.cmpt276.iteration1;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -177,6 +188,18 @@ public class Children_Config extends AppCompatActivity {
             //fill view
             TextView nameView = itemView.findViewById(R.id.children_config_list_name);
             nameView.setText(current_child.getName());
+            ImageView profilePicture = (ImageView)itemView.findViewById(R.id.picker_profile);
+            String path = current_child.getBitmap();
+
+            // default image
+//            if (current_child.defaultImage()) {
+//                profilePicture.setImageResource(R.drawable.default_profile);
+//            }
+            // select a different image
+            Bitmap bitmap = BitmapFactory.decodeFile(path);
+            //profilePicture.setImageBitmap(bitmap);
+
+
 
             itemView.setOnClickListener(view -> {
                 Intent intent = new Intent(Children_Config.this, Edit_Child_Activity.class);
@@ -196,6 +219,5 @@ public class Children_Config extends AppCompatActivity {
             add_name_launcher.launch(intent);
         });
     }
-
 
 }

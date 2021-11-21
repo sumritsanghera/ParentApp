@@ -11,9 +11,11 @@ import android.os.Parcelable;
 public class Child implements Parcelable {
     private String name;
     private String bitmap;
+    private static final String NO_PICTURE = "No profile picture uploaded";
 
     public Child(String name) {
         this.name = name;
+        this.bitmap = NO_PICTURE;
     }
 
     public Child(String name, String bitmap) {
@@ -62,4 +64,10 @@ public class Child implements Parcelable {
     public String getBitmap() {
         return bitmap;
     }
+
+//    public boolean defaultImage(){
+//        return bitmap.equals("No profile picture uploaded");
+//    }
 }
+
+
