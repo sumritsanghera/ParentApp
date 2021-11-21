@@ -53,8 +53,8 @@ public class Child implements Parcelable {
         this.name = name;
     }
 
-    public void setBitmap(String bitmap) {
-        this.bitmap = bitmap;
+    public void setBitmap(String name) {
+        this.bitmap = name;
     }
 
     public String getName() {
@@ -65,9 +65,6 @@ public class Child implements Parcelable {
         return bitmap;
     }
 
-//    public boolean defaultImage(){
-//        return bitmap.equals("No profile picture uploaded");
-//    }
 }
 
 

@@ -19,7 +19,7 @@
         <entry key="app/src/main/res/drawable/config_children_list_background.xml" value="0.11018518518518519" />
         <entry key="app/src/main/res/drawable/info_icon.xml" value="0.11481481481481481" />
         <entry key="app/src/main/res/drawable/timer_icon.xml" value="0.11481481481481481" />
-        <entry key="app/src/main/res/layout/activity_add_name.xml" value="0.18" />
+        <entry key="app/src/main/res/layout/activity_add_name.xml" value="0.14" />
         <entry key="app/src/main/res/layout/activity_coin_flip_config.xml" value="0.17685185185185184" />
         <entry key="app/src/main/res/layout/activity_config.xml" value="0.17685185185185184" />
         <entry key="app/src/main/res/layout/activity_edit_name.xml" value="0.17685185185185184" />
