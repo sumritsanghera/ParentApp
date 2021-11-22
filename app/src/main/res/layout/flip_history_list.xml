@@ -20,6 +20,7 @@
             android:id="@+id/history_list_profile"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:scaleType="centerCrop"
             android:background="@drawable/default_profile"
             android:layout_gravity="center_horizontal"
             android:contentDescription="@string/profile_description" />

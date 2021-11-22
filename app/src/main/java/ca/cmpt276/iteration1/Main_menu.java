@@ -111,7 +111,7 @@ public class Main_menu extends AppCompatActivity {
                             //update coin_manager if there are flipped coins
                             if(!coin_manager.getCoin_flip_list().isEmpty()){
                                 //update on edited names
-                                coin_manager.update_child_name_after_edit(edited_children_list);
+                                coin_manager.update_child_after_edit(edited_children_list);
 
                                 //remove coin flips if removed list is not empty.
                                 if(!removed_list.isEmpty()){

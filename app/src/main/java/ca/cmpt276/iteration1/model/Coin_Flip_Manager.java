@@ -32,11 +32,13 @@ public class Coin_Flip_Manager {
         return coin_flip_list;
     }
 
-    public void update_child_name_after_edit(ArrayList<Edited_Child> name_list){
+    public void update_child_after_edit(ArrayList<Edited_Child> name_list){
         for(Coin_Flip flip : coin_flip_list){
             for(Edited_Child child : name_list){
-                if(flip.getName().equals(child.getOriginal_name())){
+                if(flip.getName().equals(child.getOriginal_name()) &&
+                        flip.getImage().equals(child.getOriginal_image())){
                     flip.setName(child.getNew_name());
+                    flip.setImage(child.getNew_image());
                 }
             }
         }
@@ -48,7 +50,8 @@ public class Coin_Flip_Manager {
         if(!removed_list.isEmpty() && !coin_flip_list.isEmpty()) {
             for (Coin_Flip flip : coin_flip_list) {
                 for (Child removed_child : removed_list) {
-                    if (flip.getName().equals(removed_child.getName())) {
+                    if (flip.getName().equals(removed_child.getName()) &&
+                        flip.getImage().equals(removed_child.getImagePath())) {
                         indices.add(index);
                     }
                 }

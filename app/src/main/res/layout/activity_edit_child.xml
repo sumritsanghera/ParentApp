@@ -32,12 +32,14 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
+            android:layout_toStartOf="@id/delete_button"
+            android:layout_toEndOf="@id/edit_back_button"
             android:fontFamily="@font/andada"
             android:padding="10dp"
             android:text="@string/edit_name_title"
             android:textColor="@color/dark_blue"
             android:textSize="30sp"
-            android:textStyle="bold"  />
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/delete_button"
@@ -45,7 +47,8 @@
             android:layout_height="40dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            app:srcCompat="@drawable/trash_icon" />
+            app:srcCompat="@drawable/trash_icon"
+            android:contentDescription="@string/edit_delete_description" />
     </RelativeLayout>
 
 
@@ -83,7 +86,8 @@
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
                     android:src="@drawable/default_profile"
-                    android:layout_gravity="center_horizontal"/>
+                    android:layout_gravity="center_horizontal"
+                    android:contentDescription="@string/edit_profile_description" />
             </androidx.cardview.widget.CardView>
 
             <TextView
@@ -107,8 +111,8 @@
             android:paddingHorizontal="20dp"
             android:textColor="@color/dark_blue"
             android:textAllCaps="true"
-            android:text="Profile photo"
-            android:textSize="14dp"/>
+            android:text="@string/profile_photo"
+            android:textSize="14sp"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -120,7 +124,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentStart="true"
-                android:text="Nickname"
+                android:text="@string/nickname"
                 android:textColor="@color/light_grey"/>
 
             <com.google.android.material.textfield.TextInputEditText
@@ -131,7 +135,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_gravity="center"
                 android:background="@drawable/text_input_background"
-                android:hint="Edit Name"
+                android:hint="@string/edit_child_edit_name"
                 android:textSize="20sp"/>
 
         </RelativeLayout>
@@ -147,7 +151,7 @@
         android:layout_gravity="center"
         android:layout_margin="10dp"
         android:background="@drawable/button_background"
-        android:text="@string/submit"
+        android:text="@string/save"
         android:theme="@style/ButtonStyle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

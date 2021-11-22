@@ -101,4 +101,10 @@
     <string name="add_name_hint">Add name</string>
     <string name="add_profile_info">Touch to add profile picture</string>
     <string name="touch_to_edit_profile_photo">Touch to edit profile photo</string>
+    <string name="save">Save</string>
+    <string name="edit_delete_description">edit delete icon</string>
+    <string name="edit_profile_description">edit profile pic</string>
+    <string name="profile_photo">Profile photo</string>
+    <string name="nickname">Nickname</string>
+    <string name="edit_child_edit_name">Edit Name</string>
 </resources>
