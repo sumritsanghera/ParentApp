@@ -20,10 +20,9 @@
             android:id="@+id/add_name_back_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:background="@drawable/back_icon"
             android:contentDescription="@string/back_button_image_description"
-            tools:ignore="ImageContrastCheck"/>
+            tools:ignore="ImageContrastCheck" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -43,10 +42,16 @@
     </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_title"
+        app:layout_constraintVertical_bias="0.627">
         app:layout_constraintTop_toBottomOf="@+id/add_name_tool_bar"
         app:layout_constraintVertical_bias="0.3">
 
@@ -68,7 +73,7 @@
             android:layout_gravity="center"
             android:layout_margin="10dp"
             android:textSize="25sp"
-            app:layout_constraintTop_toBottomOf="@+id/enterName"/>
+            app:layout_constraintTop_toBottomOf="@+id/enterName" />
 
         <Button
             android:id="@+id/add_name_button"
@@ -76,8 +81,32 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/submit"
-            android:theme="@style/ButtonStyle"/>
+            android:theme="@style/ButtonStyle" />
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/profile_picture"
+        android:layout_width="125dp"
+        android:layout_height="106dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="32dp"
+        android:src="@drawable/profile_icon"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout2"
+        app:layout_constraintTop_toBottomOf="@+id/add_title"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/touch_add_picture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Touch to add profile picture"
+        app:layout_constraintBottom_toTopOf="@+id/profile_picture"
+        app:layout_constraintEnd_toEndOf="@+id/profile_picture"
+        app:layout_constraintStart_toStartOf="@+id/profile_picture"
+        app:layout_constraintTop_toBottomOf="@+id/add_title"
+        app:layout_constraintVertical_bias="1.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

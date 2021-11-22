@@ -10,8 +10,17 @@ import android.os.Parcelable;
 
 public class Child implements Parcelable {
     private String name;
+    private String bitmap;
+    private static final String NO_PICTURE = "No profile picture uploaded";
+
     public Child(String name) {
         this.name = name;
+        this.bitmap = NO_PICTURE;
+    }
+
+    public Child(String name, String bitmap) {
+        this.name = name;
+        this.bitmap = bitmap;
     }
 
     protected Child(Parcel in) {
@@ -44,7 +53,18 @@ public class Child implements Parcelable {
         this.name = name;
     }
 
+    public void setBitmap(String name) {
+        this.bitmap = name;
+    }
+
     public String getName() {
         return name;
     }
+
+    public String getBitmap() {
+        return bitmap;
+    }
+
 }
+
+

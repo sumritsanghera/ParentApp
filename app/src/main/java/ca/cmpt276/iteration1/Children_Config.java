@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -98,11 +99,13 @@ public class Children_Config extends AppCompatActivity {
                         Intent data = result.getData();
                         if (data != null) {
                             String name = data.getStringExtra("NAME");
-                            Child new_child = new Child(name);
+                            String bitmap = data.getStringExtra("PICTURE");
+                            Child new_child = new Child(name, bitmap);
                             children_list.add(new_child);
                             added_children.add(new_child);
                             refresh_children_list();
                             setResult();
+                            Log.i("TAG", "picture in child class");
                         }
                     }
                 });
@@ -227,4 +230,5 @@ public class Children_Config extends AppCompatActivity {
             add_name_launcher.launch(intent);
         });
     }
+
 }
