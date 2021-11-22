@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,9 @@ import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import ca.cmpt276.iteration1.model.Child;
@@ -32,13 +37,13 @@ public class Picker_Queue_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_picker_queue);
         setup_back_button();
 
-        setup_setIntentData();
+        setup_getIntentData();
 
         setup_queue_listView();
         setup_save_button();
     }
 
-    private void setup_setIntentData() {
+    private void setup_getIntentData() {
         children_list = getIntent().getParcelableArrayListExtra("CHILDREN_LIST");
     }
 
@@ -68,7 +73,8 @@ public class Picker_Queue_Activity extends AppCompatActivity {
                 itemView = getLayoutInflater().inflate(R.layout.queue_item,parent,false);
             }
             //populate the list
-            //get current coin_flip
+            //get current child
+            Child current_child = children_list.get(position);
 
             //fill view
             CardView cardView = itemView.findViewById(R.id.picker_card_view);
@@ -76,7 +82,11 @@ public class Picker_Queue_Activity extends AppCompatActivity {
             cardView.setRadius((float) width/2);
 
             ImageView imageView = itemView.findViewById(R.id.queue_profile);
-            imageView.setImageResource(R.drawable.default_profile);
+            if(current_child.getImagePath().equals("Default pic")){
+                imageView.setImageResource(R.drawable.default_profile);
+            } else {
+                loadImageFromStorage(current_child.getImagePath(),current_child.getName(),imageView);
+            }
 
             TextView nameView = itemView.findViewById(R.id.queue_name);
             nameView.setText(children_list.get(position).getName());
@@ -113,6 +123,22 @@ public class Picker_Queue_Activity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    //pass in filename (which is child's name) and the image path to load image.
+    private void loadImageFromStorage(String path, String filename, ImageView imageView)
+    {
+
+        try {
+            File f=new File(path, filename + ".jpg");
+            Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
+            imageView.setImageBitmap(b);
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+
     }
 
 

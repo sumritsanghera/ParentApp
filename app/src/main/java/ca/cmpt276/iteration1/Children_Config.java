@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -147,7 +146,6 @@ public class Children_Config extends AppCompatActivity {
     private void setResult() {
         Intent intent = new Intent();
         intent.putExtra("CHILDREN_LIST",children_list);
-        Log.e("CHILDREN CONFIG", children_list.get(0).getImagePath());
         intent.putExtra("ADDED_CHILDREN", added_children);
         intent.putExtra("REMOVED_CHILDREN",removed_children);
         intent.putExtra("EDITED_CHILDREN",edited_children);
@@ -218,7 +216,6 @@ public class Children_Config extends AppCompatActivity {
                 Intent intent = new Intent(Children_Config.this, Edit_Child_Activity.class);
                 intent.putExtra("CHILD", current_child);
                 intent.putExtra("IMAGE", current_child.getImagePath());
-                Log.e("CHILDREN_CONFIG bitmap in adapter", current_child.getImagePath());
                 intent.putExtra("INDEX", position);
                 edit_name_launcher.launch(intent);
             });

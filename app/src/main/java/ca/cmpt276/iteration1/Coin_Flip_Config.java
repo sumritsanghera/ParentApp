@@ -89,6 +89,13 @@ public class Coin_Flip_Config extends AppCompatActivity {
                             int index = data.getIntExtra("CHILD_INDEX",0);
                             picker_name = findViewById(R.id.picker_name);
                             picker_name.setText(queue.get(index).getName());
+                            if(queue.get(index).getImagePath().equals("Default pic")){
+                                picker_picture.setImageResource(R.drawable.default_profile);
+                            } else {
+                                loadImageFromStorage(queue.get(index).getImagePath(),
+                                        queue.get(index).getName(),
+                                        picker_picture);
+                            }
                             index_picker = index;
                         }
                     }

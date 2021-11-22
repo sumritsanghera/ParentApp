@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
 
@@ -77,9 +76,6 @@ public class Main_menu extends AppCompatActivity {
                             ArrayList<Child> added_list = data.getParcelableArrayListExtra("ADDED_CHILDREN");
                             ArrayList<Child> removed_list = data.getParcelableArrayListExtra("REMOVED_CHILDREN");
                             ArrayList<Edited_Child> edited_children_list = data.getParcelableArrayListExtra("EDITED_CHILDREN");
-
-                            Log.e("MAIN MENU config launcher", children_list.get(0).getName());
-                            Log.e("MAIN MENU config launcher", children_list.get(0).getImagePath());
 
                             children_manager.clear();
                             for (Child new_child : children_list) {
@@ -211,10 +207,6 @@ public class Main_menu extends AppCompatActivity {
         button.setOnClickListener(view -> {
             Intent intent = new Intent(Main_menu.this, Coin_Flip_Config.class);
             intent.putExtra("QUEUE",coin_queue.getQueue());
-            if(!coin_queue.getQueue().isEmpty()){
-                Log.e("MAIN MENU queue", coin_queue.getQueue().get(0).getName());
-                Log.e("MAIN MENU queue", coin_queue.getQueue().get(0).getImagePath());
-            }
             coin_flip_launcher.launch(intent);
         });
     }
