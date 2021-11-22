@@ -90,7 +90,7 @@ public class Coin_Flip_Config extends AppCompatActivity {
         picker_name.setText(queue.get(0).getName());
 
         picker_picture = findViewById(R.id.picker_profile);
-        Bitmap bm = StringToBitMap(queue.get(0).getBitmap());
+        Bitmap bm = StringToBitMap(queue.get(0).getImagePath());
         picker_picture.setImageBitmap(bm);
 
     }

@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +21,9 @@ import androidx.cardview.widget.CardView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import ca.cmpt276.iteration1.model.Child;
@@ -125,7 +127,7 @@ public class Children_Config extends AppCompatActivity {
                             String name = data.getStringExtra("NAME");
                             String bitmap = data.getStringExtra("PICTURE");
                             Edited_Child new_child = new Edited_Child(children_list.get(index).getName(),name,
-                                                            children_list.get(index).getBitmap(),bitmap);
+                                                            children_list.get(index).getImagePath(),bitmap);
                             edited_children.add(new_child);
                             Child edit_child = children_list.get(index);
                             edit_child.setName(name);
@@ -206,8 +208,7 @@ public class Children_Config extends AppCompatActivity {
             cardView.setRadius((float) width/2);
 
             ImageView profile = itemView.findViewById(R.id.profile_icon);
-            Bitmap bm = StringToBitMap(current_child.getBitmap());
-            profile.setImageBitmap(bm);
+            loadImageFromStorage(current_child.getImagePath(),current_child.getName(),profile);
 
             TextView nameView = itemView.findViewById(R.id.config_child_name);
             nameView.setText(child_name);
@@ -215,8 +216,8 @@ public class Children_Config extends AppCompatActivity {
             itemView.setOnClickListener(view -> {
                 Intent intent = new Intent(Children_Config.this, Edit_Child_Activity.class);
                 intent.putExtra("CHILD", current_child);
-                intent.putExtra("IMAGE", current_child.getBitmap());
-                Log.e("CHILDREN_CONFIG bitmap in adapter", current_child.getBitmap());
+                intent.putExtra("IMAGE", current_child.getImagePath());
+                Log.e("CHILDREN_CONFIG bitmap in adapter", current_child.getImagePath());
                 intent.putExtra("INDEX", position);
                 edit_name_launcher.launch(intent);
             });
@@ -234,17 +235,20 @@ public class Children_Config extends AppCompatActivity {
         });
     }
 
-    //https://stackoverflow.com/questions/13562429/how-many-ways-to-convert-bitmap-to-string-and-vice-versa
-    public Bitmap StringToBitMap(String encodedString){
-        try{
-            byte [] encodeByte = Base64.decode(encodedString,Base64.DEFAULT);
-            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-            return bitmap;
+    //pass in filename (which is child's name) and the image path to load image.
+    private void loadImageFromStorage(String path, String filename, ImageView imageView)
+    {
+
+        try {
+            File f=new File(path, filename + ".jpg");
+            Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
+            imageView.setImageBitmap(b);
         }
-        catch(Exception e){
-            e.getMessage();
-            return null;
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
         }
+
     }
 
 }

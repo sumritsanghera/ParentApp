@@ -61,7 +61,7 @@ public class Child implements Parcelable {
         return name;
     }
 
-    public String getBitmap() {
+    public String getImagePath() {
         return bitmap;
     }
 

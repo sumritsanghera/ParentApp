@@ -1,9 +1,14 @@
 package ca.cmpt276.iteration1;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.ImageDecoder;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -15,15 +20,21 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.UUID;
@@ -48,20 +59,30 @@ import java.util.UUID;
 public class Add_Child_Activity extends AppCompatActivity {
 
     private ImageView profilePicture;
-    private static final String SD_PATH = Environment.getExternalStorageDirectory().getPath();
-    private static final String IN_PATH = Environment.getDataDirectory().getPath();
+    private String image_path;
+    private String name;
     private AlertDialog alertDialogProfilePicture;
+    private ActivityResultLauncher<Intent> camera_launcher;
+    private TextInputEditText input;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_child);
 
-        profilePicture = findViewById(R.id.profile_picture);
+        setup_params();
 
         setup_back_button();
+
+        setup_camera_launcher();
         setup_submit_button();
         setup_camera_button();
+    }
+
+    private void setup_params() {
+        profilePicture = findViewById(R.id.profile_picture);
+        image_path = "";
+        input = findViewById(R.id.add_name_edit_text);
     }
 
     private void setup_back_button() {
@@ -69,10 +90,28 @@ public class Add_Child_Activity extends AppCompatActivity {
         back_button.setOnClickListener(view -> Add_Child_Activity.super.onBackPressed());
     }
 
+    private void setup_camera_launcher() {
+        camera_launcher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if(result.getResultCode() == Activity.RESULT_OK){
+                        Intent data = result.getData();
+                        Bundle extras = data.getExtras();
+                        Bitmap imageBitmap = (Bitmap) extras.get("data");
+                        name = String.valueOf(input.getText());
+                        image_path = saveToInternalStorage(imageBitmap,name);
+                        loadImageFromStorage(image_path,name,profilePicture);
+                    }
+                }
+        );
+
+    }
+
+    //Submit profile back to config, send back image and name of child
     private void setup_submit_button() {
         Button button = findViewById(R.id.add_name_button);
         button.setOnClickListener(view -> {
-            TextInputEditText input = findViewById(R.id.add_name_edit_text);
+            input = findViewById(R.id.add_name_edit_text);
             if(String.valueOf(input.getText()).equals("")){
                 Snackbar.make(view,"Cannot add empty name",Snackbar.LENGTH_LONG).show();
             } else {
@@ -84,8 +123,8 @@ public class Add_Child_Activity extends AppCompatActivity {
 
                 profilePicture.buildDrawingCache();
                 Bitmap bitmap = profilePicture.getDrawingCache();
-                String code = bitmapToString(bitmap);
-                intent.putExtra("PICTURE", code);
+                saveToInternalStorage(bitmap,capitalizeFirstLetter);
+                intent.putExtra("PICTURE", image_path);
 
                 setResult(RESULT_OK,intent);
                 finish();
@@ -139,46 +178,85 @@ public class Add_Child_Activity extends AppCompatActivity {
     }
 
     private void takePictureFromGallery() {
-        Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(pickPhoto,1);
+        // start get image for cropping and then use the image in cropping activity
+        CropImage.activity()
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .start(this);
     }
 
     private void takePictureFromCamera() {
-        Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if(takePicture.resolveActivity(getPackageManager()) != null){
-            startActivityForResult(takePicture, 2);
-        }
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        camera_launcher.launch(intent);
     }
 
+
+    //pass in bitmap of image and filename (which is child's name) to save image
+    private String saveToInternalStorage(Bitmap bitmapImage,String filename){
+        ContextWrapper cw = new ContextWrapper(getApplicationContext());
+        // path to /data/data/yourapp/app_data/imageDir
+        File directory = cw.getDir("children_images", Context.MODE_PRIVATE);
+        // Create imageDir
+        File mypath=new File(directory,filename + ".jpg");
+
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(mypath);
+            // Use the compress method on the BitMap object to write image to the OutputStream
+            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                fos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return directory.getAbsolutePath();
+    }
+
+    //pass in filename (which is child's name) and the image path to load image.
+    private void loadImageFromStorage(String path, String filename, ImageView imageView)
+    {
+
+        try {
+            File f=new File(path, filename + ".jpg");
+            Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
+            imageView.setImageBitmap(b);
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+
+    }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1) {
-            if (data != null) {
-                Uri selectedImageURI = data.getData();
-                profilePicture.setImageURI(selectedImageURI);
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                Uri resultUri = result.getUri();
+                profilePicture.setImageURI(resultUri);
+                Bitmap imageBitmap = null;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                    try {
+                        imageBitmap = ImageDecoder.decodeBitmap(ImageDecoder.createSource(this.getContentResolver(), resultUri));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    try {
+                        imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), resultUri);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                assert imageBitmap!=null;
+                image_path = saveToInternalStorage(imageBitmap,String.valueOf(input.getText()));
             }
         }
-        if (requestCode == 2) {
-            if (data != null) {
-                Bundle bundle = data.getExtras();
-                Bitmap bitmapImage = (Bitmap) bundle.get("data");
-                profilePicture.setImageBitmap(bitmapImage);
-            }
-        }
-    }
-
-    public String bitmapToString(Bitmap bitmap){
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
-        byte [] b = baos.toByteArray();
-        String temp = Base64.encodeToString(b, Base64.DEFAULT);
-        return temp;
-    }
-
-    private static String generateFileName() {
-        return UUID.randomUUID().toString();
     }
 
 }
