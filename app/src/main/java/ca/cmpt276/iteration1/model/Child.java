@@ -11,11 +11,11 @@ import android.os.Parcelable;
 public class Child implements Parcelable {
     private String name;
     private String bitmap;
-    private static final String NO_PICTURE = "No profile picture uploaded";
 
-    public Child(String name) {
+    //Only use this constructor for when adding the no name person in queue.
+    public Child(String name){
         this.name = name;
-        this.bitmap = NO_PICTURE;
+        this.bitmap = "Default pic";
     }
 
     public Child(String name, String bitmap) {

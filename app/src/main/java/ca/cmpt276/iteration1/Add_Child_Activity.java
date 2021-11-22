@@ -47,10 +47,10 @@ import java.util.UUID;
 
 public class Add_Child_Activity extends AppCompatActivity {
 
-    ImageView profilePicture;
+    private ImageView profilePicture;
     private static final String SD_PATH = Environment.getExternalStorageDirectory().getPath();
     private static final String IN_PATH = Environment.getDataDirectory().getPath();
-    AlertDialog alertDialogProfilePicture;
+    private AlertDialog alertDialogProfilePicture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +86,6 @@ public class Add_Child_Activity extends AppCompatActivity {
                 Bitmap bitmap = profilePicture.getDrawingCache();
                 String code = bitmapToString(bitmap);
                 intent.putExtra("PICTURE", code);
-                Log.i("TAG", "picture added to child");
 
                 setResult(RESULT_OK,intent);
                 finish();
@@ -180,36 +179,6 @@ public class Add_Child_Activity extends AppCompatActivity {
 
     private static String generateFileName() {
         return UUID.randomUUID().toString();
-    }
-
-    public static String saveBitmap(Context context, Bitmap photo) {
-
-        String savePath;
-        File filePic;
-        if (Environment.getExternalStorageState().equals(
-                Environment.MEDIA_MOUNTED)) {
-            savePath = SD_PATH;
-        } else {
-            savePath = context.getApplicationContext().getFilesDir()
-                    .getAbsolutePath()
-                    + IN_PATH;
-        }
-
-        try {
-            filePic = new File(savePath + generateFileName() + ".jpg");
-            if (!filePic.exists()) {
-                filePic.getParentFile().mkdirs();
-                filePic.createNewFile();
-            }
-            FileOutputStream fos = new FileOutputStream(filePic);
-            photo.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-            fos.flush();
-            fos.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-        return filePic.getAbsolutePath();
     }
 
 }

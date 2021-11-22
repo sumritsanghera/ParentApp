@@ -3,7 +3,10 @@ package ca.cmpt276.iteration1;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,12 +57,12 @@ public class Children_Config extends AppCompatActivity {
         info = findViewById(R.id.config_info);
         if(!children_list.isEmpty()){
             info.setText(R.string.config_info_2);
-            adapter = new Children_Config_Adapter(this,children_list);
-            GridView list = findViewById(R.id.children_grid_view);
-            list.setAdapter(adapter);
         } else {
             info.setText(R.string.config_info);
         }
+        adapter = new Children_Config_Adapter(this,children_list);
+        GridView list = findViewById(R.id.children_grid_view);
+        list.setAdapter(adapter);
 
     }
 
@@ -72,8 +75,8 @@ public class Children_Config extends AppCompatActivity {
         setup_fields();
 
         setup_back_button();
-        setup_add_name_launcher();
-        setup_edit_name_launcher();
+        setup_add_child_launcher();
+        setup_edit_child_launcher();
         setup_children_list();
         setup_floating_button();
     }
@@ -91,7 +94,7 @@ public class Children_Config extends AppCompatActivity {
         back_button.setOnClickListener(view -> Children_Config.super.onBackPressed());
     }
 
-    private void setup_add_name_launcher() {
+    private void setup_add_child_launcher() {
         add_name_launcher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
@@ -105,13 +108,12 @@ public class Children_Config extends AppCompatActivity {
                             added_children.add(new_child);
                             refresh_children_list();
                             setResult();
-                            Log.i("TAG", "picture in child class");
                         }
                     }
                 });
     }
 
-    private void setup_edit_name_launcher() {
+    private void setup_edit_child_launcher() {
         edit_name_launcher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
@@ -121,22 +123,20 @@ public class Children_Config extends AppCompatActivity {
                         int index = data.getIntExtra("INDEX", -1);
                         if(!option) {
                             String name = data.getStringExtra("NAME");
-                            Edited_Child new_child = new Edited_Child(children_list.get(index).getName(),name);
+                            String bitmap = data.getStringExtra("PICTURE");
+                            Edited_Child new_child = new Edited_Child(children_list.get(index).getName(),name,
+                                                            children_list.get(index).getBitmap(),bitmap);
                             edited_children.add(new_child);
                             Child edit_child = children_list.get(index);
                             edit_child.setName(name);
+                            edit_child.setBitmap(bitmap);
                             children_list.set(index,edit_child);
                         } else {
                             removed_children.add(children_list.get(index));
                             children_list.remove(index);
                         }
                     }
-
-                    if(!children_list.isEmpty())
-                        refresh_children_list();
-                    else {
-                        info.setText(R.string.config_info);
-                    }
+                    refresh_children_list();
                     setResult();
 
                 });
@@ -206,14 +206,17 @@ public class Children_Config extends AppCompatActivity {
             cardView.setRadius((float) width/2);
 
             ImageView profile = itemView.findViewById(R.id.profile_icon);
-            profile.setImageResource(R.drawable.default_profile);
+            Bitmap bm = StringToBitMap(current_child.getBitmap());
+            profile.setImageBitmap(bm);
 
             TextView nameView = itemView.findViewById(R.id.config_child_name);
             nameView.setText(child_name);
 
             itemView.setOnClickListener(view -> {
                 Intent intent = new Intent(Children_Config.this, Edit_Child_Activity.class);
-                intent.putExtra("NAME", children_list.get(position).getName());
+                intent.putExtra("CHILD", current_child);
+                intent.putExtra("IMAGE", current_child.getBitmap());
+                Log.e("CHILDREN_CONFIG bitmap in adapter", current_child.getBitmap());
                 intent.putExtra("INDEX", position);
                 edit_name_launcher.launch(intent);
             });
@@ -229,6 +232,19 @@ public class Children_Config extends AppCompatActivity {
             Intent intent = new Intent(Children_Config.this, Add_Child_Activity.class);
             add_name_launcher.launch(intent);
         });
+    }
+
+    //https://stackoverflow.com/questions/13562429/how-many-ways-to-convert-bitmap-to-string-and-vice-versa
+    public Bitmap StringToBitMap(String encodedString){
+        try{
+            byte [] encodeByte = Base64.decode(encodedString,Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        }
+        catch(Exception e){
+            e.getMessage();
+            return null;
+        }
     }
 
 }

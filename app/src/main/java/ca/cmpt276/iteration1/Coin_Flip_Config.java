@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
@@ -44,7 +45,6 @@ public class Coin_Flip_Config extends AppCompatActivity {
 
         setup_children_list();
         setup_default_picker();
-        setup_profile();
 
         setup_choose_picker_launcher();
         setup_coin_flip_launcher();
@@ -70,26 +70,30 @@ public class Coin_Flip_Config extends AppCompatActivity {
 
     private void setup_children_list() {
         Intent data = getIntent();
-        children_list = data.getParcelableArrayListExtra("CHILDREN_LIST");
-        Child no_name = new Child("No name");
-        children_list.add(no_name);
+        queue = data.getParcelableArrayListExtra("CHILDREN_LIST");
+        String imageUri = getURLForResource(R.drawable.default_profile);
+        Child no_name = new Child("No name", imageUri);
+        queue.add(no_name);
     }
+
+    public String getURLForResource (int resourceId) {
+        //use BuildConfig.APPLICATION_ID instead of R.class.getPackage().getName() if both are not same
+        return Uri.parse("android.resource://"+R.class.getPackage().getName()+"/" +resourceId).toString();
+    }
+
     private void setup_default_picker() {
-        picker_name = findViewById(R.id.picker_name);
-        picker_name.setText(children_list.get(0).getName());
 
-        picker_picture = findViewById(R.id.picker_profile);
-        Bitmap bm = StringToBitMap(children_list.get(0).getBitmap());
-        picker_picture.setImageBitmap(bm);
-
-    }
-
-    private void setup_profile() {
         CardView profile = findViewById(R.id.coin_config_card_view);
         int width = profile.getLayoutParams().width;
         profile.setRadius((float) width/2);
-    }
+        picker_name = findViewById(R.id.picker_name);
+        picker_name.setText(queue.get(0).getName());
 
+        picker_picture = findViewById(R.id.picker_profile);
+        Bitmap bm = StringToBitMap(queue.get(0).getBitmap());
+        picker_picture.setImageBitmap(bm);
+
+    }
 
     private void setup_choose_picker_launcher() {
         picker_launcher = registerForActivityResult(
