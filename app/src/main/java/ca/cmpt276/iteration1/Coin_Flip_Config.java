@@ -7,9 +7,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.util.Base64;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -30,6 +33,7 @@ public class Coin_Flip_Config extends AppCompatActivity {
     private TextView picker_name;
     private RadioGroup options;
     private Boolean guess; //true is heads, false is tails.
+    private ImageView picker_picture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +52,18 @@ public class Coin_Flip_Config extends AppCompatActivity {
         setup_flip_coin();
     }
 
-
+    //https://stackoverflow.com/questions/13562429/how-many-ways-to-convert-bitmap-to-string-and-vice-versa
+    public Bitmap StringToBitMap(String encodedString){
+        try{
+            byte [] encodeByte = Base64.decode(encodedString,Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        }
+        catch(Exception e){
+            e.getMessage();
+            return null;
+        }
+    }
 
     private void setup_children_list() {
         Intent data = getIntent();
@@ -59,6 +74,11 @@ public class Coin_Flip_Config extends AppCompatActivity {
     private void setup_default_picker() {
         picker_name = findViewById(R.id.picker_name);
         picker_name.setText(children_list.get(0).getName());
+
+        picker_picture = findViewById(R.id.picker_profile);
+        Bitmap bm = StringToBitMap(children_list.get(0).getBitmap());
+        picker_picture.setImageBitmap(bm);
+
     }
 
     private void setup_choose_picker_launcher() {
