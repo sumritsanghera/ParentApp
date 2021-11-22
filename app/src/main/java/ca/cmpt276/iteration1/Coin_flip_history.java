@@ -10,8 +10,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import java.util.ArrayList;
 
@@ -39,14 +39,15 @@ public class Coin_flip_history extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flip_history);
-        setSupportActionBar(findViewById(R.id.coin_flip_menu_toolbar));
-        ActionBar ab = getSupportActionBar();
-        assert ab != null;
-        ab.setDisplayHomeAsUpEnabled(true);
 
+        setup_back_button();
         setup_history_list();
     }
 
+    private void setup_back_button() {
+        ImageView back_button = findViewById(R.id.history_back_button);
+        back_button.setOnClickListener(view -> Coin_flip_history.super.onBackPressed());
+    }
     private void setup_history_list() {
         coin_list = getIntent().getParcelableArrayListExtra("COIN_FLIP_LIST");
         if(!coin_list.isEmpty()) {
@@ -79,6 +80,11 @@ public class Coin_flip_history extends AppCompatActivity {
             Coin_Flip current_coin_flip = coin_list.get(position);
 
             //fill view
+
+            CardView cardView = itemView.findViewById(R.id.history_list_card_view);
+            int width = cardView.getLayoutParams().width;
+            cardView.setRadius((float) width/2);
+
             ImageView imageView = itemView.findViewById(R.id.coin_flip_image);
             if(current_coin_flip.getResult())
                 imageView.setImageResource(R.drawable.check_mark);
@@ -88,7 +94,7 @@ public class Coin_flip_history extends AppCompatActivity {
             TextView timeView = itemView.findViewById(R.id.history_time);
             timeView.setText(current_coin_flip.getTime());
 
-            TextView nameView = itemView.findViewById(R.id.history_name);
+            TextView nameView = itemView.findViewById(R.id.history_list_name);
             nameView.setText(current_coin_flip.getName());
 
             return itemView;

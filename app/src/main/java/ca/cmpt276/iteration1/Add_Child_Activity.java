@@ -42,8 +42,11 @@ public class Add_Child_Activity extends AppCompatActivity {
             if(String.valueOf(input.getText()).equals("")){
                 Snackbar.make(view,"Cannot add empty name",Snackbar.LENGTH_LONG).show();
             } else {
+                String original = String.valueOf(input.getText());
+                String capitalizeFirstLetter = original.substring(0, 1).toUpperCase() + original.substring(1);
+
                 Intent intent = new Intent();
-                intent.putExtra("NAME", String.valueOf(input.getText()));
+                intent.putExtra("NAME", capitalizeFirstLetter);
                 setResult(RESULT_OK,intent);
                 finish();
             }

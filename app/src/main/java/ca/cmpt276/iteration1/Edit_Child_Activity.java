@@ -56,9 +56,12 @@ public class Edit_Child_Activity extends AppCompatActivity {
             if(String.valueOf(text.getText()).equals("")){
                 Snackbar.make(view,"Cannot add empty name",Snackbar.LENGTH_LONG).show();
             } else {
+                String original = String.valueOf(text.getText());
+                String capitalizeFirstLetter = original.substring(0, 1).toUpperCase() + original.substring(1);
+
                 Intent intent = new Intent();
                 intent.putExtra("DELETE_BUTTON",false);
-                intent.putExtra("NAME", String.valueOf(text.getText()));
+                intent.putExtra("NAME", capitalizeFirstLetter);
                 intent.putExtra("ORIGINAL_NAME",original_name);
                 intent.putExtra("INDEX", getIntent().getIntExtra("INDEX",-1));
                 setResult(RESULT_OK,intent);

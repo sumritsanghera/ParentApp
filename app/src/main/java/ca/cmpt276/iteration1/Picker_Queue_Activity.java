@@ -3,6 +3,7 @@ package ca.cmpt276.iteration1;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -70,6 +71,10 @@ public class Picker_Queue_Activity extends AppCompatActivity {
             //get current coin_flip
 
             //fill view
+            CardView cardView = itemView.findViewById(R.id.picker_card_view);
+            int width = cardView.getLayoutParams().width;
+            cardView.setRadius((float) width/2);
+
             ImageView imageView = itemView.findViewById(R.id.queue_profile);
             imageView.setImageResource(R.drawable.default_profile);
 

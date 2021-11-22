@@ -1,20 +1,20 @@
 package ca.cmpt276.iteration1;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -35,12 +35,12 @@ import ca.cmpt276.iteration1.model.Edited_Child;
 public class Children_Config extends AppCompatActivity {
 
     private ActivityResultLauncher<Intent> add_name_launcher;
-    private ArrayList<Child> children_list;
-    private final ArrayList<Child> added_children = new ArrayList<>();
-    private final ArrayList<Child> removed_children = new ArrayList<>();
-    private final ArrayList<Edited_Child> edited_children = new ArrayList<>();
-    private ArrayAdapter<Child> adapter;
     private ActivityResultLauncher<Intent> edit_name_launcher;
+    private ArrayList<Child> children_list;
+    private ArrayList<Child> added_children;
+    private ArrayList<Child> removed_children;
+    private ArrayList<Edited_Child> edited_children;
+    private Children_Config_Adapter adapter;
     private TextView info;
 
     @Override
@@ -52,9 +52,9 @@ public class Children_Config extends AppCompatActivity {
     private void refresh_children_list() {
         info = findViewById(R.id.config_info);
         if(!children_list.isEmpty()){
-            info.setText("");
-            adapter = new Children_Config_Adapter();
-            ListView list = findViewById(R.id.children_listView);
+            info.setText(R.string.config_info_2);
+            adapter = new Children_Config_Adapter(this,children_list);
+            GridView list = findViewById(R.id.children_grid_view);
             list.setAdapter(adapter);
         } else {
             info.setText(R.string.config_info);
@@ -68,11 +68,20 @@ public class Children_Config extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_config);
 
+        setup_fields();
+
         setup_back_button();
         setup_add_name_launcher();
         setup_edit_name_launcher();
         setup_children_list();
         setup_floating_button();
+    }
+
+    private void setup_fields() {
+        info = findViewById(R.id.config_info);
+        added_children = new ArrayList<>();
+        removed_children = new ArrayList<>();
+        edited_children = new ArrayList<>();
     }
 
 
@@ -123,7 +132,6 @@ public class Children_Config extends AppCompatActivity {
                     if(!children_list.isEmpty())
                         refresh_children_list();
                     else {
-                        adapter.clear();
                         info.setText(R.string.config_info);
                     }
                     setResult();
@@ -144,36 +152,61 @@ public class Children_Config extends AppCompatActivity {
         Intent intent = getIntent();
         children_list = intent.getParcelableArrayListExtra("CHILDREN_LIST");
         if(!children_list.isEmpty()){
-            adapter = new Children_Config_Adapter();
-            ListView list = findViewById(R.id.children_listView);
+            info.setText(R.string.config_info_2);
+            adapter = new Children_Config_Adapter(this,children_list);
+            GridView list = findViewById(R.id.children_grid_view);
             list.setAdapter(adapter);
 
         }
     }
 
 
-    private class Children_Config_Adapter extends ArrayAdapter<Child> {
-        public Children_Config_Adapter() {
-            super(Children_Config.this,
-                    R.layout.children_list,
-                    children_list);
+    private class Children_Config_Adapter extends BaseAdapter {
+        Context context;
+        private final ArrayList<Child> children_list;
+
+        public Children_Config_Adapter(Context context, ArrayList<Child> values) {
+            this.context = context;
+            this.children_list = values;
         }
 
-        @NonNull
         @Override
-        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-            //Make sure we have a view to work with (could be null)
+        public int getCount() {
+            return children_list.size();
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
             View itemView = convertView;
             if(itemView == null){
-                itemView = getLayoutInflater().inflate(R.layout.children_list,parent,false);
+                itemView = getLayoutInflater().inflate(R.layout.children_config_grid_view_item,parent,false);
             }
             //populate the list
-            //get current coin_flip
+            //get current child
+            Child current_child = children_list.get(position);
+            String child_name = current_child.getName();
 
             //fill view
 
-            TextView nameView = itemView.findViewById(R.id.children_config_list_name);
-            nameView.setText(children_list.get(position).getName());
+            CardView cardView = itemView.findViewById(R.id.grid_card_view);
+            int width = cardView.getLayoutParams().width;
+            cardView.setRadius((float) width/2);
+
+            ImageView profile = itemView.findViewById(R.id.profile_icon);
+            profile.setImageResource(R.drawable.default_profile);
+
+            TextView nameView = itemView.findViewById(R.id.config_child_name);
+            nameView.setText(child_name);
 
             itemView.setOnClickListener(view -> {
                 Intent intent = new Intent(Children_Config.this, Edit_Child_Activity.class);
@@ -181,6 +214,7 @@ public class Children_Config extends AppCompatActivity {
                 intent.putExtra("INDEX", position);
                 edit_name_launcher.launch(intent);
             });
+
 
             return itemView;
         }

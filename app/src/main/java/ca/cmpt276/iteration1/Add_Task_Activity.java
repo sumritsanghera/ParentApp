@@ -3,6 +3,7 @@ package ca.cmpt276.iteration1;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -23,7 +24,6 @@ public class Add_Task_Activity extends AppCompatActivity {
 
     private ArrayList<Child> children_list;
     private TextInputEditText description;
-    private int chosen_child_index = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +56,9 @@ public class Add_Task_Activity extends AppCompatActivity {
         if(!children_list.isEmpty()){
             name.setText(children_list.get(0).getName());
         }
+        CardView cardView = findViewById(R.id.add_task_card_view);
+        int width = cardView.getLayoutParams().width;
+        cardView.setRadius((float) width/2);
     }
 
     //Return queue and task description
@@ -66,11 +69,6 @@ public class Add_Task_Activity extends AppCompatActivity {
             if(String.valueOf(description.getText()).equals("")){
                 Snackbar.make(view,"Cannot add empty task",Snackbar.LENGTH_LONG).show();
             } else {
-                if(chosen_child_index!=0){
-                    Child update_queue_child = children_list.get(chosen_child_index);
-                    children_list.remove(chosen_child_index);
-                    children_list.add(0,update_queue_child);
-                }
                 Intent intent = new Intent();
                 intent.putExtra("TASK_DESCRIPTION", String.valueOf(description.getText()));
                 intent.putExtra("QUEUE", children_list);

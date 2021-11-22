@@ -48,7 +48,7 @@
                     android:padding="10dp"
                     android:text="@string/task_title"
                     android:textColor="@color/dark_blue"
-                    android:textSize="25sp"
+                    android:textSize="30sp"
                     android:textStyle="bold" />
 
             </RelativeLayout>

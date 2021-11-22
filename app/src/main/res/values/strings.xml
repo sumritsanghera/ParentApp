@@ -56,13 +56,13 @@
     <string name="enter_positive_number">Please enter a positive number</string>
     <string name="timer_back_button_description">timer back button</string>
     <string name="config_info">Empty list, click button to add children!</string>
-    <string name="config_info2">Tap a name to edit or delete</string>
-    <string name="children_configuration_title">Children Configuration</string>
+    <string name="config_info2">Tap a child to edit or delete</string>
+    <string name="children_configuration_title">Children Settings</string>
     <string name="floating_action_button_in_config">Floating action button in config</string>
-    <string name="edit_name_title">Edit Name</string>
+    <string name="edit_name_title">Edit Child</string>
     <string name="save_button_text">Save</string>
     <string name="delete_button_text">Delete</string>
-    <string name="add_name_title">Add Name</string>
+    <string name="add_name_title">Add Child</string>
     <string name="config_card_background_description">config card background</string>
     <string name="profile_description">Profile picture</string>
     <string name="task_background_description">task card background</string>
@@ -92,4 +92,5 @@
     <string name="queue_title">Queue</string>
     <string name="save_option_button_text">Save option</string>
     <string name="inflate_default_name">No name</string>
+    <string name="config_info_2">Tap on a child to edit</string>
 </resources>

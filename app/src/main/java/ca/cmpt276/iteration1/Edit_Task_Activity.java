@@ -4,6 +4,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -81,6 +82,10 @@ public class Edit_Task_Activity extends AppCompatActivity {
         if(!given_task.getQueue().isEmpty()){
             name.setText(given_task.getQueue().get(0).getName());
         }
+
+        CardView cardView = findViewById(R.id.edit_task_card_view);
+        int width = cardView.getLayoutParams().width;
+        cardView.setRadius((float) width/2);
     }
 
     private void setup_description() {
