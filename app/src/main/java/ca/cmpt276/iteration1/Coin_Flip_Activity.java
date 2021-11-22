@@ -43,6 +43,7 @@ public class Coin_Flip_Activity extends AppCompatActivity {
     private LocalDateTime time;
     private ImageView coin;
     private TextView info;
+    private TextView info2;
     private boolean cur_face; //true is head, false is tails.
     private int duration = 40;
     private int duration_increment = 0;
@@ -80,6 +81,9 @@ public class Coin_Flip_Activity extends AppCompatActivity {
     private void setup_params() {
         guess = getIntent().getBooleanExtra("GUESS",false);
         child_name = getIntent().getStringExtra("CHILD_NAME");
+        coin = findViewById(R.id.coin_img_view);
+        info = findViewById(R.id.coin_info);
+        info2 = findViewById(R.id.coin_info_2);
     }
 
     /*
@@ -166,10 +170,13 @@ public class Coin_Flip_Activity extends AppCompatActivity {
                     TextView result = findViewById(R.id.result);
                     duration = 40;
                     duration_increment = 0;
-                    if(cur_face)
+                    if(cur_face) {
                         result.setText(R.string.heads_text);
-                    else
+                    }
+                    else {
                         result.setText(R.string.tails_text);
+                    }
+                    info2.setText(R.string.coin_info2);
                     setup_Result(cur_face == guess);
                 }
             }
@@ -189,8 +196,6 @@ public class Coin_Flip_Activity extends AppCompatActivity {
 
     private void setup_spin_coin_image_click() {
         cur_face = true;
-        coin = findViewById(R.id.coin_img_view);
-        info = findViewById(R.id.coin_info);
         coin.setSoundEffectsEnabled(false);
         coin.setOnClickListener(view -> {
 

@@ -50,20 +50,14 @@
                 android:textStyle="bold" />
         </RelativeLayout>
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true">
-
             <ListView
                 android:id="@+id/choose_picker_list"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:divider="@color/light_blue"
                 android:dividerHeight="1dp"
                 android:fadeScrollbars="false"
                 android:scrollbarSize="10dp"/>
-        </ScrollView>
     </LinearLayout>
 
     <Button

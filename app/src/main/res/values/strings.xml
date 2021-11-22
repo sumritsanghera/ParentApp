@@ -93,4 +93,5 @@
     <string name="save_option_button_text">Save option</string>
     <string name="inflate_default_name">No name</string>
     <string name="config_info_2">Tap on a child to edit</string>
+    <string name="coin_info2">Go back to flip coin again</string>
 </resources>
