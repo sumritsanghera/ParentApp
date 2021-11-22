@@ -53,6 +53,8 @@ public class Coin_Queue_Manager {
         return queue.get(0).getName();
     }
 
+    public String firstProfile() { return queue.get(0).getImagePath();}
+
     public void dequeue(){
         if(queue.size()>1){
             Child child = queue.get(0);
@@ -61,11 +63,13 @@ public class Coin_Queue_Manager {
         }
     }
 
-    public void update_child_name_after_edit(ArrayList<Edited_Child> name_list){
+    public void update_child_after_edit(ArrayList<Edited_Child> children_list){
         for(Child child : queue){
-            for(Edited_Child edited_child : name_list){
-                if(child.getName().equals(edited_child.getOriginal_name())){
+            for(Edited_Child edited_child : children_list){
+                if(child.getName().equals(edited_child.getOriginal_name()) ||
+                        child.getImagePath().equals(edited_child.getOriginal_image())){
                     child.setName(edited_child.getNew_name());
+                    child.setBitmap(edited_child.getNew_image());
                 }
             }
         }

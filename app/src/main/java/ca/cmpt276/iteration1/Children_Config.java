@@ -147,6 +147,7 @@ public class Children_Config extends AppCompatActivity {
     private void setResult() {
         Intent intent = new Intent();
         intent.putExtra("CHILDREN_LIST",children_list);
+        Log.e("CHILDREN CONFIG", children_list.get(0).getImagePath());
         intent.putExtra("ADDED_CHILDREN", added_children);
         intent.putExtra("REMOVED_CHILDREN",removed_children);
         intent.putExtra("EDITED_CHILDREN",edited_children);

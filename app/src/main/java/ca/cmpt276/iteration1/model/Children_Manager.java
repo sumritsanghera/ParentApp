@@ -34,9 +34,9 @@ public class Children_Manager {
         children_list.clear();
     }
 
-    public int find_name(String name){
+    public int find_child(String name,String image){
         for(Child child : children_list){
-            if(child.getName().equals(name)){
+            if(child.getName().equals(name) && child.getImagePath().equals(image)){
                 return children_list.indexOf(child);
             }
         }

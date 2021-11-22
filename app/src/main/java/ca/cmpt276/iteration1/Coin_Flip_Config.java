@@ -23,6 +23,9 @@ import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import ca.cmpt276.iteration1.model.Child;
@@ -55,30 +58,11 @@ public class Coin_Flip_Config extends AppCompatActivity {
         setup_flip_coin();
     }
 
-    //https://stackoverflow.com/questions/13562429/how-many-ways-to-convert-bitmap-to-string-and-vice-versa
-    public Bitmap StringToBitMap(String encodedString){
-        try{
-            byte [] encodeByte = Base64.decode(encodedString,Base64.DEFAULT);
-            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-            return bitmap;
-        }
-        catch(Exception e){
-            e.getMessage();
-            return null;
-        }
-    }
-
     private void setup_children_list() {
         Intent data = getIntent();
-        queue = data.getParcelableArrayListExtra("CHILDREN_LIST");
-        String imageUri = getURLForResource(R.drawable.default_profile);
-        Child no_name = new Child("No name", imageUri);
+        queue = data.getParcelableArrayListExtra("QUEUE");
+        Child no_name = new Child("No name");
         queue.add(no_name);
-    }
-
-    public String getURLForResource (int resourceId) {
-        //use BuildConfig.APPLICATION_ID instead of R.class.getPackage().getName() if both are not same
-        return Uri.parse("android.resource://"+R.class.getPackage().getName()+"/" +resourceId).toString();
     }
 
     private void setup_default_picker() {
@@ -90,8 +74,8 @@ public class Coin_Flip_Config extends AppCompatActivity {
         picker_name.setText(queue.get(0).getName());
 
         picker_picture = findViewById(R.id.picker_profile);
-        Bitmap bm = StringToBitMap(queue.get(0).getImagePath());
-        picker_picture.setImageBitmap(bm);
+        String image = queue.get(0).getImagePath();
+        loadImageFromStorage(image,queue.get(0).getName(), picker_picture);
 
     }
 
@@ -172,6 +156,22 @@ public class Coin_Flip_Config extends AppCompatActivity {
                 coin_flip_launcher.launch(intent);
             }
         });
+
+    }
+
+    //pass in filename (which is child's name) and the image path to load image.
+    private void loadImageFromStorage(String path, String filename, ImageView imageView)
+    {
+
+        try {
+            File f=new File(path, filename + ".jpg");
+            Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
+            imageView.setImageBitmap(b);
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
 
     }
 

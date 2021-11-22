@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
 
@@ -77,10 +78,14 @@ public class Main_menu extends AppCompatActivity {
                             ArrayList<Child> removed_list = data.getParcelableArrayListExtra("REMOVED_CHILDREN");
                             ArrayList<Edited_Child> edited_children_list = data.getParcelableArrayListExtra("EDITED_CHILDREN");
 
+                            Log.e("MAIN MENU config launcher", children_list.get(0).getName());
+                            Log.e("MAIN MENU config launcher", children_list.get(0).getImagePath());
+
                             children_manager.clear();
                             for (Child new_child : children_list) {
                                 children_manager.addChild(new_child);
                             }
+
 
                             //update coin_queue
                             if (coin_queue.getQueue().isEmpty()) {
@@ -88,16 +93,17 @@ public class Main_menu extends AppCompatActivity {
                                 coin_queue.setQueue(children_manager.getChildren_list());
                             } else {
                                 //first, save edited names
-                                coin_queue.update_child_name_after_edit(edited_children_list);
+                                coin_queue.update_child_after_edit(edited_children_list);
 
                                 //then get the first child in queue and find its index in children manager
                                 String firstChild = coin_queue.firstChild();
-                                int found_index = children_manager.find_name(firstChild);
+                                String firstImage = coin_queue.firstProfile();
+                                int found_index = children_manager.find_child(firstChild,firstImage);
 
                                 //set queue to be children list
                                 coin_queue.setQueue(children_manager.getChildren_list());
 
-                                //if name is found, then dequeue by number of index to move picker to front of line.
+                                //if child is found, then dequeue by number of index to move picker to front of line.
                                 //else, leave queue same with children manager
                                 if(found_index!=-1){
                                     for(int i = 0; i < found_index; i++){
@@ -205,6 +211,10 @@ public class Main_menu extends AppCompatActivity {
         button.setOnClickListener(view -> {
             Intent intent = new Intent(Main_menu.this, Coin_Flip_Config.class);
             intent.putExtra("QUEUE",coin_queue.getQueue());
+            if(!coin_queue.getQueue().isEmpty()){
+                Log.e("MAIN MENU queue", coin_queue.getQueue().get(0).getName());
+                Log.e("MAIN MENU queue", coin_queue.getQueue().get(0).getImagePath());
+            }
             coin_flip_launcher.launch(intent);
         });
     }

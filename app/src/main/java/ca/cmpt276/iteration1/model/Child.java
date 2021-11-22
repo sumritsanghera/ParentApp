@@ -23,13 +23,16 @@ public class Child implements Parcelable {
         this.bitmap = bitmap;
     }
 
+
     protected Child(Parcel in) {
         name = in.readString();
+        bitmap = in.readString();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(name);
+        dest.writeString(bitmap);
     }
 
     @Override
