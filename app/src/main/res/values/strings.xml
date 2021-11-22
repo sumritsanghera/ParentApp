@@ -65,4 +65,5 @@
     <string name="add_name_title">Add Name</string>
     <string name="config_card_background_description">config card background</string>
     <string name="profile_description">Profile picture</string>
+    <string name="add_image">Add an Image</string>
 </resources>

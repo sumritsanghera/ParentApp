@@ -1,31 +1,23 @@
 package ca.cmpt276.iteration1;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.media.Image;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
@@ -36,7 +28,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.UUID;
 
-import ca.cmpt276.iteration1.model.Child;
 
 /*
     Add Child Activity
@@ -44,20 +35,29 @@ import ca.cmpt276.iteration1.model.Child;
     -   User can edit text and save name or delete name
     -   When add an empty name, snackbar appear to inform user action can not be done.
 
+    References:
+    -   https://stackoverflow.com/questions/4715044/android-how-to-convert-whole-imageview-to-bitmap
+    -   https://stackoverflow.com/questions/9224056/android-bitmap-to-base64-string
+    -   https://stackoverflow.com/questions/13562429/how-many-ways-to-convert-bitmap-to-string-and-vice-versa
+    -   https://www.youtube.com/watch?v=foOp5Dq1Ypk
+    -   https://www.youtube.com/watch?v=7v9afVcQCxw
+    -   https://www.youtube.com/watch?v=2tRw6Q2JXGo
+
  */
 
 public class Add_Child_Activity extends AppCompatActivity {
 
     ImageView profilePicture;
-    private static final String SD_PATH = "/sdcard/dskqxt/pic/";
-    private static final String IN_PATH = "/dskqxt/pic/";
+    private static final String SD_PATH = Environment.getExternalStorageDirectory().getPath();
+    private static final String IN_PATH = Environment.getDataDirectory().getPath();
+    AlertDialog alertDialogProfilePicture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_name);
 
-        profilePicture = findViewById(R.id.imageViewMainActivityProfilePicture);
+        profilePicture = findViewById(R.id.profile_picture);
 
         setup_back_button();
         setup_submit_button();
@@ -78,20 +78,20 @@ public class Add_Child_Activity extends AppCompatActivity {
             } else {
                 Intent intent = new Intent();
                 intent.putExtra("NAME", String.valueOf(input.getText()));
+
+                profilePicture.buildDrawingCache();
+                Bitmap bitmap = profilePicture.getDrawingCache();
+                String code = bitmapToString(bitmap);
+                intent.putExtra("PICTURE", code);
+                Log.i("TAG", "picture added to child");
+
                 setResult(RESULT_OK,intent);
-
-//                Intent picture = new Intent();
-//                String code = BitMapToString(((BitmapDrawable) profilePicture.getDrawable()).getBitmap());
-//                picture.putExtra("PICTURE", code);
-//                setResult(RESULT_OK, picture);
-
                 finish();
             }
         });
     }
 
     private void setup_camera_button() {
-        //Button button = findViewById(R.id.add_image_button);
         profilePicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -104,30 +104,28 @@ public class Add_Child_Activity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(Add_Child_Activity.this);
         LayoutInflater inflater = getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.alert_dialog_profile_picture, null);
+
         builder.setCancelable(false);
         builder.setView(dialogView);
-        builder.setTitle("Add an image");
+        builder.setTitle(R.string.add_image);
 
-        ImageView imageViewADPPCamera = dialogView.findViewById(R.id.imageViewADPPCamera);
-        ImageView imageViewADPPGallery = dialogView.findViewById(R.id.imageViewADPPGallery);
+        ImageView camera_icon = dialogView.findViewById(R.id.imageView_CameraIcon);
+        ImageView gallery_icon = dialogView.findViewById(R.id.imageView_GalleryIcon);
 
-
-        AlertDialog alertDialogProfilePicture = builder.create();
+        alertDialogProfilePicture = builder.create();
         alertDialogProfilePicture.show();
 
-        imageViewADPPCamera.setOnClickListener(new View.OnClickListener() {
+        camera_icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(checkAndRequestPermissions()) {
-                    takePictureFromCamera();
-                }
+                takePictureFromCamera();
                 alertDialogProfilePicture.cancel();
                 TextView text = findViewById(R.id.touch_add_picture);
                 text.setVisibility(View.INVISIBLE);
             }
         });
 
-        imageViewADPPGallery.setOnClickListener(new View.OnClickListener() {
+        gallery_icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 takePictureFromGallery();
@@ -150,50 +148,30 @@ public class Add_Child_Activity extends AppCompatActivity {
         }
     }
 
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
-            Uri selectedImageURI = data.getData();
-            profilePicture.setImageURI(selectedImageURI);
-        }
-        if (requestCode == 2) {
-            Bundle bundle = data.getExtras();
-            Bitmap bitmapImage = (Bitmap) bundle.get("data");
-            String path=saveBitmap(this,bitmapImage);
-            displayImage(path);
-            profilePicture.setImageBitmap(bitmapImage);
-        }
-    }
-
-    private boolean checkAndRequestPermissions(){
-        if(Build.VERSION.SDK_INT >= 23){
-            int cameraPermission = ActivityCompat.checkSelfPermission(Add_Child_Activity.this, Manifest.permission.CAMERA);
-            if(cameraPermission == PackageManager.PERMISSION_DENIED){
-                ActivityCompat.requestPermissions(Add_Child_Activity.this, new String[]{Manifest.permission.CAMERA}, 20);
-                return false;
+            if (data != null) {
+                Uri selectedImageURI = data.getData();
+                profilePicture.setImageURI(selectedImageURI);
             }
         }
-        return true;
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(requestCode == 20 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-            takePictureFromCamera();
+        if (requestCode == 2) {
+            if (data != null) {
+                Bundle bundle = data.getExtras();
+                Bitmap bitmapImage = (Bitmap) bundle.get("data");
+                profilePicture.setImageBitmap(bitmapImage);
+            }
         }
-        else
-            Toast.makeText(Add_Child_Activity.this, "Permission not Granted", Toast.LENGTH_SHORT).show();
     }
 
-    //https://stackoverflow.com/questions/9224056/android-bitmap-to-base64-string
-    //https://stackoverflow.com/questions/13562429/how-many-ways-to-convert-bitmap-to-string-and-vice-versa
-    public String BitMapToString(Bitmap bitmap){
-        ByteArrayOutputStream baos=new  ByteArrayOutputStream();
+    public String bitmapToString(Bitmap bitmap){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
-        byte [] b=baos.toByteArray();
-        String temp=Base64.encodeToString(b, Base64.DEFAULT);
+        byte [] b = baos.toByteArray();
+        String temp = Base64.encodeToString(b, Base64.DEFAULT);
         return temp;
     }
 
@@ -231,10 +209,4 @@ public class Add_Child_Activity extends AppCompatActivity {
         return filePic.getAbsolutePath();
     }
 
-    private void displayImage(String imagePath) {
-        if (imagePath != null) {
-            Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
-            profilePicture.setImageBitmap(bitmap);
-        }
-    }
 }

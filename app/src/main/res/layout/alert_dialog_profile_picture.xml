@@ -4,15 +4,15 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/imageViewADPPCamera"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:id="@+id/imageView_CameraIcon"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
         android:src="@drawable/camera_icon" />
 
     <ImageView
-        android:id="@+id/imageViewADPPGallery"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:id="@+id/imageView_GalleryIcon"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
         android:src="@drawable/gallery_icon" />
 
 </LinearLayout>
