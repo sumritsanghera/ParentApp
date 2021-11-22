@@ -10,11 +10,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
-import android.util.Base64;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -33,6 +31,7 @@ import ca.cmpt276.iteration1.model.Child;
 public class Coin_Flip_Config extends AppCompatActivity {
 
     private ArrayList<Child> queue;
+    private Child current_child;
     private ActivityResultLauncher<Intent> picker_launcher;
     private ActivityResultLauncher<Intent> coin_flip_launcher;
     private TextView picker_name;
@@ -46,7 +45,7 @@ public class Coin_Flip_Config extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coin_flip_config);
 
-        setup_children_list();
+        setup_params();
         setup_default_picker();
 
         setup_choose_picker_launcher();
@@ -58,11 +57,12 @@ public class Coin_Flip_Config extends AppCompatActivity {
         setup_flip_coin();
     }
 
-    private void setup_children_list() {
+    private void setup_params() {
         Intent data = getIntent();
         queue = data.getParcelableArrayListExtra("QUEUE");
         Child no_name = new Child("No name");
         queue.add(no_name);
+        current_child = queue.get(0);
     }
 
     private void setup_default_picker() {
@@ -71,11 +71,11 @@ public class Coin_Flip_Config extends AppCompatActivity {
         int width = profile.getLayoutParams().width;
         profile.setRadius((float) width/2);
         picker_name = findViewById(R.id.picker_name);
-        picker_name.setText(queue.get(0).getName());
+        picker_name.setText(current_child.getName());
 
         picker_picture = findViewById(R.id.picker_profile);
-        String image = queue.get(0).getImagePath();
-        loadImageFromStorage(image,queue.get(0).getName(), picker_picture);
+        String image = current_child.getImagePath();
+        loadImageFromStorage(image,current_child.getName(), picker_picture);
 
     }
 
@@ -87,13 +87,14 @@ public class Coin_Flip_Config extends AppCompatActivity {
                         Intent data = result.getData();
                         if(data!=null){
                             int index = data.getIntExtra("CHILD_INDEX",0);
+                            current_child = queue.get(index);
                             picker_name = findViewById(R.id.picker_name);
-                            picker_name.setText(queue.get(index).getName());
+                            picker_name.setText(current_child.getName());
                             if(queue.get(index).getImagePath().equals("Default pic")){
                                 picker_picture.setImageResource(R.drawable.default_profile);
                             } else {
-                                loadImageFromStorage(queue.get(index).getImagePath(),
-                                        queue.get(index).getName(),
+                                loadImageFromStorage(current_child.getImagePath(),
+                                        current_child.getName(),
                                         picker_picture);
                             }
                             index_picker = index;
@@ -111,7 +112,7 @@ public class Coin_Flip_Config extends AppCompatActivity {
                         Intent data = result.getData();
                         if(data!=null){
                             Intent intent = new Intent();
-                            intent.putExtra("PICKER", data.getStringExtra("PICKER"));
+                            intent.putExtra("CHILD",current_child);
                             intent.putExtra("RESULT",data.getBooleanExtra("RESULT",false));
                             intent.putExtra("TIME", data.getStringExtra("TIME"));
                             intent.putExtra("INDEX",index_picker);
@@ -159,7 +160,7 @@ public class Coin_Flip_Config extends AppCompatActivity {
             } else {
                 Intent intent = new Intent(Coin_Flip_Config.this,Coin_Flip_Activity.class);
                 intent.putExtra("GUESS",guess);
-                intent.putExtra("CHILD_NAME", picker_name.getText().toString());
+                intent.putExtra("CHILD",current_child);
                 coin_flip_launcher.launch(intent);
             }
         });

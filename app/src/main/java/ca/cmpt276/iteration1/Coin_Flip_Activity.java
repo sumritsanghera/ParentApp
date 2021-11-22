@@ -18,6 +18,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import ca.cmpt276.iteration1.model.Child;
+
 /*
     Coin_Flip_Activity:
         - Includes a spinner to choose picker's name
@@ -49,7 +51,7 @@ public class Coin_Flip_Activity extends AppCompatActivity {
     private int duration_increment = 0;
     private MediaPlayer player;
     private boolean guess;
-    private String child_name;
+    private Child child;
 
     @Override
     protected void onResume() {
@@ -79,8 +81,8 @@ public class Coin_Flip_Activity extends AppCompatActivity {
     }
 
     private void setup_params() {
+        child = getIntent().getParcelableExtra("CHILD");
         guess = getIntent().getBooleanExtra("GUESS",false);
-        child_name = getIntent().getStringExtra("CHILD_NAME");
         coin = findViewById(R.id.coin_img_view);
         info = findViewById(R.id.coin_info);
         info2 = findViewById(R.id.coin_info_2);
@@ -188,7 +190,7 @@ public class Coin_Flip_Activity extends AppCompatActivity {
         DateTimeFormatter format = DateTimeFormatter.ofPattern("MMM dd - HH:mma");
 
         Intent intent = new Intent();
-        intent.putExtra("PICKER", child_name);
+        intent.putExtra("CHILD", child);
         intent.putExtra("RESULT",result);
         intent.putExtra("TIME", time.format(format));
         setResult(RESULT_OK,intent);

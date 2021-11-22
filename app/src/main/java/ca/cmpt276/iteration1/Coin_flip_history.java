@@ -1,5 +1,7 @@
 package ca.cmpt276.iteration1;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,6 +15,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import ca.cmpt276.iteration1.model.Coin_Flip;
@@ -85,11 +90,21 @@ public class Coin_flip_history extends AppCompatActivity {
             int width = cardView.getLayoutParams().width;
             cardView.setRadius((float) width/2);
 
+            ImageView profile = itemView.findViewById(R.id.history_list_profile);
+            if(current_coin_flip.getImage().equals("Default pic")){
+                profile.setImageResource(R.drawable.default_profile);
+            } else {
+                loadImageFromStorage(current_coin_flip.getImage(),current_coin_flip.getName(),profile);
+            }
+
+
             ImageView imageView = itemView.findViewById(R.id.coin_flip_image);
-            if(current_coin_flip.getResult())
+            if(current_coin_flip.getResult()) {
                 imageView.setImageResource(R.drawable.check_mark);
-            else
+            }
+            else {
                 imageView.setImageResource(R.drawable.clear_mark);
+            }
 
             TextView timeView = itemView.findViewById(R.id.history_time);
             timeView.setText(current_coin_flip.getTime());
@@ -101,9 +116,20 @@ public class Coin_flip_history extends AppCompatActivity {
         }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        finish();
-        return super.onOptionsItemSelected(item);
+    //pass in filename (which is child's name) and the image path to load image.
+    private void loadImageFromStorage(String path, String filename, ImageView imageView)
+    {
+
+        try {
+            File f=new File(path, filename + ".jpg");
+            Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
+            imageView.setImageBitmap(b);
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+
     }
+
 }

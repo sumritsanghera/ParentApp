@@ -12,34 +12,21 @@ import android.os.Parcelable;
 
 public class Coin_Flip implements Parcelable {
     private String name;
+    private String image;
     private final Boolean result;
     private final String time;
 
-    public Coin_Flip(String name, boolean result, String time) {
-        this.name = name;
+    public Coin_Flip(Child child, boolean result, String time) {
+        this.name = child.getName();
+        this.image = child.getImagePath();
         this.result = result;
         this.time = time;
 
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Boolean getResult() {
-        return result;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
     protected Coin_Flip(Parcel in) {
         name = in.readString();
+        image = in.readString();
         byte tmpResult = in.readByte();
         result = tmpResult == 0 ? null : tmpResult == 1;
         time = in.readString();
@@ -48,6 +35,7 @@ public class Coin_Flip implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(name);
+        dest.writeString(image);
         dest.writeByte((byte) (result == null ? 0 : result ? 1 : 2));
         dest.writeString(time);
     }
@@ -68,4 +56,28 @@ public class Coin_Flip implements Parcelable {
             return new Coin_Flip[size];
         }
     };
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Boolean getResult() {
+        return result;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 }

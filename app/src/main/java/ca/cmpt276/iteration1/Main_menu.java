@@ -149,16 +149,17 @@ public class Main_menu extends AppCompatActivity {
                         // There are no request codes
                         Intent data = result.getData();
                         if(data!=null) {
-                            String picker = data.getStringExtra("PICKER");
+                            Child result_child = data.getParcelableExtra("CHILD");
                             boolean returned_result = data.getBooleanExtra("RESULT", false);
                             String time = data.getStringExtra("TIME");
 
                             //move child to end of line after every flip
-                            if (!picker.equals("No name")) {
+                            if (!result_child.getName().equals("No name")) {
                                 int index = 0;
                                 ArrayList<Child> children_list = coin_queue.getQueue();
                                 for (int i = 0; i < children_list.size(); i++) {
-                                    if (children_list.get(i).getName().equals(picker)) {
+                                    if (children_list.get(i).getName().equals(result_child.getName()) &&
+                                        children_list.get(i).getImagePath().equals(result_child.getImagePath())) {
                                         index = i;
                                         break;
                                     }
@@ -168,7 +169,7 @@ public class Main_menu extends AppCompatActivity {
                                 coin_queue.add(dequeue_child); //move first child to end of line
                             }
 
-                            Coin_Flip new_flip = new Coin_Flip(picker, returned_result, time);
+                            Coin_Flip new_flip = new Coin_Flip(result_child, returned_result, time);
                             coin_manager.add_flip(new_flip);
                         }
                     }
