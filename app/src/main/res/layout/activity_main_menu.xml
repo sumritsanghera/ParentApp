@@ -101,7 +101,7 @@
                     android:alpha="0.30"
                     android:scaleType="centerCrop"
                     android:src="@drawable/history_card_background"
-                    android:contentDescription="@string/history_background" />
+                    android:contentDescription="@string/history_background"/>
 
                 <TextView
                     android:layout_width="wrap_content"

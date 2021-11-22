@@ -11,10 +11,9 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
 /*
-    Add Name Activity
+    Add Child Activity
     -   Takes in the tapped name in configuration activity, and display in edit text.
     -   User can edit text and save name or delete name
-    -   Upon clicking delete name, a dialog will appear to warn user.
     -   When add an empty name, snackbar appear to inform user action can not be done.
 
  */
