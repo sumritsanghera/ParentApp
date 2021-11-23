@@ -59,6 +59,7 @@ public class Task implements Parcelable {
     public String getName(){
         return queue.get(0).getName();
     }
+    public String getImage() { return queue.get(0).getImagePath(); }
 
     public void remove(int i){
         queue.remove(i);

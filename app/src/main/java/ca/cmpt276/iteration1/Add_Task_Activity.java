@@ -7,6 +7,8 @@ import androidx.cardview.widget.CardView;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -15,6 +17,9 @@ import android.widget.TextView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import ca.cmpt276.iteration1.model.Child;
@@ -59,6 +64,12 @@ public class Add_Task_Activity extends AppCompatActivity {
         CardView cardView = findViewById(R.id.add_task_card_view);
         int width = cardView.getLayoutParams().width;
         cardView.setRadius((float) width/2);
+
+        ImageView imageView = findViewById(R.id.add_task_profile);
+        loadImageFromStorage(children_list.get(0).getImagePath(),
+                            children_list.get(0).getName(),
+                            imageView);
+
     }
 
     //Return queue and task description
@@ -78,5 +89,19 @@ public class Add_Task_Activity extends AppCompatActivity {
         });
     }
 
+    //pass in filename (which is child's name) and the image path to load image.
+    private void loadImageFromStorage(String path, String filename, ImageView imageView)
+    {
 
+        try {
+            File f=new File(path, filename + ".jpg");
+            Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
+            imageView.setImageBitmap(b);
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+
+    }
 }

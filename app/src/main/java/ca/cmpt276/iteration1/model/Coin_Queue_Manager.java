@@ -69,7 +69,7 @@ public class Coin_Queue_Manager {
                 if(child.getName().equals(edited_child.getOriginal_name()) &&
                         child.getImagePath().equals(edited_child.getOriginal_image())){
                     child.setName(edited_child.getNew_name());
-                    child.setBitmap(edited_child.getNew_image());
+                    child.setImage(edited_child.getNew_image());
                 }
             }
         }

@@ -34,12 +34,14 @@ public class Task_Manager {
         return task_list;
     }
 
-    public void update_child_name_after_edit(ArrayList<Edited_Child> name_list){
+    public void update_child_after_edit(ArrayList<Edited_Child> name_list){
         for(Task task : task_list){
             for(Child queue_child : task.getQueue()){
                 for(Edited_Child edited_child : name_list){
-                    if(queue_child.getName().equals(edited_child.getOriginal_name())){
+                    if(queue_child.getName().equals(edited_child.getOriginal_name()) &&
+                        queue_child.getImagePath().equals(edited_child.getOriginal_image())){
                         queue_child.setName(edited_child.getNew_name());
+                        queue_child.setImage(edited_child.getNew_image());
                     }
                 }
             }
@@ -61,7 +63,8 @@ public class Task_Manager {
             if(!removed_list.isEmpty() && !task.getQueue().isEmpty()) {
                 for (Child child : task.getQueue()) {
                     for (Child removed_child : removed_list) {
-                        if (child.getName().equals(removed_child.getName())) {
+                        if (child.getName().equals(removed_child.getName()) &&
+                                child.getImagePath().equals(removed_child.getImagePath())) {
                             indices.add(index);
                         }
                     }

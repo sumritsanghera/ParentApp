@@ -56,7 +56,7 @@ public class Child implements Parcelable {
         this.name = name;
     }
 
-    public void setBitmap(String name) {
+    public void setImage(String name) {
         this.bitmap = name;
     }
 

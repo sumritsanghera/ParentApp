@@ -130,7 +130,7 @@ public class Children_Config extends AppCompatActivity {
                             edited_children.add(new_child);
                             Child edit_child = children_list.get(index);
                             edit_child.setName(name);
-                            edit_child.setBitmap(bitmap);
+                            edit_child.setImage(bitmap);
                             children_list.set(index,edit_child);
                         } else {
                             removed_children.add(children_list.get(index));

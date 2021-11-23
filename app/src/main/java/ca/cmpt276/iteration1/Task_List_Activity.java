@@ -9,6 +9,8 @@ import androidx.cardview.widget.CardView;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.transition.Explode;
 import android.util.DisplayMetrics;
@@ -27,6 +29,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import ca.cmpt276.iteration1.model.Child;
@@ -182,6 +188,9 @@ public class Task_List_Activity extends AppCompatActivity {
             Task current_task = task_list.get(position);
 
             //fill view
+            ImageView profile = itemView.findViewById(R.id.add_task_profile);
+            loadImageFromStorage(current_task.getImage(),current_task.getImage(),profile);
+
             TextView nameView = itemView.findViewById(R.id.task_name);
 
             if(task_list.get(position).getQueue().size() > 0) {
@@ -193,7 +202,8 @@ public class Task_List_Activity extends AppCompatActivity {
             final View inflate_view = itemView;
 
             RelativeLayout inflate_item = itemView.findViewById(R.id.task_item_relative_layout);
-            inflate_item.setOnClickListener(view -> showPopupWindow(inflate_view,position,nameView));
+            inflate_item.setOnClickListener(view -> showPopupWindow(inflate_view,position,nameView,
+                                                                    current_task));
 
             ImageView edit_button = itemView.findViewById(R.id.task_edit);
             edit_button.setOnClickListener(view -> {
@@ -206,7 +216,7 @@ public class Task_List_Activity extends AppCompatActivity {
             return itemView;
         }
 
-        public void showPopupWindow(View view,int position,TextView task_name) {
+        public void showPopupWindow(View view,int position,TextView task_name, Task currentTask) {
 
             // inflate the layout of the popup window
             LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -227,15 +237,18 @@ public class Task_List_Activity extends AppCompatActivity {
             profile.getLayoutParams().height = profile.getLayoutParams().width;
             profile.setRadius(profile.getLayoutParams().width /(float)2);
 
+            ImageView imageView = popupView.findViewById(R.id.inflate_profile);
+            loadImageFromStorage(currentTask.getImage(),currentTask.getName(),imageView);
+
             TextView name = popupView.findViewById(R.id.inflate_text);
-            if(task_list.get(position).getQueue().isEmpty()){
+            if(currentTask.getQueue().isEmpty()){
                 name.setText(R.string.inflate_default_name);
             } else {
-                name.setText(task_list.get(position).getQueue().get(0).getName());
+                name.setText(currentTask.getQueue().get(0).getName());
             }
 
             TextView description = popupView.findViewById(R.id.inflate_task_name);
-            description.setText(task_list.get(position).getTask_description());
+            description.setText(currentTask.getTask_description());
 
             // show the popup window
             popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
@@ -270,6 +283,22 @@ public class Task_List_Activity extends AppCompatActivity {
     private void updateQueue(int position, TextView name) {
         Task task = task_list.get(position);
         task.update_queue();
-        name.setText(task_list.get(position).getQueue().get(0).getName());
+        name.setText(task.getQueue().get(0).getName());
+    }
+
+    //pass in filename (which is child's name) and the image path to load image.
+    private void loadImageFromStorage(String path, String filename, ImageView imageView)
+    {
+
+        try {
+            File f=new File(path, filename + ".jpg");
+            Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
+            imageView.setImageBitmap(b);
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+
     }
 }

@@ -121,7 +121,7 @@ public class Main_menu extends AppCompatActivity {
 
                             //update tasks queues if there are existing tasks
                             if(!task_manager.getTask_list().isEmpty()) {
-                                task_manager.update_child_name_after_edit(edited_children_list);
+                                task_manager.update_child_after_edit(edited_children_list);
 
                                 task_manager.addUpdate(added_list);
                                 task_manager.removeUpdate(removed_list);
