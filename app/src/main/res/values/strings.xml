@@ -7,7 +7,7 @@
     <string name="enter_the_name">Enter the name:</string>
     <string name="submit">Submit</string>
     <string name="which_name_you_want_to_edit">Which name you want to edit?</string>
-    <string name="cancel">cancel</string>
+    <string name="cancel">Cancel</string>
 
     <string name="coin_flip_child_info">(By default, child picked heads)</string>
     <string name="coin_spin_info">Tap coin to spin</string>
@@ -19,7 +19,7 @@
     <string name="picker_text">Picker:</string>
     <string name="heads_text">Heads</string>
     <string name="tails_text">Tails</string>
-    <string name="history_default_info_text">(Add a coin flip to see history here)</string>
+    <string name="history_default_info_text">Add a coin flip to see history here.</string>
     <string name="history_title">Coin Flip History</string>
     <string name="coin_flip_back_button_description">Coin Flip Back Button</string>
     <string name="coin_flip_title">Coin Flip</string>
@@ -32,7 +32,7 @@
     <string name="main_history_text">Coin Flip History</string>
     <string name="main_coin_flip_text">Coin Flip</string>
     <string name="main_timer_text">Timer</string>
-    <string name="main_about_us_text">About Us</string>
+    <string name="main_help_text">Help</string>
     <string name="history_background">history background</string>
     <string name="coin_flip_background">coin flip backgroun</string>
     <string name="timer_background">timer background</string>
@@ -56,14 +56,143 @@
     <string name="enter_positive_number">Please enter a positive number</string>
     <string name="timer_back_button_description">timer back button</string>
     <string name="config_info">Empty list, click button to add children!</string>
-    <string name="config_info2">Tap a name to edit or delete</string>
-    <string name="children_configuration_title">Children Configuration</string>
+    <string name="config_info2">Tap a child to edit or delete</string>
+    <string name="children_configuration_title">Children Settings</string>
     <string name="floating_action_button_in_config">Floating action button in config</string>
-    <string name="edit_name_title">Edit Name</string>
+    <string name="edit_name_title">Edit Child</string>
     <string name="save_button_text">Save</string>
     <string name="delete_button_text">Delete</string>
-    <string name="add_name_title">Add Name</string>
+    <string name="add_name_title">Add Child</string>
     <string name="config_card_background_description">config card background</string>
     <string name="profile_description">Profile picture</string>
+    <string name="task_background_description">task card background</string>
+    <string name="main_tasks_title">Tasks</string>
+    <string name="task_icon">task icon</string>
+    <string name="task_activity_title">Task Manager</string>
+    <string name="task_item_description">Task description goes here</string>
+    <string name="task_item_name">No name</string>
+    <string name="edit_icon">edit icon</string>
+    <string name="inflate_name">Name</string>
+    <string name="inflate_description">Task description goes here</string>
+    <string name="inflate_cancel">Cancel</string>
+    <string name="inflate_turn_done">Turn Done</string>
+    <string name="add_task_title">Add Task</string>
+    <string name="task_list_info_1">Add a task to begin!</string>
+    <string name="task_title">Task Manager</string>
+    <string name="add_task_default_name">No name</string>
+    <string name="add_task_default_task">Task Description</string>
+    <string name="add_task_add_button">Add task</string>
+    <string name="edit_task_submit_text">Save task</string>
+    <string name="edit_task_title">Edit Task</string>
+    <string name="task_delete_button_description">task delete button</string>
+    <string name="coin_config_title">Setup</string>
+    <string name="coin_config_default_name">Name</string>
+    <string name="change_picker_button_text">Change Picker</string>
+    <string name="flip_coin_button_text">Flip Coin</string>
+    <string name="queue_title">Queue</string>
+    <string name="save_option_button_text">Save option</string>
+    <string name="inflate_default_name">No name</string>
+    <string name="config_info_2">Tap on a child to edit</string>
+    <string name="coin_info2">Go back to flip coin again</string>
     <string name="add_image">Add an Image</string>
+    <string name="add_child_profile_pic_description">add child profile pic</string>
+    <string name="add_info_profile_photo">Profile photo</string>
+    <string name="add_nickname">Nickname</string>
+    <string name="add_name_hint">Add name</string>
+    <string name="add_profile_info">Touch to add profile picture</string>
+    <string name="touch_to_edit_profile_photo">Touch to edit profile photo</string>
+    <string name="save">Save</string>
+    <string name="edit_delete_description">edit delete icon</string>
+    <string name="edit_profile_description">edit profile pic</string>
+    <string name="profile_photo">Profile photo</string>
+    <string name="nickname">Nickname</string>
+    <string name="edit_child_edit_name">Edit Name</string>
+    <string name="help_title">Help</string>
+
+    <string name="author_ref">Written by Hani Nguyen and Sumrit Sanghera, project by Dr.Brian Fraser <a
+        href="https://opencoursehub.cs.sfu.ca/bfraser/grav-cms/cmpt276/home">
+        https://opencoursehub.cs.sfu.ca/bfraser/grav-cms/cmpt276/home</a></string>
+
+    <string name="main_config_background_ref">Config background:
+        <a href="https://illinoisearlylearning.org/answers/parent-child/">
+                www.illinoisearlylearning.org
+        </a></string>
+
+    <string name="main_history_background_ref">Coin flip history background:
+        <a href="https://www.marketplace.org/2021/01/21/why-do-books-have-prices-printed-on-them/">
+                www.marketplace.org
+        </a></string>
+    <string name="main_coin_flip_background_ref">Coin flip background:
+        <a href="https://www.pbs.org/newshour/economy/cant-decide-just-flip-coin">
+                www.pbs.org
+        </a></string>
+    <string name="main_tasks_background_ref">Tasks background:
+        <a href="https://www.istockphoto.com/photo/macro-photography-of-check-mark-over-white-background-gm882329946-245548220">
+                www.istockphoto.com
+        </a></string>
+    <string name="main_timer_background_ref">Timer background:
+        <a href="https://photostockeditor.com/free-images/chilren">
+                photostockeditor.com
+        </a></string>
+    <string name="main_help_background_ref">Help background:
+        <a href="https://manmantras.com/blog/child-behavior-that-show-your-child-is-in-stress">
+                manmantras.com
+        </a></string>
+
+    <string name="default_child_pic_ref">Default child picture:
+        <a href="https://www.flaticon.com/premium-icon/son_2880690?term=child&amp;page=1&amp;position=38&amp;page=1&amp;position=38&amp;related_id=2880690&amp;origin=search">
+                www.flaticon.com
+        </a></string>
+
+    <string name="app_launch_pic_ref">App launch picture:
+        <a href="https://www.flaticon.com/premium-icon/family_769639?term=family&amp;page=3&amp;position=14&amp;page=3&amp;position=14&amp;related_id=769639&amp;origin=search">
+                www.flaticon.com
+        </a></string>
+
+
+    <string name="coin_ref">Coin images:
+         <a href="https://www.coinsandcanada.com/coins-prices.php?coin=1-dollar-2020&amp;years=1-dollar-2020-2020">
+                www.coinsandcanada.com
+        </a></string>
+
+    <string name="coin_flip_sound_ref">Coin flip sound:
+         <a href="https://freesound.org/people/InspectorJ/sounds/342242/">
+                freesound.org
+        </a></string>
+
+    <string name="timer_background_ref">Timer background:
+         <a href="https://www.youtube.com/watch?v=btk4229qI04">
+                www.youtube.com
+        </a></string>
+
+
+    <string name="code_ref1">Android Image Cropper:
+         <a href="https://github.com/ArthurHub/Android-Image-Cropper">
+                https://github.com/ArthurHub/Android-Image-Cropper
+        </a></string>
+
+    <string name="code_ref2">Bitmap to string conversion:
+         <a href="https://stackoverflow.com/questions/13562429/how-many-ways-to-convert-bitmap-to-string-and-vice-versa">
+                stackoverflow.com
+        </a></string>
+
+    <string name="code_ref3">Inflate popup in task list:
+         <a href="https://stackoverflow.com/questions/5944987/how-to-create-a-popup-window-popupwindow-in-android">
+                stackoverflow.com
+        </a></string>
+
+    <string name="code_ref4">Custom gridview tutorial:
+         <a href="https://www.sanktips.com/2017/11/17/android-custom-gridview-example/">
+                sanktips.com
+        </a></string>
+
+
+
+
+
+    <string name="team_name">Team: Potassium</string>
+    <string name="image_references_text">Image references:</string>
+    <string name="media_references_text">Media references:</string>
+    <string name="code_references_text">Code references</string>
+
 </resources>

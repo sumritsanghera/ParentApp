@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Add_Child_Activity">
+
+
+    <RelativeLayout
+        android:id="@+id/add_name_tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/add_name_back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="@drawable/back_icon"
+            android:contentDescription="@string/back_button_image_description"
+            tools:ignore="ImageContrastCheck" />
+
+        <TextView
+            android:id="@+id/add_name_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/andada"
+            android:padding="10dp"
+            android:text="@string/add_name_title"
+            android:textColor="@color/dark_blue"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_name_tool_bar">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_margin="5dp"
+            android:text="@string/add_profile_info"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/add_profile_card_view"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:elevation="12dp"
+                android:layout_gravity="center_horizontal"
+                app:cardCornerRadius="80dp"
+                android:layout_centerHorizontal="true">
+
+                <ImageView
+                    android:id="@+id/profile_picture"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/default_profile"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/default_profile"
+                    android:contentDescription="@string/add_child_profile_pic_description" />
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/touch_add_picture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/add_profile_card_view"
+                android:layout_alignBottom="@id/add_profile_card_view"
+                android:layout_alignStart="@id/add_profile_card_view"
+                android:layout_alignEnd="@id/add_profile_card_view"
+                app:layout_constraintVertical_bias="1.0" />
+
+
+
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/profile_pic_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="10dp"
+            android:fontFamily="@font/cabin"
+            android:paddingHorizontal="20dp"
+            android:textColor="@color/dark_blue"
+            android:textAllCaps="true"
+            android:text="@string/add_info_profile_photo"
+            android:textSize="14sp"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_margin="10dp">
+
+            <TextView
+                android:id="@+id/nickname_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:text="@string/add_nickname"
+                android:textColor="@color/light_grey" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/add_name_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="center"
+                android:background="@drawable/text_input_background"
+                android:hint="@string/add_name_hint"
+                android:textSize="20sp" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/add_name_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:background="@drawable/button_background"
+        android:text="@string/submit"
+        android:theme="@style/ButtonStyle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

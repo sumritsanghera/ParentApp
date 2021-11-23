@@ -11,8 +11,10 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="100dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,61 +22,70 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="?actionBarSize">
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/config_back_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:background="@drawable/back_icon"
-                tools:ignore="ImageContrastCheck"
-                android:contentDescription="@string/back_button_image_description" />
+                android:contentDescription="@string/back_button_image_description"
+                tools:ignore="ImageContrastCheck"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/andada"
+                android:padding="10dp"
+                android:text="@string/children_configuration_title"
+                android:textColor="@color/dark_blue"
+                android:textSize="30sp"
+                android:textStyle="bold" />
         </RelativeLayout>
 
         <TextView
+            android:id="@+id/config_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/andada"
-            android:padding="10dp"
-            android:text="@string/children_configuration_title"
-            android:textColor="@color/dark_blue"
-            android:textSize="30sp" />
+            android:fontFamily="@font/cabin"
+            android:text="@string/config_info"
+            android:layout_margin="5dp"
+            android:textSize="20sp"
+            android:layout_gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
-        <ListView
-            android:id="@+id/children_listView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/config_children_list_background"/>
-
-
+            <GridView
+                android:id="@+id/children_grid_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:columnWidth="150dp"
+                android:horizontalSpacing="30dp"
+                android:verticalSpacing="30dp"
+                android:numColumns="2"/>
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_child_floating_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="40dp"
+        android:backgroundTint="@color/dark_blue"
         android:clickable="true"
+        android:contentDescription="@string/floating_action_button_in_config"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/add_icon"
-        android:contentDescription="@string/floating_action_button_in_config" />
-
-    <TextView
-        android:id="@+id/config_info"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:fontFamily="@font/cabin"
-        android:text="@string/config_info"
-        android:textSize="20sp"
-        android:gravity="center"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
+        app:srcCompat="@drawable/add_icon" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

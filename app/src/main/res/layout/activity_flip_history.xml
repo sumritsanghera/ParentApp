@@ -7,16 +7,41 @@
     android:background="@color/white_grey"
     tools:context=".Coin_flip_history">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/coin_flip_menu_toolbar"
+    <RelativeLayout
+        android:id="@+id/history_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white_grey"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="@style/ToolBarStyle"
+        android:layout_marginHorizontal="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/history_back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="@drawable/back_icon"
+            android:contentDescription="@string/back_button_image_description"
+            tools:ignore="ImageContrastCheck"/>
+
+        <TextView
+            android:id="@+id/history_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/andada"
+            android:padding="10dp"
+            android:text="@string/history_title"
+            android:textColor="@color/dark_blue"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/history_info"
@@ -28,20 +53,10 @@
         android:text="@string/history_default_info_text"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/history_title" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
-    <TextView
-        android:id="@+id/history_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/andada"
-        android:text="@string/history_title"
-        android:textColor="@color/darker_blue"
-        android:textSize="30sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/coin_flip_menu_toolbar" />
 
     <ListView
         android:id="@+id/coin_flip_list"
@@ -54,16 +69,6 @@
         android:scrollbarSize="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/history_title" />
-
-    <View
-        android:id="@+id/divider2"
-        android:layout_width="409dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/light_blue"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/history_title" />
+        app:layout_constraintTop_toBottomOf="@+id/history_toolbar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
