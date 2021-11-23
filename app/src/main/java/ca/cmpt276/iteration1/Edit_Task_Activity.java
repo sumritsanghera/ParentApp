@@ -8,6 +8,8 @@ import androidx.cardview.widget.CardView;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -17,12 +19,18 @@ import android.widget.TextView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
+import ca.cmpt276.iteration1.model.Child;
 import ca.cmpt276.iteration1.model.Task;
 
 public class Edit_Task_Activity extends AppCompatActivity {
 
     private ActivityResultLauncher<Intent> edit_launcher;
     private TextView name;
+    private ImageView profile;
     private TextInputEditText description_text_input;
     private Task given_task;
     private int chosen_child_index = 0;
@@ -33,7 +41,7 @@ public class Edit_Task_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_task);
 
-        setup_getIntentData();
+        setup_params();
 
         setup_edit_launcher();
 
@@ -41,14 +49,16 @@ public class Edit_Task_Activity extends AppCompatActivity {
         setup_profile();
         setup_description();
         setup_edit_child();
-        setup_edit_task_button();
+        setup_save_task_button();
         setup_delete_task_button();
     }
 
-    private void setup_getIntentData() {
+    private void setup_params() {
 
         task_index = getIntent().getIntExtra("INDEX",-1);
         given_task = getIntent().getParcelableExtra("TASK");
+        name = findViewById(R.id.edit_task_name);
+        profile = findViewById(R.id.edit_task_profile);
 
         assert task_index != -1;
         assert given_task != null;
@@ -63,8 +73,15 @@ public class Edit_Task_Activity extends AppCompatActivity {
                         Intent data = result.getData();
                         if(data!=null){
                             int index = data.getIntExtra("CHILD_INDEX",0);
-                            name = findViewById(R.id.edit_task_name);
-                            name.setText(given_task.getQueue().get(index).getName());
+                            Child chosen_child = given_task.getQueue().get(index);
+                            name.setText(chosen_child.getName());
+                            if(chosen_child.getImagePath().equals("Default pic")){
+                                profile.setImageResource(R.drawable.default_profile);
+                            } else {
+                                loadImageFromStorage(chosen_child.getImagePath(),
+                                        chosen_child.getName(),
+                                        profile);
+                            }
                             chosen_child_index = index;
                         }
                     }
@@ -78,9 +95,15 @@ public class Edit_Task_Activity extends AppCompatActivity {
     }
 
     private void setup_profile() {
-        TextView name = findViewById(R.id.edit_task_name);
         if(!given_task.getQueue().isEmpty()){
             name.setText(given_task.getQueue().get(0).getName());
+            if(given_task.getImage().equals("Default pic")){
+                profile.setImageResource(R.drawable.default_profile);
+            } else {
+                loadImageFromStorage(given_task.getImage(),
+                                        given_task.getName(),
+                                        profile);
+            }
         }
 
         CardView cardView = findViewById(R.id.edit_task_card_view);
@@ -103,7 +126,7 @@ public class Edit_Task_Activity extends AppCompatActivity {
     }
 
     //Return queue and task description
-    private void setup_edit_task_button() {
+    private void setup_save_task_button() {
         description_text_input = findViewById(R.id.edit_task_description);
         Button button = findViewById(R.id.edit_task_submit_button);
         button.setOnClickListener(view -> {
@@ -144,4 +167,19 @@ public class Edit_Task_Activity extends AppCompatActivity {
                 .show());
     }
 
+    //pass in filename (which is child's name) and the image path to load image.
+    private void loadImageFromStorage(String path, String filename, ImageView imageView)
+    {
+
+        try {
+            File f=new File(path, filename + ".jpg");
+            Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
+            imageView.setImageBitmap(b);
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+
+    }
 }

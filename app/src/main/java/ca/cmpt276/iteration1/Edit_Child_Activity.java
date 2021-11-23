@@ -69,7 +69,7 @@ public class Edit_Child_Activity extends AppCompatActivity {
 
     private void setup_params() {
         profilePicture = findViewById(R.id.edit_profile_picture);
-        image_path = "";
+        image_path = getIntent().getStringExtra("IMAGE");
         input = findViewById(R.id.edit_name_edit_text);
     }
 

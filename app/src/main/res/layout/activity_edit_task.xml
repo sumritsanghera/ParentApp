@@ -77,6 +77,7 @@
                 app:cardCornerRadius="80dp">
 
                 <ImageView
+                    android:id="@+id/edit_task_profile"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/default_profile"
