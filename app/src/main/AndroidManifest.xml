@@ -19,7 +19,11 @@
         android:theme="@style/Theme.Iteration1">
         <activity
             android:name="ca.cmpt276.ParentApp.Help"
-            android:exported="true" />
+            android:exported="true"
+            android:label="Back"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"/>
         <activity
             android:name="ca.cmpt276.ParentApp.Edit_Task_Activity"
             android:exported="true"

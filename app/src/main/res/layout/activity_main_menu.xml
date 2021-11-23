@@ -306,7 +306,7 @@
                     android:contentDescription="@string/info_icon" />
 
                 <Button
-                    android:id="@+id/about_button"
+                    android:id="@+id/help_button"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@android:color/transparent" />

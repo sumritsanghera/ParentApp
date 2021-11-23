@@ -61,6 +61,7 @@ public class Main_menu extends AppCompatActivity {
         setup_tasks();
         setup_history_button();
         setup_timer_button();
+        setup_help_button();
 
     }
 
@@ -238,6 +239,16 @@ public class Main_menu extends AppCompatActivity {
             startActivity(intent);
         });
     }
+
+
+    private void setup_help_button() {
+        Button button = findViewById(R.id.help_button);
+        button.setOnClickListener(view -> {
+            Intent intent = new Intent(Main_menu.this, Help.class);
+            startActivity(intent);
+        });
+    }
+
 
 
 
