@@ -26,6 +26,12 @@ import java.util.ArrayList;
 
 import ca.cmpt276.ParentApp.model.Child;
 
+/*
+    Queue Activity:
+    -   Takes in a Child list and display on screen along with their photos.
+    -   Allow user to choose a child and save, which takes user back to screen before.
+ */
+
 public class Picker_Queue_Activity extends AppCompatActivity {
 
     ArrayList<Child> children_list;

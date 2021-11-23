@@ -26,6 +26,15 @@ import java.io.FileNotFoundException;
 import ca.cmpt276.ParentApp.model.Child;
 import ca.cmpt276.ParentApp.model.Task;
 
+/*
+    Edit Task Activity:
+    -   Takes in the task index and parcelable task object
+    -   Display tapped task
+    -   Allow user to change task description
+    -   Allow user to change child
+    -   Allow user to delete a task, which shows a warning dialog before confirm
+ */
+
 public class Edit_Task_Activity extends AppCompatActivity {
 
     private ActivityResultLauncher<Intent> edit_launcher;

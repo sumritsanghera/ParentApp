@@ -24,10 +24,11 @@ import ca.cmpt276.ParentApp.model.Task_Manager;
 
 /*
        Main Menu class using layout: activity_main_menu
-       5 transparent buttons takes user to 5 different features of the app namely:
+       6 transparent buttons takes user to 6 different features of the app namely:
        -    Children configuration
        -    Coin flip history
        -    Coin flip
+       -    Tasks
        -    Timer
        -    Help
 

@@ -21,6 +21,13 @@ import java.util.ArrayList;
 
 import ca.cmpt276.ParentApp.model.Child;
 
+/*
+    Add Task Activity:
+    -   Takes in the configured children list and display the the first child.
+    -   Has a Text input edit for taking in user input.
+    -   Sends back to task list activity the children queue and the task description.
+ */
+
 public class Add_Task_Activity extends AppCompatActivity {
 
     private ArrayList<Child> children_list;

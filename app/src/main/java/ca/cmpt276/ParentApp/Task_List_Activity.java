@@ -38,6 +38,17 @@ import java.util.ArrayList;
 import ca.cmpt276.ParentApp.model.Child;
 import ca.cmpt276.ParentApp.model.Task;
 
+/*
+    Task List Activity:
+    -   Display all added tasks.
+    -   Upon a tap on a task, popup inflates to show user task description, current child and
+        their photo
+           -> popup includes a button to cancel popup, or press "Turn done" and child jumps
+            to next child in line of task queue.
+    -   Allow user to add by pressing floating button
+    -   Allow user to edit task by pressing on pencil icon.
+ */
+
 public class Task_List_Activity extends AppCompatActivity {
     private ArrayList<Task> task_list;
     private ArrayList<Child> children_list;

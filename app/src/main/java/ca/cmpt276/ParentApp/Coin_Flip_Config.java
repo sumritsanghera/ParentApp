@@ -28,6 +28,13 @@ import java.util.ArrayList;
 
 import ca.cmpt276.ParentApp.model.Child;
 
+/*
+    Coin Flip Config:
+    -   Allow user to choose heads or tails
+    -   Allow user to change picker
+    -   Allow user to proceed to flip coin.
+ */
+
 public class Coin_Flip_Config extends AppCompatActivity {
 
     private ArrayList<Child> queue;

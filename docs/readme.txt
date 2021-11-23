@@ -1,8 +1,13 @@
 Features Implemented:
--   Configuration activity (edit/add/delete name)
+-   Configuration activity (edit/add/delete child)
 -   Coin Flip activity
 -   Coin Flip history
+-   Tasks (edit/add/delete task)
 -   Timer
+-   Help page
+
+Style guide:
+https://github.com/standard/standard/blob/master/RULES.md
 
 References:
 Main_menu.java:

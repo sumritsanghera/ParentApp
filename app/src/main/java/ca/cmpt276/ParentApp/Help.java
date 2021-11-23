@@ -7,6 +7,11 @@ import android.text.method.LinkMovementMethod;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+/*
+    Help screen:
+    -   Hook up all hyperlinks in help xml file, takes user to reference links upon a tap.
+ */
+
 public class Help extends AppCompatActivity {
 
     @Override
