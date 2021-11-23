@@ -90,11 +90,13 @@ public class Add_Child_Activity extends AppCompatActivity {
                 result -> {
                     if(result.getResultCode() == Activity.RESULT_OK){
                         Intent data = result.getData();
-                        Bundle extras = data.getExtras();
-                        Bitmap imageBitmap = (Bitmap) extras.get("data");
-                        name = String.valueOf(input.getText());
-                        image_path = saveToInternalStorage(imageBitmap,name);
-                        loadImageFromStorage(image_path,name,profilePicture);
+                        if(data!=null){
+                            Bundle extras = data.getExtras();
+                            Bitmap imageBitmap = (Bitmap) extras.get("data");
+                            name = String.valueOf(input.getText());
+                            image_path = saveToInternalStorage(imageBitmap,name);
+                            loadImageFromStorage(image_path,name,profilePicture);
+                        }
                     }
                 }
         );
@@ -127,12 +129,7 @@ public class Add_Child_Activity extends AppCompatActivity {
     }
 
     private void setup_camera_button() {
-        profilePicture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                chooseProfilePicture();
-            }
-        });
+        profilePicture.setOnClickListener(view -> chooseProfilePicture());
     }
 
     private void chooseProfilePicture() {
@@ -150,24 +147,18 @@ public class Add_Child_Activity extends AppCompatActivity {
         alertDialogProfilePicture = builder.create();
         alertDialogProfilePicture.show();
 
-        camera_icon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                takePictureFromCamera();
-                alertDialogProfilePicture.cancel();
-                TextView text = findViewById(R.id.touch_add_picture);
-                text.setVisibility(View.INVISIBLE);
-            }
+        camera_icon.setOnClickListener(view -> {
+            takePictureFromCamera();
+            alertDialogProfilePicture.cancel();
+            TextView text = findViewById(R.id.touch_add_picture);
+            text.setVisibility(View.INVISIBLE);
         });
 
-        gallery_icon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                takePictureFromGallery();
-                alertDialogProfilePicture.cancel();
-                TextView text = findViewById(R.id.touch_add_picture);
-                text.setVisibility(View.INVISIBLE);
-            }
+        gallery_icon.setOnClickListener(view -> {
+            takePictureFromGallery();
+            alertDialogProfilePicture.cancel();
+            TextView text = findViewById(R.id.touch_add_picture);
+            text.setVisibility(View.INVISIBLE);
         });
     }
 
