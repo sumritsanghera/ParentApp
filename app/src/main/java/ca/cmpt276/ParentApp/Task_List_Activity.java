@@ -37,6 +37,7 @@ import java.util.ArrayList;
 
 import ca.cmpt276.ParentApp.model.Child;
 import ca.cmpt276.ParentApp.model.Task;
+import ca.cmpt276.ParentApp.model.Task_History_Item;
 
 /*
     Task List Activity:
@@ -214,7 +215,7 @@ public class Task_List_Activity extends AppCompatActivity {
 
             RelativeLayout inflate_item = itemView.findViewById(R.id.task_item_relative_layout);
             inflate_item.setOnClickListener(view -> showPopupWindow(inflate_view,position,nameView,
-                                                                    current_task));
+                    current_task));
 
             ImageView edit_button = itemView.findViewById(R.id.task_edit);
             edit_button.setOnClickListener(view -> {
@@ -276,12 +277,24 @@ public class Task_List_Activity extends AppCompatActivity {
                 }
             });
 
-            Button cancel = popupView.findViewById(R.id.inflate_cancel_button);
-            cancel.setOnClickListener(button_view -> popupWindow.dismiss());
+            //set up history button
+            Button history = popupView.findViewById(R.id.inflate_history_button);
+            history.setOnClickListener(button_view -> {
+                Intent intent = new Intent(Task_List_Activity.this,Task_History.class);
+                intent.putExtra("TASK_HISTORY",currentTask.getTask_history());
+                startActivity(intent);
+            });
 
+            //set up turn over button
             Button turn_over = popupView.findViewById(R.id.inflate_turn_button);
             turn_over.setOnClickListener(button_view -> {
-                if(!task_list.get(position).getQueue().isEmpty()) {
+
+                //add new task to history of current task
+                Task_History_Item new_task = new Task_History_Item(currentTask.getName(),currentTask.getImage());
+                currentTask.add_history(new_task);
+
+                //update queue if current task queue is > 1
+                if(!currentTask.getQueue().isEmpty()) {
                     updateQueue(position, task_name);
                     refreshTaskList();
                     setReturnResult();
