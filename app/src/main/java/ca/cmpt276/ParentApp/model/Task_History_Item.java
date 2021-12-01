@@ -7,8 +7,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Task_History_Item implements Parcelable {
-    private final String name;
-    private final String image;
+    private String name;
+    private String image;
     private final String time;
 
     public Task_History_Item(String name, String image) {
@@ -59,5 +59,13 @@ public class Task_History_Item implements Parcelable {
 
     public String getTime() {
         return time;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

@@ -36,12 +36,24 @@ public class Task_Manager {
 
     public void update_child_after_edit(ArrayList<Edited_Child> name_list){
         for(Task task : task_list){
+            //update task queue
             for(Child queue_child : task.getQueue()){
                 for(Edited_Child edited_child : name_list){
                     if(queue_child.getName().equals(edited_child.getOriginal_name()) &&
                         queue_child.getImagePath().equals(edited_child.getOriginal_image())){
                         queue_child.setName(edited_child.getNew_name());
                         queue_child.setImage(edited_child.getNew_image());
+                    }
+                }
+            }
+
+            //update task history
+            for(Task_History_Item item : task.getTask_history()){
+                for(Edited_Child edited_child : name_list){
+                    if(item.getName().equals(edited_child.getOriginal_name()) &&
+                        item.getImage().equals(edited_child.getOriginal_image())){
+                        item.setName(edited_child.getNew_name());
+                        item.setImage(edited_child.getNew_image());
                     }
                 }
             }
@@ -58,6 +70,7 @@ public class Task_Manager {
 
     public void removeUpdate(ArrayList<Child> removed_list) {
         for(Task task: task_list){
+            //for task queue
             ArrayList<Integer> indices = new ArrayList<>();
             int index=0;
             if(!removed_list.isEmpty() && !task.getQueue().isEmpty()) {
@@ -74,6 +87,26 @@ public class Task_Manager {
             if(indices.size()>0){
                 for(int i = indices.size()-1; i > -1; i--){
                     task.remove(indices.get(i));
+                }
+            }
+
+            //for task history
+            indices = new ArrayList<>();
+            index=0;
+            if(!removed_list.isEmpty() && !task.getTask_history().isEmpty()) {
+                for (Task_History_Item item : task.getTask_history()) {
+                    for (Child removed_child : removed_list) {
+                        if (item.getName().equals(removed_child.getName()) &&
+                                item.getImage().equals(removed_child.getImagePath())) {
+                            indices.add(index);
+                        }
+                    }
+                    index++;
+                }
+            }
+            if(indices.size()>0){
+                for(int i = indices.size()-1; i > -1; i--){
+                    task.remove_history(indices.get(i));
                 }
             }
 

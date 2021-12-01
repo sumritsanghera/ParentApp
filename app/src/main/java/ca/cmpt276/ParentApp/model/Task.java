@@ -69,6 +69,8 @@ public class Task implements Parcelable {
         queue.remove(i);
     }
 
+    public void remove_history(int i){ task_history.remove(i); }
+
     public void add(Child child){
         queue.add(child);
     }
