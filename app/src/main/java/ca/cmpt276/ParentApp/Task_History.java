@@ -5,7 +5,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -22,8 +21,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
-import ca.cmpt276.ParentApp.model.Coin_Flip;
-import ca.cmpt276.ParentApp.model.Task;
 import ca.cmpt276.ParentApp.model.Task_History_Item;
 
 public class Task_History extends AppCompatActivity {

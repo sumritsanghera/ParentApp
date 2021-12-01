@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.ImageDecoder;
 import android.net.Uri;
 import android.os.Build;
@@ -29,8 +28,6 @@ import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -56,7 +53,6 @@ public class Add_Child_Activity extends AppCompatActivity {
     private ImageView profilePicture;
     private String image_path;
     private Bitmap image_bitmap;
-    private String name;
     private AlertDialog alertDialogProfilePicture;
     private ActivityResultLauncher<Intent> camera_launcher;
     private TextInputEditText input;
@@ -200,22 +196,6 @@ public class Add_Child_Activity extends AppCompatActivity {
             }
         }
         return directory.getAbsolutePath();
-    }
-
-    //pass in filename (which is child's name) and the image path to load image.
-    private void loadImageFromStorage(String path, String filename, ImageView imageView)
-    {
-
-        try {
-            File f=new File(path, filename + ".jpg");
-            Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
-            imageView.setImageBitmap(b);
-        }
-        catch (FileNotFoundException e)
-        {
-            e.printStackTrace();
-        }
-
     }
 
     @Override
