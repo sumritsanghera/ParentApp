@@ -14,6 +14,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.transition.Explode;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -201,7 +202,9 @@ public class Task_List_Activity extends AppCompatActivity {
 
             //fill view
             ImageView profile = itemView.findViewById(R.id.add_task_profile);
-            loadImageFromStorage(current_task.getImage(),current_task.getImage(),profile);
+            if(!current_task.getImage().equals("Default pic")){
+                loadImageFromStorage(current_task.getImage(),current_task.getImage(),profile);
+            }
 
             TextView nameView = itemView.findViewById(R.id.task_name);
 
@@ -250,7 +253,9 @@ public class Task_List_Activity extends AppCompatActivity {
             profile.setRadius(profile.getLayoutParams().width /(float)2);
 
             ImageView imageView = popupView.findViewById(R.id.inflate_profile);
-            loadImageFromStorage(currentTask.getImage(),currentTask.getName(),imageView);
+            if(!currentTask.getImage().equals("Default pic")){
+                loadImageFromStorage(currentTask.getImage(),currentTask.getName(),imageView);
+            }
 
             TextView name = popupView.findViewById(R.id.inflate_text);
             if(currentTask.getQueue().isEmpty()){
@@ -290,6 +295,7 @@ public class Task_List_Activity extends AppCompatActivity {
             turn_over.setOnClickListener(button_view -> {
 
                 //add new task to history of current task
+                Log.e("TASK_LIST_ACTIVITY",currentTask.getImage());
                 Task_History_Item new_task = new Task_History_Item(currentTask.getName(),currentTask.getImage());
                 currentTask.add_history(new_task);
 
