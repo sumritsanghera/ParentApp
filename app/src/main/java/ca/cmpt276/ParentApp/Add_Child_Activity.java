@@ -5,12 +5,12 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.ImageDecoder;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -28,8 +28,6 @@ import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -54,7 +52,7 @@ public class Add_Child_Activity extends AppCompatActivity {
 
     private ImageView profilePicture;
     private String image_path;
-    private String name;
+    private Bitmap image_bitmap;
     private AlertDialog alertDialogProfilePicture;
     private ActivityResultLauncher<Intent> camera_launcher;
     private TextInputEditText input;
@@ -75,7 +73,7 @@ public class Add_Child_Activity extends AppCompatActivity {
 
     private void setup_params() {
         profilePicture = findViewById(R.id.profile_picture);
-        image_path = "";
+        image_path = "Default pic";
         input = findViewById(R.id.add_name_edit_text);
     }
 
@@ -92,10 +90,9 @@ public class Add_Child_Activity extends AppCompatActivity {
                         Intent data = result.getData();
                         if(data!=null){
                             Bundle extras = data.getExtras();
-                            Bitmap imageBitmap = (Bitmap) extras.get("data");
-                            name = String.valueOf(input.getText());
-                            image_path = saveToInternalStorage(imageBitmap,name);
-                            loadImageFromStorage(image_path,name,profilePicture);
+                            image_bitmap = (Bitmap) extras.get("data");
+                            profilePicture.setImageBitmap(image_bitmap);
+
                         }
                     }
                 }
@@ -116,11 +113,12 @@ public class Add_Child_Activity extends AppCompatActivity {
 
                 Intent intent = new Intent();
                 intent.putExtra("NAME", capitalizeFirstLetter);
-
-                profilePicture.buildDrawingCache();
-                Bitmap bitmap = profilePicture.getDrawingCache();
-                saveToInternalStorage(bitmap,capitalizeFirstLetter);
+                if(image_bitmap!=null){
+                    image_path = saveToInternalStorage(image_bitmap,capitalizeFirstLetter);
+                }
                 intent.putExtra("PICTURE", image_path);
+
+                Log.e("ADD_CHILD",image_path);
 
                 setResult(RESULT_OK,intent);
                 finish();
@@ -200,22 +198,6 @@ public class Add_Child_Activity extends AppCompatActivity {
         return directory.getAbsolutePath();
     }
 
-    //pass in filename (which is child's name) and the image path to load image.
-    private void loadImageFromStorage(String path, String filename, ImageView imageView)
-    {
-
-        try {
-            File f=new File(path, filename + ".jpg");
-            Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
-            imageView.setImageBitmap(b);
-        }
-        catch (FileNotFoundException e)
-        {
-            e.printStackTrace();
-        }
-
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -224,22 +206,20 @@ public class Add_Child_Activity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 Uri resultUri = result.getUri();
                 profilePicture.setImageURI(resultUri);
-                Bitmap imageBitmap = null;
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                     try {
-                        imageBitmap = ImageDecoder.decodeBitmap(ImageDecoder.createSource(this.getContentResolver(), resultUri));
+                        image_bitmap = ImageDecoder.decodeBitmap(ImageDecoder.createSource(this.getContentResolver(), resultUri));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 } else {
                     try {
-                        imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), resultUri);
+                        image_bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), resultUri);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
-                assert imageBitmap!=null;
-                image_path = saveToInternalStorage(imageBitmap,String.valueOf(input.getText()));
+                assert image_bitmap!=null;
             }
         }
     }

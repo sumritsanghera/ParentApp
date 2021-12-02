@@ -18,44 +18,50 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Iteration1">
         <activity
-            android:name="ca.cmpt276.ParentApp.Help"
+            android:name=".Task_History"
             android:exported="true"
             android:label="Back"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".Help"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"/>
-        <activity
-            android:name="ca.cmpt276.ParentApp.Edit_Task_Activity"
             android:exported="true"
             android:label="Back"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name="ca.cmpt276.ParentApp.Add_Task_Activity"
+            android:name=".Edit_Task_Activity"
             android:exported="true"
             android:label="Back"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name="ca.cmpt276.ParentApp.Task_List_Activity"
+            android:name=".Add_Task_Activity"
             android:exported="true"
             android:label="Back"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name="ca.cmpt276.ParentApp.Picker_Queue_Activity"
+            android:name=".Task_List_Activity"
             android:exported="true"
             android:label="Back"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name="ca.cmpt276.ParentApp.Coin_Flip_Config"
+            android:name=".Picker_Queue_Activity"
             android:exported="true"
             android:label="Back"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name="ca.cmpt276.ParentApp.Main_menu"
+            android:name=".Coin_Flip_Config"
+            android:exported="true"
+            android:label="Back"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".Main_menu"
             android:exported="true"
             android:label="Parent App"
             android:screenOrientation="portrait"
@@ -67,37 +73,37 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="ca.cmpt276.ParentApp.Coin_Flip_Activity"
+            android:name=".Coin_Flip_Activity"
             android:exported="true"
             android:label="Back"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name="ca.cmpt276.ParentApp.Coin_flip_history"
+            android:name=".Coin_flip_history"
             android:exported="true"
             android:label="Back"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name="ca.cmpt276.ParentApp.Timeout_Timer"
+            android:name=".Timeout_Timer"
             android:exported="true"
             android:label="Back"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name="ca.cmpt276.ParentApp.Children_Config"
+            android:name=".Children_Config"
             android:exported="true"
             android:label="Back"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name="ca.cmpt276.ParentApp.Add_Child_Activity"
+            android:name=".Add_Child_Activity"
             android:exported="true"
             android:label="Back"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name="ca.cmpt276.ParentApp.Edit_Child_Activity"
+            android:name=".Edit_Child_Activity"
             android:exported="true"
             android:label="Back"
             android:screenOrientation="portrait"

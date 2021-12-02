@@ -19,7 +19,7 @@ public class Edited_Child implements Parcelable {
         this.new_name = new_name;
         this.original_image = original_image;
         this.new_image = new_image;
-;    }
+    }
 
     protected Edited_Child(Parcel in) {
         original_name = in.readString();

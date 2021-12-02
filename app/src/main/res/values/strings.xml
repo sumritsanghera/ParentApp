@@ -74,7 +74,7 @@
     <string name="edit_icon">edit icon</string>
     <string name="inflate_name">Name</string>
     <string name="inflate_description">Task description goes here</string>
-    <string name="inflate_cancel">Cancel</string>
+    <string name="inflate_history">History</string>
     <string name="inflate_turn_done">Turn Done</string>
     <string name="add_task_title">Add Task</string>
     <string name="task_list_info_1">Add a task to begin!</string>
@@ -109,8 +109,7 @@
     <string name="edit_child_edit_name">Edit Name</string>
     <string name="help_title">Help</string>
 
-    <string name="author_ref">Written by Hani Nguyen and Sumrit Sanghera, project by Dr.Brian Fraser <a
-        href="https://opencoursehub.cs.sfu.ca/bfraser/grav-cms/cmpt276/home">
+    <string name="author_ref">Written by Hani Nguyen and Sumrit Sanghera, project by Dr.Brian Fraser <a href="https://opencoursehub.cs.sfu.ca/bfraser/grav-cms/cmpt276/home">
         https://opencoursehub.cs.sfu.ca/bfraser/grav-cms/cmpt276/home</a></string>
 
     <string name="main_config_background_ref">Config background:
@@ -187,12 +186,11 @@
         </a></string>
 
 
-
-
-
     <string name="team_name">Team: Potassium</string>
     <string name="image_references_text">Image references:</string>
     <string name="media_references_text">Media references:</string>
     <string name="code_references_text">Code references</string>
+    <string name="task_history_title">Task History</string>
+    <string name="task_history_info">No child had a turn yet</string>
 
 </resources>

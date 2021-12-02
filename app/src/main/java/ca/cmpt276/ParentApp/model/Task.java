@@ -11,21 +11,26 @@ import java.util.ArrayList;
  */
 
 public class Task implements Parcelable {
+    private final ArrayList<Task_History_Item> task_history;
     private final ArrayList<Child> queue;
     private final String task_description;
 
     public Task(ArrayList<Child> queue, String task_description) {
         this.queue = queue;
         this.task_description = task_description;
+        task_history = new ArrayList<>();
     }
 
+
     protected Task(Parcel in) {
+        task_history = in.createTypedArrayList(Task_History_Item.CREATOR);
         queue = in.createTypedArrayList(Child.CREATOR);
         task_description = in.readString();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeTypedList(task_history);
         dest.writeTypedList(queue);
         dest.writeString(task_description);
     }
@@ -64,6 +69,8 @@ public class Task implements Parcelable {
         queue.remove(i);
     }
 
+    public void remove_history(int i){ task_history.remove(i); }
+
     public void add(Child child){
         queue.add(child);
     }
@@ -73,4 +80,13 @@ public class Task implements Parcelable {
         queue.remove(0);
         queue.add(child);
     }
+
+    public ArrayList<Task_History_Item> getTask_history() {
+        return task_history;
+    }
+
+    public void add_history(Task_History_Item new_task){
+        task_history.add(new_task);
+    }
+
 }

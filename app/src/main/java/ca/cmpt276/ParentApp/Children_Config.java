@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -105,6 +106,7 @@ public class Children_Config extends AppCompatActivity {
                             String name = data.getStringExtra("NAME");
                             String bitmap = data.getStringExtra("PICTURE");
                             Child new_child = new Child(name, bitmap);
+                            Log.e("Children_config",bitmap);
                             children_list.add(new_child);
                             added_children.add(new_child);
                             refresh_children_list();
@@ -207,7 +209,9 @@ public class Children_Config extends AppCompatActivity {
             cardView.setRadius((float) width/2);
 
             ImageView profile = itemView.findViewById(R.id.profile_icon);
-            loadImageFromStorage(current_child.getImagePath(),current_child.getName(),profile);
+            if(!current_child.getImagePath().equals("Default pic")){
+                loadImageFromStorage(current_child.getImagePath(),current_child.getName(),profile);
+            }
 
             TextView nameView = itemView.findViewById(R.id.config_child_name);
             nameView.setText(child_name);
