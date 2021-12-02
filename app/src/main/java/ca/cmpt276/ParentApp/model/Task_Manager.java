@@ -85,8 +85,14 @@ public class Task_Manager {
                 }
             }
             if(indices.size()>0){
+                //remove children at calculated indices
                 for(int i = indices.size()-1; i > -1; i--){
                     task.remove(indices.get(i));
+                }
+                //if queue is empty, add a no name person into queue.
+                if(task.getQueue().isEmpty()){
+                    Child no_name = new Child("No name");
+                    task.add(no_name);
                 }
             }
 
