@@ -22,6 +22,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -67,6 +68,7 @@ public class Timeout_Timer extends AppCompatActivity {
     private long startTimeInMillis;
     private long timeLeftInMillis = 1000;
     private long endTime;
+    private ProgressBar progressBarCircle;
 
 
 
@@ -82,6 +84,8 @@ public class Timeout_Timer extends AppCompatActivity {
         buttonSet = findViewById(R.id.button_set);
         buttonStartPause = findViewById(R.id.button_start_pause);
         buttonReset = findViewById(R.id.button_reset);
+        progressBarCircle = findViewById(R.id.circular_progress_bar);
+
 
         setup_back_button();
         setUpSetButton();
@@ -164,7 +168,14 @@ public class Timeout_Timer extends AppCompatActivity {
             @Override
             public void onTick(long millisUntilFinished) {
                 timeLeftInMillis = millisUntilFinished;
+                //Set ProgressBar values
+                int progress = (int) timeLeftInMillis/1000;
+                int maxProgress = (int) startTimeInMillis/1000;
+                progressBarCircle.setMax(maxProgress);
+
                 updateCountDownText();
+                progressBarCircle.setProgress(progress);
+
             }
             @Override
             public void onFinish() {
@@ -229,6 +240,7 @@ public class Timeout_Timer extends AppCompatActivity {
                 radioGroup.setVisibility(View.VISIBLE);
             } else {
                 videoView.setVisibility(View.INVISIBLE);
+                progressBarCircle.setVisibility(View.INVISIBLE);
                 buttonReset.setVisibility(View.INVISIBLE);
                 textViewCountDown.setVisibility(View.VISIBLE);
                 textViewCountDown.setTextColor(getResources().getColor(android.R.color.black));
@@ -267,6 +279,7 @@ public class Timeout_Timer extends AppCompatActivity {
 
     private void timerRunningActions() {
         playVideo();
+        progressBarCircle.setVisibility(View.VISIBLE);
         videoView.setVisibility(View.VISIBLE);
         textViewCountDown.setTextColor(getResources().getColor(android.R.color.white));
         textViewCountDown.setVisibility(View.VISIBLE);
