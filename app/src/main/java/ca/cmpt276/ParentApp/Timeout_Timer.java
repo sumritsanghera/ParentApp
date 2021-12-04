@@ -69,6 +69,7 @@ public class Timeout_Timer extends AppCompatActivity {
     private long timeLeftInMillis = 1000;
     private long endTime;
     private ProgressBar progressBarCircle;
+    private double timerSpeed = 1;
 
 
 
@@ -164,10 +165,11 @@ public class Timeout_Timer extends AppCompatActivity {
     private void startTimer() {
         endTime = System.currentTimeMillis() + timeLeftInMillis;
 
-        countDownTimer = new CountDownTimer(timeLeftInMillis, 1000) {
+        countDownTimer = new CountDownTimer((long) (timeLeftInMillis / timerSpeed),
+                (long) (1000 / timerSpeed)) {
             @Override
             public void onTick(long millisUntilFinished) {
-                timeLeftInMillis = millisUntilFinished;
+                timeLeftInMillis = (long) (millisUntilFinished * timerSpeed);
                 //Set ProgressBar values
                 int progress = (int) timeLeftInMillis/1000;
                 int maxProgress = (int) startTimeInMillis/1000;
