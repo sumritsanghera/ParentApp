@@ -69,8 +69,8 @@ public class Timeout_Timer extends AppCompatActivity {
     private long timeLeftInMillis = 1000;
     private long endTime;
     private ProgressBar progressBarCircle;
-    private double timerSpeed = 1;
-
+    private double timerSpeedMultiplier = 1;
+    private final double defaultSpeed = 1;
 
 
     @Override
@@ -114,7 +114,7 @@ public class Timeout_Timer extends AppCompatActivity {
                 if (isTimerRunning) {
                     pauseTimer();
                 } else {
-                    startTimer();
+                    startTimer(defaultSpeed);
                 }
 
             }
@@ -162,7 +162,7 @@ public class Timeout_Timer extends AppCompatActivity {
     }
 
 
-    private void startTimer() {
+    private void startTimer(final double timerSpeed) {
         endTime = System.currentTimeMillis() + timeLeftInMillis;
 
         countDownTimer = new CountDownTimer((long) (timeLeftInMillis / timerSpeed),
@@ -345,7 +345,7 @@ public class Timeout_Timer extends AppCompatActivity {
                 timerStartActions();
                 textViewCountDown.setVisibility(View.VISIBLE);
             } else {
-                startTimer();
+                startTimer(defaultSpeed);
             }
         }
     }
@@ -401,5 +401,10 @@ public class Timeout_Timer extends AppCompatActivity {
         // Vibrate for 500 milliseconds
         v.vibrate(VibrationEffect.createOneShot(1000,
                 VibrationEffect.DEFAULT_AMPLITUDE));
+    }
+
+    private void changeTimerSpeed(double newSpeed) {
+        pauseTimer();
+        startTimer(newSpeed);
     }
 }

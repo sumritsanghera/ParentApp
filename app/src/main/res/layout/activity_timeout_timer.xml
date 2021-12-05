@@ -11,14 +11,14 @@
         style="@style/CircularDeterminateProgressBar"
         android:layout_width="214dp"
         android:layout_height="205dp"
+        android:elevation="1dp"
         android:gravity="center"
         android:progress="100"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/timer_linear_layout"
         app:layout_constraintEnd_toEndOf="@+id/timer_linear_layout"
         app:layout_constraintStart_toStartOf="@+id/timer_linear_layout"
-        app:layout_constraintTop_toTopOf="@+id/timer_linear_layout"
-        android:elevation="1dp"
-        android:visibility="invisible"/>
+        app:layout_constraintTop_toTopOf="@+id/timer_linear_layout" />
 
     <VideoView
         android:id="@+id/videoView"
