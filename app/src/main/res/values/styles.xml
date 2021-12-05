@@ -9,7 +9,13 @@
     <style name="ToolBarStyle" parent="Theme.AppCompat">
         <item name="android:textColorPrimary">@color/darker_blue</item>
         <item name="android:textColorSecondary">@color/light_blue</item>
-        <item name="actionMenuTextColor">@color/dark_blue</item>
+        <item name="actionMenuTextColor">@color/light_blue</item>
+    </style>
+
+    <style name="TimerToolBarStyle" parent="Theme.AppCompat">
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorSecondary">@color/white</item>
+        <item name="actionMenuTextColor">@color/white</item>
     </style>
 
 

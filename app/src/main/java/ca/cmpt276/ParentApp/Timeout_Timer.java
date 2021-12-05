@@ -1,6 +1,8 @@
 package ca.cmpt276.ParentApp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
 
 import android.content.Context;
@@ -17,6 +19,8 @@ import android.os.CountDownTimer;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -48,6 +52,10 @@ import java.util.Locale;
         https://www.youtube.com/watch?v=7dQJAkjNEjM&list=PLrnPJCHvNZuB8wxqXCwKw2_NkyEmFwcSd&index=4
         https://www.youtube.com/watch?v=btk4229qI04 - videoBackground
         https://stackoverflow.com/questions/2618182/how-to-play-ringtone-alarm-sound-in-android
+        https://stackoverflow.com/questions/26651602/display-back-arrow-on-toolbar
+        https://stackoverflow.com/questions/50162052/working-example-of-countdown-timer-with-smooth-progress-bar
+        https://www.youtube.com/watch?v=vYIw21_migM
+
  */
 
 public class Timeout_Timer extends AppCompatActivity {
@@ -71,6 +79,7 @@ public class Timeout_Timer extends AppCompatActivity {
     private ProgressBar progressBarCircle;
     private double timerSpeedMultiplier = 1;
     private final double defaultSpeed = 1;
+    private Toolbar toolbar;
 
 
     @Override
@@ -86,13 +95,24 @@ public class Timeout_Timer extends AppCompatActivity {
         buttonStartPause = findViewById(R.id.button_start_pause);
         buttonReset = findViewById(R.id.button_reset);
         progressBarCircle = findViewById(R.id.circular_progress_bar);
+        toolbar = findViewById(R.id.toolbar);
 
 
-        setup_back_button();
+
+        setup_toolbar();
+        //setup_back_button();
         setUpSetButton();
         setUpStartPauseButton();
         setUpResetButton();
         createRadioButtons();
+    }
+
+    private void setup_toolbar() {
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
     }
 
     private void setup_back_button() {
@@ -251,6 +271,7 @@ public class Timeout_Timer extends AppCompatActivity {
     }
 
     private void timerOverActions() {
+        progressBarCircle.setVisibility(View.INVISIBLE);
         videoView.setVisibility(View.INVISIBLE);
         buttonStartPause.setVisibility(View.INVISIBLE);
         textViewCountDown.setVisibility(View.VISIBLE);
@@ -318,6 +339,18 @@ public class Timeout_Timer extends AppCompatActivity {
 
         if (countDownTimer != null) {
             countDownTimer.cancel();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (timeLeftInMillis < 0) {
+            timeLeftInMillis = 0;
+            isTimerRunning = false;
+            updateCountDownText();
+            timerStartActions();
+            textViewCountDown.setVisibility(View.VISIBLE);
         }
     }
 
@@ -398,7 +431,6 @@ public class Timeout_Timer extends AppCompatActivity {
 
     private void vibrate() {
         Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        // Vibrate for 500 milliseconds
         v.vibrate(VibrationEffect.createOneShot(1000,
                 VibrationEffect.DEFAULT_AMPLITUDE));
     }
@@ -406,5 +438,46 @@ public class Timeout_Timer extends AppCompatActivity {
     private void changeTimerSpeed(double newSpeed) {
         pauseTimer();
         startTimer(newSpeed);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.timer_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        if (isTimerRunning) {
+            if (item.getItemId() == R.id.quarter_speed) {
+                timerSpeedMultiplier = 0.25;
+            }
+            else if (item.getItemId() == R.id.half_speed) {
+                timerSpeedMultiplier = 0.50;
+            }
+            else if (item.getItemId() == R.id.three_quarter_speed) {
+                timerSpeedMultiplier = 0.75;
+            }
+            else if (item.getItemId() == R.id.normal_speed) {
+                timerSpeedMultiplier = 1;
+            }
+            else if (item.getItemId() == R.id.double_speed) {
+                timerSpeedMultiplier = 2;
+            }
+            else if (item.getItemId() == R.id.triple_speed) {
+                timerSpeedMultiplier = 3;
+            }
+            else if (item.getItemId() == R.id.quadruple_speed) {
+                timerSpeedMultiplier = 4;
+            }
+            changeTimerSpeed(timerSpeedMultiplier);
+        }
+        return true;
     }
 }

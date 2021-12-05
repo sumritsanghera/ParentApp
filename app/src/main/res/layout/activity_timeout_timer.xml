@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".Timeout_Timer">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        app:title="Timeout Timer"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/dark_blue"
+        android:theme="@style/TimerToolBarStyle"
+        app:layout_constraintTop_toTopOf="parent"
+        android:elevation="1dp"/>
+
+
     <ProgressBar
         android:id="@+id/circular_progress_bar"
         style="@style/CircularDeterminateProgressBar"
