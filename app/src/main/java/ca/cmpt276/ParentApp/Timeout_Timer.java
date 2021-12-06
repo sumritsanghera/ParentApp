@@ -495,3 +495,6 @@ public class Timeout_Timer extends AppCompatActivity {
         editor.apply();
     }
 }
+
+
+//500
