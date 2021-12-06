@@ -6,6 +6,31 @@
     android:layout_height="match_parent"
     tools:context=".Timeout_Timer">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        app:title="Timer"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/white"
+        android:theme="@style/TimerToolBarStyle"
+        app:layout_constraintTop_toTopOf="parent"
+        android:elevation="1dp"/>
+
+
+    <ProgressBar
+        android:id="@+id/circular_progress_bar"
+        style="@style/CircularDeterminateProgressBar"
+        android:layout_width="214dp"
+        android:layout_height="205dp"
+        android:elevation="1dp"
+        android:gravity="center"
+        android:progress="100"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/timer_linear_layout"
+        app:layout_constraintEnd_toEndOf="@+id/timer_linear_layout"
+        app:layout_constraintStart_toStartOf="@+id/timer_linear_layout"
+        app:layout_constraintTop_toTopOf="@+id/timer_linear_layout" />
+
     <VideoView
         android:id="@+id/videoView"
         android:layout_width="match_parent"
@@ -22,7 +47,7 @@
         android:id="@+id/timer_linear_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="12dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -57,7 +82,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
-                android:hint="Minutes"
+                android:hint="@string/minutes"
                 android:inputType="number"
                 android:maxLength="4"
                 android:theme="@style/ButtonStyle" />
@@ -70,7 +95,7 @@
                 android:layout_margin="10dp"
                 android:layout_toEndOf="@+id/edit_text_input"
                 android:backgroundTint="@color/white_gray"
-                android:text="Set"
+                android:text="@string/set"
                 android:theme="@style/ButtonStyle" />
         </LinearLayout>
 
@@ -80,10 +105,12 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="10dp"
-            android:text="00:00"
+            android:text="@string/default_time"
             android:textColor="@android:color/black"
             android:textSize="60sp"
             android:visibility="visible"/>
+
+
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -98,7 +125,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:backgroundTint="@color/dark_green"
-                android:text="Start"
+                android:text="@string/start"
                 android:theme="@style/ButtonStyle"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -110,7 +137,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="Reset"
+                android:text="@string/reset"
                 android:visibility="invisible"
                 android:theme="@style/ButtonStyle"
                 android:backgroundTint="@color/red"
@@ -129,6 +156,16 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/text_view_speed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:textSize="11sp"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="@+id/videoView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

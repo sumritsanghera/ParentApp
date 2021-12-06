@@ -9,7 +9,15 @@
     <style name="ToolBarStyle" parent="Theme.AppCompat">
         <item name="android:textColorPrimary">@color/darker_blue</item>
         <item name="android:textColorSecondary">@color/light_blue</item>
+        <item name="actionMenuTextColor">@color/light_blue</item>
+    </style>
+
+    <style name="TimerToolBarStyle" parent="Theme.AppCompat">
+        <item name="android:textColorPrimary">@color/dark_blue</item>
+        <item name="android:textColorSecondary">@color/dark_blue</item>
         <item name="actionMenuTextColor">@color/dark_blue</item>
+        <item name="android:fontFamily">andada</item>
+        <item name="android:textSize">17sp</item>
     </style>
 
 
@@ -25,7 +33,7 @@
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/darker_blue</item>
-        <item name="android:fontFamily">andada</item>
+        <item name="android:fontFamily">cabin</item>
     </style>
 
     <style name="popup_animation">

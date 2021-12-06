@@ -1,6 +1,8 @@
 package ca.cmpt276.ParentApp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
 
 import android.content.Context;
@@ -17,11 +19,15 @@ import android.os.CountDownTimer;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -47,6 +53,10 @@ import java.util.Locale;
         https://www.youtube.com/watch?v=7dQJAkjNEjM&list=PLrnPJCHvNZuB8wxqXCwKw2_NkyEmFwcSd&index=4
         https://www.youtube.com/watch?v=btk4229qI04 - videoBackground
         https://stackoverflow.com/questions/2618182/how-to-play-ringtone-alarm-sound-in-android
+        https://stackoverflow.com/questions/26651602/display-back-arrow-on-toolbar
+        https://stackoverflow.com/questions/50162052/working-example-of-countdown-timer-with-smooth-progress-bar
+        https://www.youtube.com/watch?v=vYIw21_migM
+        https://stackoverflow.com/questions/2131948/force-screen-on
  */
 
 public class Timeout_Timer extends AppCompatActivity {
@@ -61,13 +71,17 @@ public class Timeout_Timer extends AppCompatActivity {
     private Button buttonReset;
 
     private CountDownTimer countDownTimer;
-//
-    private boolean isTimerRunning;
 
+    private boolean isTimerRunning;
     private long startTimeInMillis;
     private long timeLeftInMillis = 1000;
     private long endTime;
 
+    private ProgressBar progressBarCircle;
+    private TextView textViewSpeed;
+    private float timerSpeedMultiplier = 1;
+    private final float defaultSpeed = 1;
+    private Toolbar toolbar;
 
 
     @Override
@@ -78,16 +92,32 @@ public class Timeout_Timer extends AppCompatActivity {
         videoView = findViewById(R.id.videoView);
         editTextInput = findViewById(R.id.edit_text_input);
         textViewCountDown = findViewById(R.id.text_view_countdown);
+        textViewSpeed = findViewById(R.id.text_view_speed);
 
         buttonSet = findViewById(R.id.button_set);
         buttonStartPause = findViewById(R.id.button_start_pause);
         buttonReset = findViewById(R.id.button_reset);
+        progressBarCircle = findViewById(R.id.circular_progress_bar);
+        toolbar = findViewById(R.id.toolbar);
 
-        setup_back_button();
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+
+        setup_toolbar();
+        //setup_back_button();
         setUpSetButton();
         setUpStartPauseButton();
         setUpResetButton();
         createRadioButtons();
+    }
+
+    private void setup_toolbar() {
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setTitle("Timer");
+        }
     }
 
     private void setup_back_button() {
@@ -108,10 +138,10 @@ public class Timeout_Timer extends AppCompatActivity {
                 }
                 if (isTimerRunning) {
                     pauseTimer();
-                } else {
-                    startTimer();
                 }
-
+                else {
+                    startTimer(defaultSpeed);
+                }
             }
         });
     }
@@ -143,7 +173,6 @@ public class Timeout_Timer extends AppCompatActivity {
                             Toast.LENGTH_SHORT).show();
                     return;
                 }
-
                 setTime(millisInput);
                 editTextInput.setText("");
             }
@@ -157,14 +186,22 @@ public class Timeout_Timer extends AppCompatActivity {
     }
 
 
-    private void startTimer() {
+    private void startTimer(final double timerSpeed) {
         endTime = System.currentTimeMillis() + timeLeftInMillis;
 
-        countDownTimer = new CountDownTimer(timeLeftInMillis, 1000) {
+        countDownTimer = new CountDownTimer((long) (timeLeftInMillis / timerSpeed),
+                (long) (1000 / timerSpeed)) {
             @Override
             public void onTick(long millisUntilFinished) {
-                timeLeftInMillis = millisUntilFinished;
+                timeLeftInMillis = (long) (millisUntilFinished * timerSpeed);
+                //Set ProgressBar
+                int progress = (int) timeLeftInMillis/1000;
+                int maxProgress = (int) startTimeInMillis/1000;
+                progressBarCircle.setMax(maxProgress);
+
                 updateCountDownText();
+                progressBarCircle.setProgress(progress);
+
             }
             @Override
             public void onFinish() {
@@ -229,18 +266,20 @@ public class Timeout_Timer extends AppCompatActivity {
                 radioGroup.setVisibility(View.VISIBLE);
             } else {
                 videoView.setVisibility(View.INVISIBLE);
+                progressBarCircle.setVisibility(View.INVISIBLE);
                 buttonReset.setVisibility(View.INVISIBLE);
                 textViewCountDown.setVisibility(View.VISIBLE);
-                textViewCountDown.setTextColor(getResources().getColor(android.R.color.black));
+                textViewCountDown.setTextColor(Color.BLACK);
             }
         }
     }
 
     private void timerOverActions() {
+        progressBarCircle.setVisibility(View.INVISIBLE);
         videoView.setVisibility(View.INVISIBLE);
         buttonStartPause.setVisibility(View.INVISIBLE);
         textViewCountDown.setVisibility(View.VISIBLE);
-        textViewCountDown.setTextColor(getResources().getColor(android.R.color.black));
+        textViewCountDown.setTextColor(Color.BLACK);
         messageFragment();
         vibrate();
     }
@@ -251,7 +290,7 @@ public class Timeout_Timer extends AppCompatActivity {
         editTextInput.setVisibility(View.VISIBLE);
         buttonSet.setVisibility(View.VISIBLE);
         textViewCountDown.setVisibility(View.VISIBLE);
-        textViewCountDown.setTextColor(getResources().getColor(android.R.color.black));
+        textViewCountDown.setTextColor(Color.BLACK);
         radioGroup.setVisibility(View.VISIBLE);
         videoView.setVisibility(View.INVISIBLE);
 
@@ -261,21 +300,22 @@ public class Timeout_Timer extends AppCompatActivity {
         buttonStartPause.setBackgroundColor(Color.GREEN);
         editTextInput.setVisibility(View.VISIBLE);
         buttonSet.setVisibility(View.VISIBLE);
-        textViewCountDown.setVisibility(View.INVISIBLE);
         radioGroup.setVisibility(View.VISIBLE);
+        textViewCountDown.setVisibility(View.INVISIBLE);
     }
 
     private void timerRunningActions() {
         playVideo();
+        progressBarCircle.setVisibility(View.VISIBLE);
         videoView.setVisibility(View.VISIBLE);
-        textViewCountDown.setTextColor(getResources().getColor(android.R.color.white));
         textViewCountDown.setVisibility(View.VISIBLE);
         editTextInput.setVisibility(View.INVISIBLE);
         buttonSet.setVisibility(View.INVISIBLE);
         buttonReset.setVisibility(View.INVISIBLE);
-        buttonStartPause.setText(R.string.pause);
-        buttonStartPause.setBackgroundColor(Color.GRAY);
         radioGroup.setVisibility(View.INVISIBLE);
+        buttonStartPause.setText(R.string.pause);
+        textViewCountDown.setTextColor(Color.WHITE);
+        buttonStartPause.setBackgroundColor(Color.GRAY);
     }
 
     private void closeKeyboard() {
@@ -298,6 +338,7 @@ public class Timeout_Timer extends AppCompatActivity {
         editor.putLong("millisLeft", timeLeftInMillis);
         editor.putBoolean("timerRunning", isTimerRunning);
         editor.putLong("endTime", endTime);
+        editor.putFloat("timerSpeed", timerSpeedMultiplier);
 
         editor.apply();
 
@@ -315,13 +356,13 @@ public class Timeout_Timer extends AppCompatActivity {
         startTimeInMillis = prefs.getLong("startTimeInMillis", 600000);
         timeLeftInMillis = prefs.getLong("millisLeft", startTimeInMillis);
         isTimerRunning = prefs.getBoolean("timerRunning", false);
+        timerSpeedMultiplier = prefs.getFloat("timerSpeed", 1);
 
         updateCountDownText();
 
         if (isTimerRunning) {
             endTime = prefs.getLong("endTime", 0);
             timeLeftInMillis = endTime - System.currentTimeMillis();
-
 
             if (timeLeftInMillis < 0) {
                 timeLeftInMillis = 0;
@@ -330,7 +371,7 @@ public class Timeout_Timer extends AppCompatActivity {
                 timerStartActions();
                 textViewCountDown.setVisibility(View.VISIBLE);
             } else {
-                startTimer();
+                startTimer(timerSpeedMultiplier);
             }
         }
     }
@@ -361,7 +402,6 @@ public class Timeout_Timer extends AppCompatActivity {
 
                     Snackbar.make(view,numMinute + " Minute Timer Selected",
                             Snackbar.LENGTH_LONG).show();
-
                 }
             });
             radioGroup.addView(button);
@@ -383,8 +423,78 @@ public class Timeout_Timer extends AppCompatActivity {
 
     private void vibrate() {
         Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        // Vibrate for 500 milliseconds
         v.vibrate(VibrationEffect.createOneShot(1000,
                 VibrationEffect.DEFAULT_AMPLITUDE));
     }
+
+    private void updateSpeed(float newSpeed) {
+        pauseTimer();
+        startTimer(newSpeed);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.timer_menu, menu);
+        return true;
+    }
+
+    //timer speed buttons from toolbar
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        View view = findViewById(android.R.id.content);
+        int timerSpeedText = 100;
+
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        if (isTimerRunning) {
+            if (item.getItemId() == R.id.quarter_speed) {
+                timerSpeedMultiplier = 0.25f;
+                timerSpeedText = 25;
+            }
+            else if (item.getItemId() == R.id.half_speed) {
+                timerSpeedMultiplier = 0.5f;
+                timerSpeedText = 50;
+            }
+            else if (item.getItemId() == R.id.three_quarter_speed) {
+                timerSpeedMultiplier = 0.75f;
+                timerSpeedText = 75;
+            }
+            else if (item.getItemId() == R.id.normal_speed) {
+                timerSpeedMultiplier = 1f;
+                timerSpeedText = 100;
+            }
+            else if (item.getItemId() == R.id.double_speed) {
+                timerSpeedMultiplier = 2f;
+                timerSpeedText = 200;
+            }
+            else if (item.getItemId() == R.id.triple_speed) {
+                timerSpeedMultiplier = 3f;
+                timerSpeedText = 300;
+            }
+            else if (item.getItemId() == R.id.quadruple_speed) {
+                timerSpeedMultiplier = 4f;
+                timerSpeedText = 400;
+            }
+            textViewSpeed.setText("Time @"+timerSpeedText+"%");
+            updateSpeed(timerSpeedMultiplier);
+            saveTimerSpeed();
+            return true;
+        }
+        else {
+            Snackbar.make(view, R.string.start_timer_first,Snackbar.LENGTH_LONG ).show();
+        }
+        return true;
+    }
+
+    private void saveTimerSpeed() {
+        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putFloat("timerSpeed", timerSpeedMultiplier);
+        editor.apply();
+    }
 }
+
+
+//500
