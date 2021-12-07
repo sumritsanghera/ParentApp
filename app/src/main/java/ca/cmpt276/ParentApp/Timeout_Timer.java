@@ -386,7 +386,7 @@ public class Timeout_Timer extends AppCompatActivity {
 
         if (isTimerRunning) {
             endTime = prefs.getLong("endTime", 0);
-            timeLeftInMillis = (long) ((endTime - System.currentTimeMillis()) * timerSpeedMultiplier);
+            timeLeftInMillis = endTime - System.currentTimeMillis();
 
             if (timeLeftInMillis < 0) {
                 timeLeftInMillis = 0;
