@@ -176,6 +176,7 @@
         android:text=""
         app:layout_constraintBottom_toBottomOf="@+id/videoView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="invisible"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,7 +3,6 @@ package ca.cmpt276.ParentApp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
 
 import android.content.Context;
@@ -27,7 +26,6 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -193,6 +191,7 @@ public class Timeout_Timer extends AppCompatActivity {
             public void onFinish() {
                 isTimerRunning = false;
                 updateButtons();
+                textViewSpeed.setText("");
             }
         }.start();
 
@@ -206,6 +205,7 @@ public class Timeout_Timer extends AppCompatActivity {
         updateButtons2();
         buttonStartPause.setText("Resume");
         textViewCountDown.setVisibility(View.VISIBLE);
+        textViewSpeed.setVisibility(View.INVISIBLE);
     }
 
     private void resetTimer() {
@@ -213,6 +213,7 @@ public class Timeout_Timer extends AppCompatActivity {
         updateCountDownText();
         updateButtons();
         buttonStartPause.setText("Start");
+        textViewSpeed.setText("");
     }
 
     private void updateCountDownText() {
@@ -285,6 +286,7 @@ public class Timeout_Timer extends AppCompatActivity {
                 editTextInput.setVisibility(View.INVISIBLE);
                 radioGroup.setVisibility(View.INVISIBLE);
             } else {
+                textViewSpeed.setVisibility(View.INVISIBLE);
                 videoView.setVisibility(View.INVISIBLE);
                 progressBarCircle.setVisibility(View.INVISIBLE);
                 buttonReset.setVisibility(View.INVISIBLE);
@@ -295,6 +297,7 @@ public class Timeout_Timer extends AppCompatActivity {
     }
 
     private void timerOverActions() {
+        textViewSpeed.setVisibility(View.INVISIBLE);
         progressBarCircle.setVisibility(View.INVISIBLE);
         videoView.setVisibility(View.INVISIBLE);
         buttonStartPause.setVisibility(View.INVISIBLE);
@@ -326,6 +329,7 @@ public class Timeout_Timer extends AppCompatActivity {
 
     private void timerRunningActions() {
         playVideo();
+        textViewSpeed.setVisibility(View.VISIBLE);
         progressBarCircle.setVisibility(View.VISIBLE);
         videoView.setVisibility(View.VISIBLE);
         textViewCountDown.setVisibility(View.VISIBLE);
@@ -382,7 +386,7 @@ public class Timeout_Timer extends AppCompatActivity {
 
         if (isTimerRunning) {
             endTime = prefs.getLong("endTime", 0);
-            timeLeftInMillis = endTime - System.currentTimeMillis();
+            timeLeftInMillis = (long) ((endTime - System.currentTimeMillis()) * timerSpeedMultiplier);
 
             if (timeLeftInMillis < 0) {
                 timeLeftInMillis = 0;
@@ -462,7 +466,6 @@ public class Timeout_Timer extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         View view = findViewById(android.R.id.content);
-        int timerSpeedText = 100;
 
         if (item.getItemId() == android.R.id.home) {
             finish();
@@ -471,33 +474,27 @@ public class Timeout_Timer extends AppCompatActivity {
         if (isTimerRunning) {
             if (item.getItemId() == R.id.quarter_speed) {
                 timerSpeedMultiplier = 0.25f;
-                timerSpeedText = 25;
             }
             else if (item.getItemId() == R.id.half_speed) {
                 timerSpeedMultiplier = 0.5f;
-                timerSpeedText = 50;
             }
             else if (item.getItemId() == R.id.three_quarter_speed) {
                 timerSpeedMultiplier = 0.75f;
-                timerSpeedText = 75;
             }
             else if (item.getItemId() == R.id.normal_speed) {
                 timerSpeedMultiplier = 1f;
-                timerSpeedText = 100;
             }
             else if (item.getItemId() == R.id.double_speed) {
                 timerSpeedMultiplier = 2f;
-                timerSpeedText = 200;
             }
             else if (item.getItemId() == R.id.triple_speed) {
                 timerSpeedMultiplier = 3f;
-                timerSpeedText = 300;
             }
             else if (item.getItemId() == R.id.quadruple_speed) {
                 timerSpeedMultiplier = 4f;
-                timerSpeedText = 400;
             }
-            textViewSpeed.setText("Time @"+timerSpeedText+"%");
+            double timerSpeedText = timerSpeedMultiplier*100;
+            textViewSpeed.setText("Time @"+(int) timerSpeedText+"%");
             updateSpeed(timerSpeedMultiplier);
             saveTimerSpeed();
             return true;
