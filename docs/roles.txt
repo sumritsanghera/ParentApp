@@ -1,4 +1,4 @@
-Scrum Master/Product Owner: Hani
-Scrum Master/Repo Manager: Sumrits
+Scrum Master/Repo Manager: Hani
+Scrum Master/Product Owner: Sumrits
 
 NOTE FOR MARKER: Team of two

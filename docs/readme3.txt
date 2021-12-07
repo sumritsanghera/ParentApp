@@ -3,7 +3,9 @@ Features Implemented:
 -   Coin Flip activity
 -   Coin Flip history
 -   Tasks (edit/add/delete task)
+-   Tasks history
 -   Timer
+-   Timer progress bar
 -   Help page
 
 Style guide:
