@@ -316,7 +316,6 @@ public class Timeout_Timer extends AppCompatActivity {
         textViewCountDown.setTextColor(Color.BLACK);
         radioGroup.setVisibility(View.VISIBLE);
         videoView.setVisibility(View.INVISIBLE);
-
     }
 
     private void timerPausedActions() {
