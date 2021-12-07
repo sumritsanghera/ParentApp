@@ -34,7 +34,7 @@ Coin flip sounds:
     https://freesound.org/people/InspectorJ/sounds/342242/
     https://stackoverflow.com/questions/3072173/how-to-call-a-method-after-a-delay-in-android
 
-
+gi
 Timeout_Timer.java:
     https://beginnersbook.com/2019/04/java-int-to-long-conversion/
     https://www.youtube.com/watch?v=MDuGwI6P-X8&list=PLrnPJCHvNZuB8wxqXCwKw2_NkyEmFwcSd&index=1
