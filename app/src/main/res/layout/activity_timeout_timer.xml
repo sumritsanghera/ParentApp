@@ -4,32 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".Timeout_Timer">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        app:title="Timer"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/white"
-        android:theme="@style/TimerToolBarStyle"
-        app:layout_constraintTop_toTopOf="parent"
-        android:elevation="1dp"/>
-
-
-    <ProgressBar
-        android:id="@+id/circular_progress_bar"
-        style="@style/CircularDeterminateProgressBar"
-        android:layout_width="214dp"
-        android:layout_height="205dp"
         android:elevation="1dp"
-        android:gravity="center"
-        android:progress="100"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/timer_linear_layout"
-        app:layout_constraintEnd_toEndOf="@+id/timer_linear_layout"
-        app:layout_constraintStart_toStartOf="@+id/timer_linear_layout"
-        app:layout_constraintTop_toTopOf="@+id/timer_linear_layout" />
+        android:theme="@style/TimerToolBarStyle"
+        app:title=""
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/custom_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/timer_title"
+            android:textColor="@color/darker_blue"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/andada" />
+
+    </androidx.appcompat.widget.Toolbar>
 
     <VideoView
         android:id="@+id/videoView"
@@ -85,15 +84,14 @@
                 android:hint="@string/minutes"
                 android:inputType="number"
                 android:maxLength="4"
-                android:theme="@style/ButtonStyle" />
+                android:theme="@style/ButtonStyle"
+                android:autofillHints="" />
 
             <Button
                 android:id="@+id/button_set"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/edit_text_input"
                 android:layout_margin="10dp"
-                android:layout_toEndOf="@+id/edit_text_input"
                 android:backgroundTint="@color/white_gray"
                 android:text="@string/set"
                 android:theme="@style/ButtonStyle" />
@@ -109,7 +107,6 @@
             android:textColor="@android:color/black"
             android:textSize="60sp"
             android:visibility="visible"/>
-
 
 
         <LinearLayout
@@ -145,16 +142,30 @@
 
         </LinearLayout>
 
-        <RadioGroup
-            android:id="@+id/radio_group_timer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_gravity="center"
-            />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ProgressBar
+                android:id="@+id/circular_progress_bar"
+                style="@style/CircularDeterminateProgressBar"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:elevation="1dp"
+                android:layout_centerHorizontal="true"
+                android:progress="100"
+                android:visibility="invisible" />
+
+            <RadioGroup
+                android:id="@+id/radio_group_timer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_centerHorizontal="true"/>
+        </RelativeLayout>
 
 
     </LinearLayout>
+
 
     <TextView
         android:id="@+id/text_view_speed"
@@ -166,6 +177,5 @@
         app:layout_constraintBottom_toBottomOf="@+id/videoView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

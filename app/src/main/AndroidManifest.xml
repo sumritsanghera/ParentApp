@@ -87,9 +87,7 @@
         <activity
             android:name=".Timeout_Timer"
             android:exported="true"
-            android:label="Back"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity
             android:name=".Children_Config"
             android:exported="true"

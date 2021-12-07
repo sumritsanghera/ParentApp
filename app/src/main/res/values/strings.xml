@@ -196,5 +196,6 @@
     <string name="code_references_text">Code references</string>
     <string name="task_history_title">Task History</string>
     <string name="task_history_info">No child had a turn yet</string>
+    <string name="timer_title">Timer</string>
 
 </resources>

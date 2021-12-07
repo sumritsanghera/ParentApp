@@ -1,6 +1,7 @@
 package ca.cmpt276.ParentApp;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
@@ -81,13 +82,18 @@ public class Timeout_Timer extends AppCompatActivity {
     private TextView textViewSpeed;
     private float timerSpeedMultiplier = 1;
     private final float defaultSpeed = 1;
-    private Toolbar toolbar;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeout_timer);
+        setSupportActionBar(findViewById(R.id.toolbar));
+        //enable "up" on toolbar
+        ActionBar ab = getSupportActionBar();
+        assert ab != null;
+        ab.setDisplayHomeAsUpEnabled(true);
+        ab.setDisplayShowTitleEnabled(false);
 
         videoView = findViewById(R.id.videoView);
         editTextInput = findViewById(R.id.edit_text_input);
@@ -98,34 +104,14 @@ public class Timeout_Timer extends AppCompatActivity {
         buttonStartPause = findViewById(R.id.button_start_pause);
         buttonReset = findViewById(R.id.button_reset);
         progressBarCircle = findViewById(R.id.circular_progress_bar);
-        toolbar = findViewById(R.id.toolbar);
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-
-        setup_toolbar();
-        //setup_back_button();
         setUpSetButton();
         setUpStartPauseButton();
         setUpResetButton();
         createRadioButtons();
     }
-
-    private void setup_toolbar() {
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null){
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-            getSupportActionBar().setTitle("Timer");
-        }
-    }
-
-    private void setup_back_button() {
-        ImageView back_button = findViewById(R.id.timer_back_button);
-        back_button.setOnClickListener(view -> Timeout_Timer.super.onBackPressed());
-    }
-
-
     private void setUpStartPauseButton() {
         buttonStartPause.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -217,7 +203,8 @@ public class Timeout_Timer extends AppCompatActivity {
     private void pauseTimer() {
         countDownTimer.cancel();
         isTimerRunning = false;
-        updateButtons();
+        updateButtons2();
+        buttonStartPause.setText("Resume");
         textViewCountDown.setVisibility(View.VISIBLE);
     }
 
@@ -225,6 +212,7 @@ public class Timeout_Timer extends AppCompatActivity {
         timeLeftInMillis = startTimeInMillis;
         updateCountDownText();
         updateButtons();
+        buttonStartPause.setText("Start");
     }
 
     private void updateCountDownText() {
@@ -264,6 +252,38 @@ public class Timeout_Timer extends AppCompatActivity {
                 buttonReset.setVisibility(View.VISIBLE);
                 buttonReset.setBackgroundColor(Color.RED);
                 radioGroup.setVisibility(View.VISIBLE);
+            } else {
+                videoView.setVisibility(View.INVISIBLE);
+                progressBarCircle.setVisibility(View.INVISIBLE);
+                buttonReset.setVisibility(View.INVISIBLE);
+                textViewCountDown.setVisibility(View.VISIBLE);
+                textViewCountDown.setTextColor(Color.BLACK);
+            }
+        }
+    }
+
+    private void updateButtons2() {
+        if (isTimerRunning) {
+            timerRunningActions();
+        }
+        else {
+            timerPausedActions();
+
+            //if timer is over
+            if (timeLeftInMillis < 1000) {
+                timerOverActions();
+            }
+            else {
+                buttonStartPause.setVisibility(View.VISIBLE);
+                buttonStartPause.setText(R.string.start);
+            }
+
+            if (timeLeftInMillis < startTimeInMillis) {
+                buttonReset.setVisibility(View.VISIBLE);
+                buttonReset.setBackgroundColor(Color.RED);
+                buttonSet.setVisibility(View.INVISIBLE);
+                editTextInput.setVisibility(View.INVISIBLE);
+                radioGroup.setVisibility(View.INVISIBLE);
             } else {
                 videoView.setVisibility(View.INVISIBLE);
                 progressBarCircle.setVisibility(View.INVISIBLE);
