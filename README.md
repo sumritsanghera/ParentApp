@@ -1,4 +1,4 @@
-# ParentApp
+# ParentApp Android Application
 
 Android Application created to assist parents with everyday decisions and disagreements
 
