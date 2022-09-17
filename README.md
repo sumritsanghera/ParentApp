@@ -1,6 +1,6 @@
 # ParentApp Android Application
 
-The ParentApp Android Application is created to assist parents and children with decisions/disagreements that come up in everyday life. 
+The ParentApp Android Application is created to assist parents and children with decisions and disagreements that come up in everyday life. 
 
 A video demo of the application is available: [Here](https://youtu.be/O1ixStXwwGE)
 
