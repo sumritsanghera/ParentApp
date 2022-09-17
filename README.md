@@ -14,4 +14,8 @@ Includes:
 - good, clean code
 
 
-
+![Alt text](/app/src/main/res/drawable/pa_main_menu.png?raw=true "Main Menu")
+![Alt text](/app/src/main/res/drawable/pa_configure_children.png?raw=true "Configure Children")
+![Alt text](/app/src/main/res/drawable/pa_coin_flip.png?raw=true "Coin Flip")
+![Alt text](/app/src/main/res/drawable/pa_tasks.png?raw=true "Tasks")
+![Alt text](/app/src/main/res/drawable/pa_timer.png?raw=true "Timer")
